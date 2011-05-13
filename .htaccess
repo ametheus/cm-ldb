@@ -1,0 +1,17 @@
+
+AuthType basic
+AuthName "Ledendatabase Collegium Musicum"
+AuthUserFile /etc/apache2/ledendatabase.htpasswd
+
+<Files ~"\.php">
+    require valid-user
+</Files>
+<Files "">
+    require valid-user
+</Files>
+
+<Files ~"\.inc">
+    order allow,deny
+    deny from all
+</Files>
+

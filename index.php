@@ -1,5 +1,7 @@
 <?php
 
+require_once( "inc/db.inc" );
+
 header("Content-type: text/plain");
 
 # Als je dit kunt lezen, ben ik vergeten libapache2-php5 te installeren. Oeps.
