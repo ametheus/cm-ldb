@@ -56,6 +56,16 @@ class Query
     private function load_body_from_xml( $body_node )
     {
         if ( ! $body_node ) { throw new Exception( "Invalid Query: Must have a body." ); }
+        
+        foreach ( $body_node->childNodes as $cn )
+        {
+            if ( ! is_a($cn,"DOMElement") ) { continue; }
+            if ( $cn->nodeName != "Text" ) { continue; }
+            if ( $cn->hasAttribute("Name") )
+            {
+                $this->_texts[$cn->getAttribute("Name")] = $cn->textContent;
+            }
+        }
     }
     
     function __get( $name )
