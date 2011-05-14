@@ -45,9 +45,26 @@ foreach ( array_keys($Result) as $table )
 <?php
 foreach ( $Result as $table=>$data )
 {
+    if ( count($data) == 0 ) { continue; }
     $tid = preg_replace('/[^a-zA-Z0-9]/','',$table);
     print( "            <div id=\"table-$tid\">\n" );
-    print_r( $data );
+    print( "            <table>\n" );
+    print( "                <tr>\n" );
+    foreach ( array_keys($data[0]) as $col )
+    {
+        print( "                    <th>{$col}</th>\n" );
+    }
+    print( "                </tr>\n" );
+    foreach ( $data as $row )
+    {
+        print( "                <tr>\n" );
+        foreach ( $row as $val )
+        {
+            print( "                    <td>{$val}</td>\n" );
+        }
+        print( "                </tr>\n" );
+    }
+    print( "            </table>\n" );
     print( "            </div>\n" );
 }
 ?>
