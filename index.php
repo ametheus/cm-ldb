@@ -1,32 +1,47 @@
 <?php
 
 require_once( "inc/db.inc" );
+require_once( "inc/query.inc" );
 
-header("Content-type: text/plain");
+function I($n){return str_repeat("    ",$n);}
 
 # Als je dit kunt lezen, ben ik vergeten libapache2-php5 te installeren. Oeps.
 
+function LoQ()
+{
+    $queries = Query::queries_in_dir( Config::$query_dir );
+    $qlist = Query::sort_query_list( $queries );
+    foreach ( $qlist as $cat=>$qs )
+    {
+        print( I(4)."<h3>$cat</h3>\n" );
+        foreach ( $qs as $q )
+        {
+            print( I(4)."<a href=\"/query/{$q->file}\">\n" );
+            print( I(5)."<span class=\"title\">{$q->Title}</span>\n" );
+            print( I(5)."<span class=\"description\">{$q->Description}</span>\n" );
+            print( I(5)."<span class=\"author\">{$q->Author}</span>\n" );
+            print( I(4)."</a>\n" );
+        }
+    }
+}
 
 
-$Q1 = <<<EOT
-    SELECT Voornaam, Tussenvoegsel, Achternaam
-    FROM persoon
-    WHERE pers_id = @`per-soon`
-EOT;
-$Q2 = <<<EOT
-    SELECT Klasse, Groepsnaam, van, tot
-    FROM lidVan
-        JOIN groep USING ( groep_id )
-    WHERE pers_id = @`per-soon`
-EOT;
-$Query = new Command( array($Q1,$Q2), DB::ro() );
-print_r( $Query->execute( array( 'per-soon' => 2021 ) ) );
 
-
-
-?>
-
-
-SERVER:<?=print_r($_SERVER,true)?>
-POST:<?=print_r($_POST,true)?>
-REQUEST:<?=print_r($_REQUEST,true)?>
+?><!DOCTYPE html>
+<html>
+    <head>
+        <title>Ledendatabase v3.2.0</title>
+        
+        <link rel="stylesheet" href="/css/ldb.css" />
+    </head>
+    <body>
+        <div id="MainQueryView">
+            <div class="query_list tile_view">
+<?php LoQ() ?>
+            </div>
+        </div>
+        <div id="Modules">
+            TODO: Modules toevoegen.
+        </div>
+    </body>
+</html>

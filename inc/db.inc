@@ -9,6 +9,14 @@ if ( ! Auth::check() )
 }
 
 
+class Config
+{
+    static $query_dir = 'queries';
+    
+    # Database connectivity is configured below.
+}
+
+
 class Connection
 {
     private $_dbcon;
