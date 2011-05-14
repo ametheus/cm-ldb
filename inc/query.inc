@@ -60,6 +60,10 @@ class Query
     private function load_parameters_from_xml( $parameters_node )
     {
         if ( ! $parameters_node ) { return; }
+        if ( $parameters_node->childNodes->length > 0 )
+        {
+            throw new Exception( "Parameters zijn nog niet af." );
+        }
     }
     private function load_body_from_xml( $body_node )
     {
