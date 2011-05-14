@@ -41,7 +41,7 @@ class Connection
         $rs = mysql_query( $text, $this->_dbcon );
         if ( mysql_errno() )
         {
-            throw new Exception( "MySQL error " . mysql_errno() . ":\n" . mysql_error() . "\nQuery:\n" . $Q );
+            throw new Exception( "MySQL error " . mysql_errno() . ":\n" . mysql_error() . "\nQuery:\n" . $text );
         }
         $rv = array();
         while ( $r = @mysql_fetch_assoc( $rs ) )
