@@ -11,10 +11,10 @@ header("Content-type: text/plain");
 $Q = <<<EOT
     SELECT Voornaam, Tussenvoegsel, Achternaam
     FROM persoon
-    WHERE pers_id = @persoon
+    WHERE pers_id = @`per-soon`
 EOT;
 $Query = new Command( $Q, DB::ro() );
-print_r( $Query->execute( array( 'persoon' => 2021 ) ) );
+print_r( $Query->execute( array( 'per-soon' => 2021 ) ) );
 
 
 

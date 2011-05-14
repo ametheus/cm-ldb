@@ -26,12 +26,8 @@ class Connection
             $args = "";
             foreach ( $arguments as $k=>$v )
             {
-                if ( ! preg_match( '/^[a-zA-Z0-9_]+$/', $k ) )
-                {
-                    throw new Exception( "Parameter '" . mysql_escape_string($k) .
-                        "' is invalid." );
-                }
-                $args .= ", @$k = '" . mysql_real_escape_string($v,$this->_dbcon) . "'";
+                $args .= ", @`" . mysql_real_escape_string($k,$this->_dbcon) . "` = " .
+                    "'" . mysql_real_escape_string($v,$this->_dbcon) . "'";
             }
             
             $this->exec( "SET " . substr($args,1) );
