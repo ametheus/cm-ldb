@@ -129,7 +129,7 @@ class AP
         {
             return false;
         }
-        if ( count($rv) > 1 )
+        if ( $rv->length > 1 )
         {
             if ( ini_get("display_errors") > 0 )
             {
