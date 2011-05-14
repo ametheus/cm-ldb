@@ -13,14 +13,14 @@ function LoQ()
     $qlist = Query::sort_query_list( $queries );
     foreach ( $qlist as $cat=>$qs )
     {
-        print( I(3)."<h3>$cat</h3>\n" );
+        print( I(4)."<h3>$cat</h3>\n" );
         foreach ( $qs as $q )
         {
-            print( I(3)."<a href=\"/query/{$q->file}\">\n" );
-            print( I(4)."<span class=\"Title\">{$q->Title}</span>\n" );
-            print( I(4)."<span class=\"Description\">{$q->Description}</span>\n" );
-            print( I(4)."<span class=\"Author\">{$q->Author}</span>\n" );
-            print( I(3)."</a>\n" );
+            print( I(4)."<a href=\"/query/{$q->file}\">\n" );
+            print( I(5)."<span class=\"title\">{$q->Title}</span>\n" );
+            print( I(5)."<span class=\"description\">{$q->Description}</span>\n" );
+            print( I(5)."<span class=\"author\">{$q->Author}</span>\n" );
+            print( I(4)."</a>\n" );
         }
     }
 }
@@ -31,10 +31,17 @@ function LoQ()
 <html>
     <head>
         <title>Ledendatabase v3.2.0</title>
+        
+        <link rel="stylesheet" href="/css/ldb.css" />
     </head>
     <body>
-        <div id="QueryList">
+        <div id="MainQueryView">
+            <div class="query_list tile_view">
 <?php LoQ() ?>
+            </div>
+        </div>
+        <div id="Modules">
+            TODO: Modules toevoegen.
         </div>
     </body>
 </html>
