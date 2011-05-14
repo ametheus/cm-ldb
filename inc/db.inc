@@ -11,7 +11,7 @@ if ( ! Auth::check() )
 
 class Config
 {
-    static $query_dir = './queries';
+    static $query_dir = 'queries';
     
     # Database connectivity is configured below.
 }

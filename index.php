@@ -16,9 +16,3 @@ foreach ( $qs as $q )
 
 
 
-?>
-
-
-SERVER:<?=print_r($_SERVER,true)?>
-POST:<?=print_r($_POST,true)?>
-REQUEST:<?=print_r($_REQUEST,true)?>
