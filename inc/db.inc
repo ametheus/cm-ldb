@@ -21,20 +21,38 @@ class Connection
     
     function execute( Command $query, $arguments )
     {
-        $Q = "";
-        foreach ( $arguments as $k=>$v )
+        if ( count($arguments ) > 0 )
         {
-            if ( ! preg_match( '/^[a-zA-Z0-9_]+$/', $k ) )
+            $args = "";
+            foreach ( $arguments as $k=>$v )
             {
-                throw new Exception( "Parameter '" . mysql_escape_string($k) .
-                    "' is invalid." );
+                if ( ! preg_match( '/^[a-zA-Z0-9_]+$/', $k ) )
+                {
+                    throw new Exception( "Parameter '" . mysql_escape_string($k) .
+                        "' is invalid." );
+                }
+                $args .= ", @$k = '" . mysql_real_escape_string($v,$this->_dbcon) . "'";
             }
-            $Q .= "SET @$k = '" . mysql_escape_string($v) . "';\n";
+            
+            $this->exec( "SET " . substr($args,1) );
         }
         
-        $Q .= "\n\n" . $query->text;
-        
-        print $Q;
+        return $this->exec( $query->text );
+    }
+    
+    private function exec( $text )
+    {
+        $rs = mysql_query( $text, $this->_dbcon );
+        if ( mysql_errno() )
+        {
+            throw new Exception( "MySQL error " . mysql_errno() . ":\n" . mysql_error() . "\nQuery:\n" . $Q );
+        }
+        $rv = array();
+        while ( $r = @mysql_fetch_assoc( $rs ) )
+        {
+            $rv[] = $r;
+        }
+        return $rv;
     }
 }
 
