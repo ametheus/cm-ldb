@@ -14,6 +14,8 @@ class Query
             throw new Exception( "File [$query_file] does not exist." );
         }
     }
+    private $_file = "";
+    
     private $_texts;
     
     private $_Title = 'Naamloze query';
@@ -24,6 +26,7 @@ class Query
     
     private function load_from_xml( $file )
     {
+        $this->_file = $file;
         $doc = new DOMDocument;
         $doc->load( $file );
         
@@ -66,6 +69,8 @@ class Query
                 return $this->_Author;
             case "Category":
                 return $this->_Category;
+            case "file":
+                return $this->_file;
         }
     }
     
