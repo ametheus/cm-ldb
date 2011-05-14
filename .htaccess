@@ -3,14 +3,17 @@ AuthType basic
 AuthName "Ledendatabase Collegium Musicum"
 AuthUserFile /etc/apache2/ledendatabase.htpasswd
 
-<Files ~"\.php">
+RewriteEngine On
+RewriteRule ^query/(.*)$ exec-query.php?query=$1
+
+<Files ~ "\.php$">
     require valid-user
 </Files>
 <Files "">
     require valid-user
 </Files>
 
-<Files ~"\.inc">
+<Files ~ "\.inc">
     order allow,deny
     deny from all
 </Files>

@@ -1,5 +1,6 @@
 <?php
 
+require_once( "inc/db.inc" );
 
 class Query
 {
@@ -22,6 +23,14 @@ class Query
     private $_Description = 'Een query zonder naam. Geen idee wat hij doet.';
     private $_Author = 'J.S. Bach';
     private $_Category = 'Overig';
+    
+    function execute()
+    {
+        $comm = new Command( $this->_texts, DB::ro() );
+        
+        #TODO: Iets met parameters.
+        return $comm->execute(array());
+    }
     
     
     private function load_from_xml( $file )
@@ -55,6 +64,16 @@ class Query
     private function load_body_from_xml( $body_node )
     {
         if ( ! $body_node ) { throw new Exception( "Invalid Query: Must have a body." ); }
+        
+        foreach ( $body_node->childNodes as $cn )
+        {
+            if ( ! is_a($cn,"DOMElement") ) { continue; }
+            if ( $cn->nodeName != "Text" ) { continue; }
+            if ( $cn->hasAttribute("Name") )
+            {
+                $this->_texts[$cn->getAttribute("Name")] = $cn->textContent;
+            }
+        }
     }
     
     function __get( $name )
@@ -117,6 +136,25 @@ class Query
             }
         }
         return $rv;
+    }
+    static function query_from_file()
+    {
+        if ( !isset($_GET["query"]) ) { return false; }
+        $A = explode( '/', $_GET["query"] );
+        if ( count($A) != 2 ) { return false; }
+        switch ( $A[0] )
+        {
+            case Config::$query_dir:
+            case 'standaard':
+                if ( file_exists( Config::$query_dir . "/" . $A[1]) )
+                {
+                    return new Query( Config::$query_dir . "/" . $A[1] );
+                }
+                return false;
+            case 'persoonlijk':
+                throw new Exception( "Niet geïmplementeerd." );
+        }
+        throw new Exception( "Ongeldig pad." );
     }
 }
 
