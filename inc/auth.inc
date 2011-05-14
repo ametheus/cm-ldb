@@ -20,7 +20,7 @@ class Auth
     {
         if ( ! isset($_SERVER["REMOTE_USER"]) )
         {
-            Auth::deny_access();
+            Auth::deny_access( "No remote user set." );
         }
         
         // TODO: Implement layered privileges.

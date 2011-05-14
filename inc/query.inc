@@ -1,5 +1,6 @@
 <?php
 
+require_once( "inc/db.inc" );
 
 class Query
 {
@@ -117,6 +118,25 @@ class Query
             }
         }
         return $rv;
+    }
+    static function query_from_file()
+    {
+        if ( !isset($_GET["query"]) ) { return false; }
+        $A = explode( '/', $_GET["query"] );
+        if ( count($A) != 2 ) { return false; }
+        switch ( $A[0] )
+        {
+            case Config::$query_dir:
+            case 'standaard':
+                if ( file_exists( Config::$query_dir . "/" . $A[1]) )
+                {
+                    return new Query( Config::$query_dir . "/" . $A[1] );
+                }
+                return false;
+            case 'persoonlijk':
+                throw new Exception( "Niet geïmplementeerd." );
+        }
+        throw new Exception( "Ongeldig pad." );
     }
 }
 
