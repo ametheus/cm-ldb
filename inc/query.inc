@@ -24,6 +24,14 @@ class Query
     private $_Author = 'J.S. Bach';
     private $_Category = 'Overig';
     
+    function execute()
+    {
+        $comm = new Command( $this->_texts, DB::ro() );
+        
+        #TODO: Iets met parameters.
+        return $comm->execute(array());
+    }
+    
     
     private function load_from_xml( $file )
     {

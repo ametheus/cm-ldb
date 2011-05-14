@@ -10,5 +10,5 @@ if ( ! $Q )
     die( "Query niet gevonden." );
 }
 
-print $Q->Title;
+print_r( $Q->execute() );
 
