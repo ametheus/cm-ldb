@@ -92,6 +92,27 @@ class Query
         
         return $rv;
     }
+    static function sort_query_list( $list )
+    {
+        function cmp($a,$b)
+        {
+            return strcmp($a->Title, $b->Title);
+        }
+        usort($list,"cmp");
+        $rv = array();
+        foreach ( $list as $q )
+        {
+            if ( ! isset($rv[$q->Category]) )
+            {
+                $rv[$q->Category] = array( $q );
+            }
+            else
+            {
+                $rv[$q->Category][] = $q;
+            }
+        }
+        return $rv;
+    }
 }
 
 

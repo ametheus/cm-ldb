@@ -8,11 +8,14 @@ header("Content-type: text/plain");
 # Als je dit kunt lezen, ben ik vergeten libapache2-php5 te installeren. Oeps.
 
 
-$qs = Query::queries_in_dir( Config::$query_dir );
-foreach ( $qs as $q )
+$queries = Query::queries_in_dir( Config::$query_dir );
+$qlist = Query::sort_query_list( $queries );
+foreach ( $qlist as $cat=>$qs )
 {
-    print( $q->Title . "\n" );
+    print( "\n   * [$cat]\n" );
+    foreach ( $qs as $q )
+    {
+        print( $q->Title . "\n" );
+    }
 }
-
-
 
