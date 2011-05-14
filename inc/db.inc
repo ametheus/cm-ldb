@@ -33,7 +33,19 @@ class Connection
             $this->exec( "SET " . substr($args,1) );
         }
         
-        return $this->exec( $query->text );
+        if ( is_array( $query->text ) )
+        {
+            $rv = array();
+            foreach ( $query->text as $k=>$v )
+            {
+                $rv[$k] = $this->exec( $v );
+            }
+            return $rv;
+        }
+        else
+        {
+            return $this->exec( $query->text );
+        }
     }
     
     private function exec( $text )

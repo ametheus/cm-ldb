@@ -8,12 +8,18 @@ header("Content-type: text/plain");
 
 
 
-$Q = <<<EOT
+$Q1 = <<<EOT
     SELECT Voornaam, Tussenvoegsel, Achternaam
     FROM persoon
     WHERE pers_id = @`per-soon`
 EOT;
-$Query = new Command( $Q, DB::ro() );
+$Q2 = <<<EOT
+    SELECT Klasse, Groepsnaam, van, tot
+    FROM lidVan
+        JOIN groep USING ( groep_id )
+    WHERE pers_id = @`per-soon`
+EOT;
+$Query = new Command( array($Q1,$Q2), DB::ro() );
 print_r( $Query->execute( array( 'per-soon' => 2021 ) ) );
 
 
