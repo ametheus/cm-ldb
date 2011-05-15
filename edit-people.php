@@ -3,22 +3,29 @@
 
 require_once( "inc/adapters/persoon.inc" );
 
-header( "Content-type: text/plain" );
+//header( "Content-type: text/plain" );
 
-$PA = Adapters\Persoon::IDs();
-$IDs = $PA->execute(array());
-$I = array();
+//$PA = Adapters\Persoon::IDs();
+//$IDs = $PA->execute(array());
 
-foreach ( $IDs as $r )
+
+if ( ! isset($_GET["json"]) )
 {
-    print( "{$r["pers_id"]} " );
-    $I[] = $r["pers_id"];
+    include( "edit-people.html" );
+    exit;
 }
 
-print( "\n\nComplement:\n" );
 
-for ( $i = 0; $i < 2657; $i++ )
+if ( $_GET["json"] == "IDs" )
 {
-    if ( in_array($i,$I) ) { continue; }
-    print( "$i " );
+    header( "Content-type: text-plain" );
+    $PA = Adapters\Persoon::IDs();
+    $IDs = $PA->execute(array());
+    print( "[" );
+    foreach ( $IDs as $i=>$r )
+    {
+        if ( $i ) { print(","); }
+        print $r["pers_id"];
+    }
+    print( "]" );
 }
