@@ -6,6 +6,12 @@ var Details = {};
 $(function()
 {
     $('#EditPeople').addClass('loading');
+    
+    $('#IDNav-fist').click(function(){select_index(0);})
+    $('#IDNav-back').click(function(){select_index(selectedIndex-1);})
+    $('#IDNav-next').click(function(){select_index(selectedIndex+1);})
+    $('#IDNav-last').click(function(){select_index(IDs.length);})
+    
     $.ajax({
         url: '/bewerken/json/IDs',
         dataType: 'json',
