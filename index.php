@@ -41,7 +41,7 @@ function LoQ()
             </div>
         </div>
         <div id="Modules">
-            TODO: Modules toevoegen.
+            <a id="Mod-Bewerken" href="/bewerken"><div>Bewerken</div></a>
         </div>
     </body>
 </html>
