@@ -23,6 +23,23 @@ EOT;
         if ( ! Persoon::$_IDs ) { return Persoon::_IDs(); }
         return Persoon::$_IDs;
     }
+    
+    
+    private static $_Detail = false;
+    private static function _Detail()
+    {
+        $Q = <<<EOT
+        SELECT * FROM persoon
+        WHERE ABS( pers_id - @persoon ) < 5
+EOT;
+        Persoon::$_Detail = new \Command( $Q, \DB::ro() );
+        return Persoon::$_Detail;
+    }
+    static function Detail()
+    {
+        if ( ! Persoon::$_Detail ) { return Persoon::_Detail(); }
+        return Persoon::$_Detail;
+    }
 }
 
 
