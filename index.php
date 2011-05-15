@@ -32,7 +32,8 @@ function LoQ()
     <head>
         <title>Ledendatabase v3.2.0</title>
         
-        <link rel="stylesheet" href="/css/ldb.css" />
+        <link rel="stylesheet" href="/css/common.css" />
+        <link rel="stylesheet" href="/css/query-list.css" />
     </head>
     <body>
         <div id="MainQueryView">

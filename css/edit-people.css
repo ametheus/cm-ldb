@@ -1,0 +1,31 @@
+
+
+#EditPeople
+{
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+
+#IDNavigator
+{
+    border: 1px solid black;
+    
+}
+#IDNavigator a
+{
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 1px outset;
+}
+#IDNavigator input
+{
+    display: inline-block;
+    border: 1px inset;
+    width: 45px;
+}
+
