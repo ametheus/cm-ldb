@@ -23,9 +23,15 @@
 #IDNavigator a
 {
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    
     border: 1px outset;
+    
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    
+    background-image: url(/css/humanity/images/ui-icons_cb672b_256x240.png);
+    background-clip: content-box;
 }
 #IDNavigator input
 {
@@ -33,4 +39,17 @@
     border: 1px inset;
     width: 45px;
 }
+
+
+#IDNav-fist { background-position: -44px -156px; }
+#IDNav-back { background-position: -93px  -12px; }
+#IDNav-next { background-position: -29px  -12px; }
+#IDNav-last { background-position: -28px -156px; }
+/* Dit zijn alternatieve knopjes. (Met pijltjes.) */
+/*#IDNav-fist { background-position: -236px -44px; }
+#IDNav-back { background-position:  -92px -44px; }
+#IDNav-next { background-position:  -28px -44px; }
+#IDNav-last { background-position: -208px -44px; }*/
+
+
 
