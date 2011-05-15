@@ -32,7 +32,7 @@ EOT;
         SELECT * FROM persoon
         WHERE ABS( pers_id - @persoon ) < 5
 EOT;
-        Persoon::$_Detail = new \Command( $Q, \DB::ro() );
+        Persoon::$_Detail = new \Command( $Q, \DB::ro(), array('pers_id') );
         return Persoon::$_Detail;
     }
     static function Detail()

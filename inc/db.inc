@@ -77,11 +77,13 @@ class Command
 {
     private $_text;
     private $_connection;
+    private $_mandatory;
     
-    function __construct( $text, $connection )
+    function __construct( $text, $connection, $mandatory=array() )
     {
         $this->_text = $text;
         $this->_connection = $connection;
+        $this->_mandatory = $mandatory;
     }
     
     function __get( $name )
@@ -94,6 +96,13 @@ class Command
     
     function execute( $arguments )
     {
+        foreach ( $this->_mandatory as $arg )
+        {
+            if ( ! array_key_exists($arg,$arguments) )
+            {
+                throw new Exception("Mandatory argument [$arg] missing.");
+            }
+        }
         return $this->_connection->execute( $this, $arguments );
     }
 }
