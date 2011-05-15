@@ -4,7 +4,8 @@ AuthName "Ledendatabase Collegium Musicum"
 AuthUserFile /etc/apache2/ledendatabase.htpasswd
 
 RewriteEngine On
-RewriteRule ^query/(.*)$ exec-query.php?query=$1
+RewriteRule ^query/(.*)$   exec-query.php?query=$1
+RewriteRule ^bewerken$     edit-people.php
 
 <Files ~ "\.php$">
     require valid-user
