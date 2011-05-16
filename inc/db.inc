@@ -118,10 +118,10 @@ class DB
         if ( Auth::check() > 0 )
         {
             DB::$_ro = new Connection(
-                "www.collegiummusicum.nl",
-                "deb7007_ldb_ro",
+                "localhost",
+                "ldb_ro",
                 "c9tdOACz",
-                "deb7007_nerdcie" );
+                "ledendatabase" );
         }
     }
     
@@ -130,10 +130,10 @@ class DB
         if ( Auth::check() > 2 )
         {
             DB::$_rw = new Connection(
-                "www.collegiummusicum.nl",
-                "deb7007_ldb_rw",
+                "localhost",
+                "ldb_rw",
                 "7SHrklIx",
-                "deb7007_nerdcie" );
+                "ledendatabase " );
         }
     }
     
