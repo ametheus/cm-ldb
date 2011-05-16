@@ -1,16 +1,26 @@
 
 var selectedIndex = 0;
 var IDs = null;
+var Changes = {};
 var Details = {};
 
 $(function()
 {
     $('#EditPeople').addClass('loading');
     
-    $('#IDNav-fist').click(function(){select_index(0);})
-    $('#IDNav-back').click(function(){select_index(selectedIndex-1);})
-    $('#IDNav-next').click(function(){select_index(selectedIndex+1);})
-    $('#IDNav-last').click(function(){select_index(IDs.length);})
+    $('#IDNav-fist').click(function(){select_index(0);});
+    $('#IDNav-back').click(function(){select_index(selectedIndex-1);});
+    $('#IDNav-next').click(function(){select_index(selectedIndex+1);});
+    $('#IDNav-last').click(function(){select_index(IDs.length);});
+    
+    $('#IDNav-save').click(save);
+    
+    $('#EditPeople input').change(function()
+    {
+        Details[pid()] = get_new_details();
+        Changes[pid()] = true;
+        $('#EditPeople').addClass('modified');
+    });
     
     $.ajax({
         url: '/bewerken/json/IDs',
@@ -77,6 +87,14 @@ function select_this()
         $('#EditPeople').addClass('loading');
         load_details( pid() );
     }
+    if ( pid() in Changes )
+    {
+        $('#EditPeople').addClass('modified');
+    }
+    else
+    {
+        $('#EditPeople').removeClass('modified');
+    }
 }
 
 function load_details( pers_id )
@@ -138,9 +156,10 @@ function update_fields()
     $('#EditPeople').removeClass('loading');
 }
 
-function update_details()
+function get_new_details()
 {
     var d = {};
+    d['pers_id']            = pid();
     d['achternaam']         = $('#Field-Achternaam').val();
     d['aangetrouwdenaam']   = $('#Field-Aangetrouwdenaam').val();
     d['voorletters']        = $('#Field-Voorletters').val();
@@ -163,6 +182,30 @@ function update_details()
     d['nationaliteit']      = $('#Field-Nationaliteit').val();
     d['voorkeurstaal']      = $('#Field-Voorkeurstaal').val();
     d['opm']                = $('#Field-Opm').val();
+    
+    return d;
 }
 
+
+function save()
+{
+    for ( i in Changes )
+    {
+        $.ajax({
+            type: 'POST',
+            url: '/bewerken/json/wijzig',
+            data: Details[i],
+            success: function(data)
+            {
+                delete Changes[i];
+                alert(data);
+                if ( pid() == i )
+                {
+                    $('#EditPeople').removeClass('modified');
+                }
+            },
+            dataType: 'html'
+        });
+    }
+}
 

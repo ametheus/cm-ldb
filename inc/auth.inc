@@ -24,7 +24,7 @@ class Auth
         }
         
         // TODO: Implement layered privileges.
-        return 2;
+        return 3;
     }
 }
 

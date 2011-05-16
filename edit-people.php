@@ -36,7 +36,7 @@ elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
     $Ds = $Detail->execute(array('pers_id'=>$_REQUEST["pers_id"]));
     print(json_encode($Ds));
 }
-elseif (( $_GET["json"] == "wijzig-persoon" ) && ( is_numeric(@$_POST["pers_id"]) ))
+elseif (( $_GET["json"] == "wijzig" ) && ( is_numeric(@$_POST["pers_id"]) ))
 {
     $Modify = Adapters\Persoon::Modify();
     $args = array();
@@ -44,10 +44,10 @@ elseif (( $_GET["json"] == "wijzig-persoon" ) && ( is_numeric(@$_POST["pers_id"]
     {
         $args[$arg] = @$_POST[$arg];
     }
-    $Ds = $Modify->execute(array('persoon'=>$_REQUEST["pers_id"]));
-    print(json_encode($Ds));
+    $Ds = $Modify->execute($args);
+    print( is_array($Ds) ? 'true' : 'false' );
 }
 else
 {
-    print "null";
+    print "Onbekend JSON-object. Sorry.";
 }

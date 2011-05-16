@@ -138,7 +138,11 @@ class DB
                 "localhost",
                 "ldb_rw",
                 "7SHrklIx",
-                "ledendatabase " );
+                "ledendatabase" );
+        }
+        else
+        {
+            DB::$_rw = DB::ro();
         }
     }
     
