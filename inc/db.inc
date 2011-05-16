@@ -105,6 +105,11 @@ class Command
         }
         return $this->_connection->execute( $this, $arguments );
     }
+    
+    function mandatory_args()
+    {
+        return $this->_mandatory;
+    }
 }
 
 
