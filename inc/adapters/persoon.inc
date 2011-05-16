@@ -40,6 +40,53 @@ EOT;
         if ( ! Persoon::$_Detail ) { return Persoon::_Detail(); }
         return Persoon::$_Detail;
     }
+    
+    
+    private static $_Modify = false;
+    private static function _Modify()
+    {
+        $Q = <<<EOT
+        UPDATE persoon SET
+            achternaam        = @achternaam,
+            aangetrouwdenaam  = @aangetrouwdenaam,
+            voorletters       = @voorletters,
+            voornaam          = @voornaam,
+            tussenvoegsel     = @tussenvoegsel,
+            titel             = @titel,
+            geslacht          = @geslacht,
+            adres             = @adres,
+            postcode          = @postcode,
+            plaats            = @plaats,
+            land              = @land,
+            post              = @post,
+            telefoon          = @telefoon,
+            mobiel            = @mobiel,
+            email             = @email,
+            geboortedatum     = @geboortedatum,
+            sterftedatum      = @sterftedatum,
+            banknummer        = @banknummer,
+            tenaamstelling    = @tenaamstelling,
+            nationaliteit     = @nationaliteit,
+            voorkeurstaal     = @voorkeurstaal,
+            opm               = @opm
+        WHERE pers_id = @pers_id
+EOT;
+        Persoon::$_Modify = new \Command( $Q, \DB::rw(), array(
+            'achternaam',       'aangetrouwdenaam', 'voorletters',
+            'voornaam',         'tussenvoegsel',    'titel',
+            'geslacht',         'adres',            'postcode',
+            'plaats',           'land',             'post',
+            'telefoon',         'mobiel',           'email',
+            'geboortedatum',    'sterftedatum',     'banknummer',
+            'tenaamstelling',   'nationaliteit',    'voorkeurstaal',
+            'opm',              'pers_id'));
+        return Persoon::$_Modify;
+    }
+    static function Modify()
+    {
+        if ( ! Persoon::$_Modify ) { return Persoon::_Modify(); }
+        return Persoon::$_Modify;
+    }
 }
 
 

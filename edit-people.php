@@ -36,6 +36,17 @@ elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
     $Ds = $Detail->execute(array('persoon'=>$_REQUEST["pers_id"]));
     print(json_encode($Ds));
 }
+elseif (( $_GET["json"] == "wijzig-persoon" ) && ( is_numeric(@$_POST["pers_id"]) ))
+{
+    $Modify = Adapters\Persoon::Modify();
+    $args = array();
+    foreach ( $Modify->mandatory_args() as $arg )
+    {
+        $args[$arg] = @$_POST[$arg];
+    }
+    $Ds = $Modify->execute(array('persoon'=>$_REQUEST["pers_id"]));
+    print(json_encode($Ds));
+}
 else
 {
     print "null";
