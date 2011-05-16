@@ -33,7 +33,7 @@ if ( $_GET["json"] == "IDs" )
 elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
 {
     $Detail = Adapters\Persoon::Detail();
-    $Ds = $Detail->execute(array('persoon'=>$_REQUEST["pers_id"]));
+    $Ds = $Detail->execute(array('pers_id'=>$_REQUEST["pers_id"]));
     print(json_encode($Ds));
 }
 elseif (( $_GET["json"] == "wijzig-persoon" ) && ( is_numeric(@$_POST["pers_id"]) ))
