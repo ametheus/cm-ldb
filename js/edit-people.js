@@ -22,7 +22,7 @@ $(function()
         Changes[pid()] = true;
         $('#EditPeople').addClass('modified');
     });
-    $('#IDNavigator input').keyup(function()
+    $('#IDNav-id').keyup(function()
     {
         select_id($('#IDNavigator input').val());
     });

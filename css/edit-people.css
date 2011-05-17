@@ -50,8 +50,11 @@
 {
     display: inline-block;
     border: 1px inset;
+    height: 18px;
+}
+#IDNav-id
+{
     width: 45px;
-    height: 20px;
 }
 
 
