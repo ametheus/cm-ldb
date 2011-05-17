@@ -42,6 +42,10 @@
     background-image: url(/img/sprite-kiwi-pack.png);
     background-clip: content-box;
 }
+#IDNavigator a:active
+{
+    border: 1px inset;
+}
 #IDNavigator input
 {
     display: inline-block;
