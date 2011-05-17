@@ -15,12 +15,16 @@ $(function()
     
     $('#IDNav-save').click(save);
     
-    $('#EditPeople input').keyup(function()
+    $('#EditPeople table input').keyup(function()
     {
         if ( ! any_changes() ) { return; }
         Details[pid()] = get_new_details();
         Changes[pid()] = true;
         $('#EditPeople').addClass('modified');
+    });
+    $('#IDNavigator input').keyup(function()
+    {
+        select_id($('#IDNavigator input').val());
     });
     
     $.ajax({
@@ -70,7 +74,6 @@ function select_id( pers_id )
             return;
         }
     }
-    select_index( IDs.length-1 );
 }
 
 function select_this()
