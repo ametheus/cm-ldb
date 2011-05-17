@@ -29,6 +29,20 @@
     border: 1px solid black;
     padding: 4px;
 }
+
+
+#IDNavigator div.separator
+{
+    display: inline-block;
+    width: 2px;
+    height: 30px;
+    border-right: 1px solid #CCCCCC;
+    margin-right: 2px;
+    overflow: hidden;
+}
+
+
+
 #IDNavigator a
 {
     display: inline-block;
@@ -46,6 +60,9 @@
 {
     border: 1px inset;
 }
+
+
+
 #IDNavigator input
 {
     display: inline-block;
