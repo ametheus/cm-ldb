@@ -32,7 +32,8 @@ function LoQ()
     <head>
         <title>Ledendatabase v3.2.0</title>
         
-        <link rel="stylesheet" href="/css/ldb.css" />
+        <link rel="stylesheet" href="/css/common.css" />
+        <link rel="stylesheet" href="/css/query-list.css" />
     </head>
     <body>
         <div id="MainQueryView">
@@ -41,7 +42,7 @@ function LoQ()
             </div>
         </div>
         <div id="Modules">
-            TODO: Modules toevoegen.
+            <a id="Mod-Bewerken" href="/bewerken"><div>Bewerken</div></a>
         </div>
     </body>
 </html>

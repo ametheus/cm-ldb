@@ -77,11 +77,19 @@ class Command
 {
     private $_text;
     private $_connection;
+    private $_mandatory;
+    private $_default;
     
-    function __construct( $text, $connection )
+    function __construct( $text, $connection, $mandatory=array(), $default=array() )
     {
         $this->_text = $text;
         $this->_connection = $connection;
+        $this->_mandatory = $mandatory;
+        $this->_default = $default;
+        
+        foreach ( $mandatory as $key )
+            if ( array_key_exists($key,$default) )
+                trigger_error("Key [$key] is mandatory, but has a default value.",E_USER_NOTICE);
     }
     
     function __get( $name )
@@ -94,7 +102,23 @@ class Command
     
     function execute( $arguments )
     {
+        foreach ( $this->_mandatory as $arg )
+        {
+            if ( ! array_key_exists($arg,$arguments) )
+            {
+                throw new Exception("Mandatory argument [$arg] missing.");
+            }
+        }
+        foreach ( $this->_default as $key=>$val )
+        {
+            if ( ! array_key_exists($key,$arguments) ) { $arguments[$key] = $val; }
+        }
         return $this->_connection->execute( $this, $arguments );
+    }
+    
+    function mandatory_args()
+    {
+        return $this->_mandatory;
     }
 }
 
@@ -109,10 +133,10 @@ class DB
         if ( Auth::check() > 0 )
         {
             DB::$_ro = new Connection(
-                "www.collegiummusicum.nl",
-                "deb7007_ldb_ro",
+                "localhost",
+                "ldb_ro",
                 "c9tdOACz",
-                "deb7007_nerdcie" );
+                "ledendatabase" );
         }
     }
     
@@ -121,10 +145,14 @@ class DB
         if ( Auth::check() > 2 )
         {
             DB::$_rw = new Connection(
-                "www.collegiummusicum.nl",
-                "deb7007_ldb_rw",
+                "localhost",
+                "ldb_rw",
                 "7SHrklIx",
-                "deb7007_nerdcie" );
+                "ledendatabase" );
+        }
+        else
+        {
+            DB::$_rw = DB::ro();
         }
     }
     

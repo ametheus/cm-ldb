@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bewerk personen</title>
+        
+        <link rel="stylesheet" href="/css/common.css" />
+        <link rel="stylesheet" href="/css/edit-people.css" />
+        <link rel="stylesheet" href="/css/humanity.css" />
+        
+        <script type="text/javascript" src="/js/jquery.js"></script>
+        <script type="text/javascript" src="/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="/js/edit-people.js"></script>
+    </head>
+    <body>
+        <div id="EditPeople">
+            <div id="IDNavigator">
+                <a id="IDNav-fist">&nbsp;</a>
+                <a id="IDNav-back">&nbsp;</a>
+                <input type="text" />
+                <a id="IDNav-next">&nbsp;</a>
+                <a id="IDNav-last">&nbsp;</a>
+                <a id="IDNav-save">&nbsp;</a>
+            </div>
+            
+            <table>
+                <tr>
+                    <td class="label"><label for="Field-Voornaam">Voornaam</label></td>
+                    <td><input type="text" id="Field-Voornaam" /></td>
+                    
+                    <td class="label"><label for="Field-Tussenvoegsel">Tussenvoegsels</label></td>
+                    <td><input type="text" id="Field-Tussenvoegsel" /></td>
+                    
+                    <td class="label"><label for="Field-Achternaam">Achternaam</label></td>
+                    <td><input type="text" id="Field-Achternaam" /></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="Field-Titel">Titel</label></td>
+                    <td><input type="text" id="Field-Titel" /></td>
+                    
+                    <td class="label"><label for="Field-Voorletters">Voorletters</label></td>
+                    <td><input type="text" id="Field-Voorletters" /></td>
+                    
+                    <td class="label"><label for="Field-Aangetrouwdenaam">Aangetrouwde naam</label></td>
+                    <td><input type="text" id="Field-Aangetrouwdenaam" /></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="Field-Geslacht">Geslacht</label></td>
+                    <td>
+                        <select id="Field-Geslacht">
+                            <option>Man</option>
+                            <option>Vrouw</option>
+                            <option>Onbekend</option>
+                        </select>
+                    </td>
+                    
+                    <td class="label"><label for="Field-Email">E-mailadres</label></td>
+                    <td><input type="email" id="Field-Email" /></td>
+                    
+                    <td class="label"><label for="Field-Telefoon">Telefoon vast</label></td>
+                    <td><input type="text" id="Field-Telefoon" /></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="Field-Adres">Straat/huisnummer</label></td>
+                    <td colspan="3"><input type="text" id="Field-Adres" /></td>
+                    
+                    <td class="label"><label for="Field-Mobiel">Telefoon mobiel</label></td>
+                    <td><input type="text" id="Field-Mobiel" /></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="Field-Postcode">Postcode</label></td>
+                    <td><input type="text" id="Field-Postcode" /></td>
+                    
+                    <td class="label"><label for="Field-Plaats">Woonplaats</label></td>
+                    <td><input type="text" id="Field-Plaats" /></td>
+                    
+                    <td class="label"><label for="Field-Land">Land</label></td>
+                    <td><input type="text" id="Field-Land" /></td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td><input type="checkbox" id="Field-Post" /><label for="Field-Post">Stelt prijs op post</label></td>
+                    
+                    <td class="label"><label for="Field-Geboortedatum">Geboortedatum</label></td>
+                    <td><input type="date" id="Field-Geboortedatum" /></td>
+                    
+                    <td class="label"><label for="Field-Sterftedatum">Sterftedatum</label></td>
+                    <td><input type="date" id="Field-Sterftedatum" /></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="Field-Banknummer">Banknummer</label></td>
+                    <td><input type="text" id="Field-Banknummer" /></td>
+                    
+                    <td class="label"><label for="Field-Tenaamstelling">Tenaamstelling</label></td>
+                    <td><input type="text" id="Field-Tenaamstelling" /></td>
+                    
+                    <td>&nbsp;</td><td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="Field-Nationaliteit">Nationaliteit</label></td>
+                    <td><input type="text" id="Field-Nationaliteit" /></td>
+                    
+                    <td class="label"><label for="Field-Voorkeurstaal">Voorkeurstaal</label></td>
+                    <td><input type="text" id="Field-Voorkeurstaal" /></td>
+                    
+                    <td>&nbsp;</td><td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Studies</td>
+                    <td colspan="2">Secties/commissies</td>
+                    <td colspan="2">Relaties</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
