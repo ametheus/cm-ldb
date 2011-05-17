@@ -16,7 +16,7 @@ function LoQ()
         print( I(4)."<h3>$cat</h3>\n" );
         foreach ( $qs as $q )
         {
-            print( I(4)."<a href=\"/query/{$q->file}\">\n" );
+            print( I(4)."<a href=\"/query/{$q->file}\" title=\"{$q->Description}\">\n" );
             print( I(5)."<span class=\"title\">{$q->Title}</span>\n" );
             print( I(5)."<span class=\"description\">{$q->Description}</span>\n" );
             print( I(5)."<span class=\"author\">{$q->Author}</span>\n" );
