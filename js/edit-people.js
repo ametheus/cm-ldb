@@ -24,7 +24,7 @@ $(function()
     });
     $('#IDNav-id').keyup(function()
     {
-        select_id($('#IDNavigator input').val());
+        select_id($('#IDNav-id').val());
     });
     
     $.ajax({
@@ -79,7 +79,7 @@ function select_id( pers_id )
 function select_this()
 {
     location.hash = pid();
-    $('#IDNavigator input').val(pid());
+    $('#IDNav-id').val(pid());
     
     if ( pid() in Details )
     {

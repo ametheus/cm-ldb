@@ -29,6 +29,10 @@
     border: 1px solid black;
     padding: 4px;
 }
+#IDNavigator *
+{
+    vertical-align: middle;
+}
 
 
 #IDNavigator div.separator
@@ -79,6 +83,7 @@
 #IDNav-back { background-position: -192px -160px; }
 #IDNav-next { background-position:  -96px  -64px; }
 #IDNav-last { background-position: -128px -128px; }
+#IDNav-search { background-position:  -64px -160px; }
 #IDNav-save { background-position:  -32px -192px; }
 
 
