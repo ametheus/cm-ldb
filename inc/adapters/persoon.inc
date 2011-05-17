@@ -30,9 +30,9 @@ EOT;
     {
         $Q = <<<EOT
         SELECT * FROM persoon
-        WHERE ABS( pers_id - @pers_id ) < 5
+        WHERE ABS( pers_id - @pers_id ) < @dist
 EOT;
-        Persoon::$_Detail = new \Command( $Q, \DB::ro(), array('pers_id') );
+        Persoon::$_Detail = new \Command( $Q, \DB::ro(), array('pers_id'), array('dist'=>5) );
         return Persoon::$_Detail;
     }
     static function Detail()

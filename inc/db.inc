@@ -78,12 +78,18 @@ class Command
     private $_text;
     private $_connection;
     private $_mandatory;
+    private $_default;
     
-    function __construct( $text, $connection, $mandatory=array() )
+    function __construct( $text, $connection, $mandatory=array(), $default=array() )
     {
         $this->_text = $text;
         $this->_connection = $connection;
         $this->_mandatory = $mandatory;
+        $this->_default = $default;
+        
+        foreach ( $mandatory as $key )
+            if ( array_key_exists($key,$default) )
+                trigger_error("Key [$key] is mandatory, but has a default value.",E_USER_NOTICE);
     }
     
     function __get( $name )
@@ -102,6 +108,10 @@ class Command
             {
                 throw new Exception("Mandatory argument [$arg] missing.");
             }
+        }
+        foreach ( $this->_default as $key=>$val )
+        {
+            if ( ! array_key_exists($key,$arguments) ) { $arguments[$key] = $val; }
         }
         return $this->_connection->execute( $this, $arguments );
     }
