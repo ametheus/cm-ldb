@@ -30,7 +30,7 @@ function LoQ()
 ?><!DOCTYPE html>
 <html>
     <head>
-        <title>Ledendatabase v3.2.0</title>
+        <title>Ledendatabase v3.2.1</title>
         
         <link rel="stylesheet" href="/css/common.css" />
         <link rel="stylesheet" href="/css/query-list.css" />
