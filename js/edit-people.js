@@ -15,8 +15,9 @@ $(function()
     
     $('#IDNav-save').click(save);
     
-    $('#EditPeople input').change(function()
+    $('#EditPeople input').keyup(function()
     {
+        if ( ! any_changes() ) { return; }
         Details[pid()] = get_new_details();
         Changes[pid()] = true;
         $('#EditPeople').addClass('modified');
@@ -184,6 +185,18 @@ function get_new_details()
     d['opm']                = $('#Field-Opm').val();
     
     return d;
+}
+
+
+function any_changes()
+{
+    var ould = Details[pid()];
+    var nehw = get_new_details();
+    for ( i in nehw )
+    {
+        if ( ould[i] != nehw[i] ) { return true; }
+    }
+    return false;
 }
 
 
