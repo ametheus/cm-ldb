@@ -110,6 +110,39 @@ EOT;
         if ( !Persoon::$_Search ) { return Persoon::_Search(); }
         return Persoon::$_Search;
     }
+    
+    
+    private static $_Insert = false;
+    private static function _Insert()
+    {
+        $Q = <<<EOT
+        INSERT INTO persoon ( Achternaam ) VALUES ( 'Nieuw persoon' );
+EOT;
+        Persoon::$_Insert = new \Command( $Q, \DB::rw() );
+        return Persoon::$_Insert;
+    }
+    static function Insert()
+    {
+        if ( !Persoon::$_Insert ) { return Persoon::_Insert(); }
+        return Persoon::$_Insert;
+    }
+    
+    
+    private static $_Delete = false;
+    private static function _Delete()
+    {
+        $Q = <<<EOT
+        DELETE FROM persoon WHERE pers_id = @pers_id
+            AND @weetjehetzeker = 'ja'
+EOT;
+        Persoon::$_Delete = new \Command( $Q, \DB::rw(), array('pers_id'), array('weetjehetzeker','neen'));
+        return Persoon::$_Delete;
+    }
+    private function Delete()
+    {
+        if ( !Persoon::$_Delete ) { return Persoon::_Delete(); }
+        return Persoon::$_Delete;
+    }
 }
 
 
