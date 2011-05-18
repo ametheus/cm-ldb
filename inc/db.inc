@@ -57,6 +57,11 @@ class Connection
         }
     }
     
+    function insert_id()
+    {
+        return mysql_insert_id( $this->_dbcon );
+    }
+    
     private function exec( $text )
     {
         $rs = mysql_query( $text, $this->_dbcon );
@@ -101,7 +106,7 @@ class Command
         }
     }
     
-    function execute( $arguments )
+    function execute( $arguments=array() )
     {
         foreach ( $this->_mandatory as $arg )
         {
