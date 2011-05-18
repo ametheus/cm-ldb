@@ -87,6 +87,29 @@ EOT;
         if ( ! Persoon::$_Modify ) { return Persoon::_Modify(); }
         return Persoon::$_Modify;
     }
+    
+    
+    private static $_Search = false;
+    private static function _Search()
+    {
+        $Q = <<<EOT
+        SELECT pers_id FROM persoon
+        WHERE
+            achternaam LIKE concat('%',@term,'%') OR
+            voornaam LIKE   concat('%',@term,'%') OR
+            adres LIKE      concat('%',@term,'%') OR
+            email LIKE      concat('%',@term,'%') OR
+            banknummer LIKE concat('%',@term,'%') 
+        ORDER BY pers_id DESC
+EOT;
+        Persoon::$_Search = new \Command( $Q, \DB::ro(), array('term') );
+        return Persoon::$_Search;
+    }
+    static function Search()
+    {
+        if ( !Persoon::$_Search ) { return Persoon::_Search(); }
+        return Persoon::$_Search;
+    }
 }
 
 

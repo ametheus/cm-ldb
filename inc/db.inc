@@ -25,6 +25,7 @@ class Connection
     {
         $this->_dbcon = mysql_connect( $host, $username, $password );
         mysql_select_db( $database, $this->_dbcon );
+        mysql_set_charset('utf8',$this->_dbcon); 
     }
     
     function execute( Command $query, $arguments )
