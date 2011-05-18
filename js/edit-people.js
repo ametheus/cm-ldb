@@ -4,6 +4,10 @@ var IDs = null;
 var Changes = {};
 var Details = {};
 
+var searchTerm = '';
+var searchIndex = 0;
+var searches = {};
+
 $(function()
 {
     $('#EditPeople').addClass('loading');
@@ -12,6 +16,9 @@ $(function()
     $('#IDNav-back').click(function(){select_index(selectedIndex-1);});
     $('#IDNav-next').click(function(){select_index(selectedIndex+1);});
     $('#IDNav-last').click(function(){select_index(IDs.length);});
+    
+    $('#IDNav-searchbox').change(search);
+    $('#IDNav-search').click(search);
     
     $('#IDNav-save').click(save);
     
@@ -22,9 +29,9 @@ $(function()
         Changes[pid()] = true;
         $('#EditPeople').addClass('modified');
     });
-    $('#IDNavigator input').keyup(function()
+    $('#IDNav-id').keyup(function()
     {
-        select_id($('#IDNavigator input').val());
+        select_id($('#IDNav-id').val());
     });
     
     $.ajax({
@@ -79,7 +86,7 @@ function select_id( pers_id )
 function select_this()
 {
     location.hash = pid();
-    $('#IDNavigator input').val(pid());
+    $('#IDNav-id').val(pid());
     
     if ( pid() in Details )
     {
@@ -109,7 +116,6 @@ function load_details( pers_id )
         data: {'pers_id': pers_id},
         success: function(data)
         {
-            //var pid;
             var update = !( pid() in Details );
             for ( var i = 0; i < data.length; i++ )
             {
@@ -223,5 +229,41 @@ function save()
             dataType: 'html'
         });
     }
+}
+
+
+function search()
+{
+    var nst = $('#IDNav-searchbox').val();
+    if ( nst == searchTerm ) { search_next(); return; }
+    searchTerm = nst;
+    search_this();
+}
+function search_next()
+{
+    var s = searches[searchTerm];
+    if ( !s || ( s.length == 0 )) { return; }
+    searchIndex++;
+    if ( searchIndex >= s.length ) { searchIndex = 0; }
+    
+    select_id( s[searchIndex] );
+}
+function search_this()
+{
+    var st = searchTerm;
+    //alert('Searching for ['+st+'].');
+    $.ajax({
+        type: 'POST',
+        url: '/bewerken/json/zoek',
+        data: {'term': st},
+        success: function(data)
+        {
+            //alert( 'Data for ['+st+']: '+data )
+            searches[st] = data;
+            searchIndex = -1;
+            search_next();
+        },
+        dataType: 'json'
+    });
 }
 

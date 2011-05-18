@@ -16,25 +16,36 @@ if ( ! isset($_GET["json"]) )
 }
 
 
-header( "Content-type: text/plain" );
-
-if ( $_GET["json"] == "IDs" )
+function print_pers_ids( $array )
 {
-    $PA = Adapters\Persoon::IDs();
-    $IDs = $PA->execute(array());
     print( "[" );
-    foreach ( $IDs as $i=>$r )
+    foreach ( $array as $i=>$r )
     {
         if ( $i ) { print(","); }
         print $r["pers_id"];
     }
     print( "]" );
 }
+
+
+header( "Content-type: text/plain" );
+
+if ( $_GET["json"] == "IDs" )
+{
+    $PA = Adapters\Persoon::IDs();
+    print_pers_ids( $PA->execute(array()) );
+}
 elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
 {
     $Detail = Adapters\Persoon::Detail();
     $Ds = $Detail->execute(array('pers_id'=>$_REQUEST["pers_id"]));
     print(json_encode($Ds));
+}
+elseif (( $_GET["json"] == "zoek" ) && ( isset($_REQUEST["term"]) ))
+{
+    $Search = Adapters\Persoon::Search();
+    $IDs = $Search->execute(array('term'=>$_REQUEST["term"]));
+    print_pers_ids( $IDs );
 }
 elseif (( $_GET["json"] == "wijzig" ) && ( is_numeric(@$_POST["pers_id"]) ))
 {
