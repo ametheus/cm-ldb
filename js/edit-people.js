@@ -234,7 +234,7 @@ function save()
             success: function(data)
             {
                 delete Changes[i];
-                alert(data);
+                //alert(data);
                 if ( pid() == i )
                 {
                     $('#EditPeople').removeClass('modified');
@@ -257,11 +257,11 @@ function insert_person()
         success: function(data)
         {
             if ( ! data ) { alert("Invoegen ging mis. Sorry."); return; }
-            alert(data);
+            //alert(data);
             IDs[IDs.length] = data;
             select_index(IDs.length-1);
         },
-        dataType: 'html'
+        dataType: 'json'
     });
 }
 function delete_person()
