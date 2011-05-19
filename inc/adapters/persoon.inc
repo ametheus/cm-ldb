@@ -138,7 +138,7 @@ EOT;
         Persoon::$_Delete = new \Command( $Q, \DB::rw(), array('pers_id'), array('weetjehetzeker','neen'));
         return Persoon::$_Delete;
     }
-    private function Delete()
+    static function Delete()
     {
         if ( !Persoon::$_Delete ) { return Persoon::_Delete(); }
         return Persoon::$_Delete;
