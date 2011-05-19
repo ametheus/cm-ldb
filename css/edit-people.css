@@ -53,11 +53,12 @@
     
     border: 1px outset;
     
-    width: 28px;
-    height: 28px;
-    padding: 4px;
+    width: 32px;
+    height: 32px;
+    padding: 2px;
     
     background-image: url(/img/sprite-kiwi-pack.png);
+    background-origin: content-box;
     background-clip: content-box;
 }
 #IDNavigator a:active
@@ -84,6 +85,8 @@
 #IDNav-next { background-position:  -96px  -64px; }
 #IDNav-last { background-position: -128px -128px; }
 #IDNav-search { background-position:  -64px -160px; }
+#IDNav-insert { background-position: -128px  -96px; }
+#IDNav-delete { background-position:  -32px  -64px; }
 #IDNav-save { background-position:  -32px -192px; }
 
 

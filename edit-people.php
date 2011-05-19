@@ -58,6 +58,18 @@ elseif (( $_GET["json"] == "wijzig" ) && ( is_numeric(@$_POST["pers_id"]) ))
     $Ds = $Modify->execute($args);
     print( is_array($Ds) ? 'true' : 'false' );
 }
+elseif (( $_GET["json"] == "invoegen" ) && ( isset($_POST["failsafe"]) ))
+{
+    $I = Adapters\Persoon::Insert();
+    $I->execute();
+    print DB::rw()->insert_id();
+}
+elseif ( $_GET["json"] == "verwijderen" )
+{
+    $D = Adapters\Persoon::Delete();
+    $ar = $D->execute(array('pers_id'=>@$_POST['pers_id'],'weetjehetzeker'=>@$_POST['weetjehetzeker']));
+    print ( is_array($ar) ? 'true' : 'false' );
+}
 else
 {
     print "Onbekend JSON-object. Sorry.";
