@@ -20,6 +20,9 @@ $(function()
     $('#IDNav-searchbox').change(search);
     $('#IDNav-search').click(search);
     
+    $('#IDNav-insert').click(insert_person);
+    $('#IDNav-delete').click(delete_person);
+    
     $('#IDNav-save').click(save);
     
     $('#EditPeople table input').keyup(function()
@@ -33,6 +36,16 @@ $(function()
     {
         select_id($('#IDNav-id').val());
     });
+    
+    reload();
+});
+
+
+
+function reload()
+{
+    $('#EditPeople').addClass('loading');
+    IDs = null;
     
     $.ajax({
         url: '/bewerken/json/IDs',
@@ -50,7 +63,8 @@ $(function()
             }
         }
     });
-})
+}
+
 
 
 function pid()
@@ -220,7 +234,7 @@ function save()
             success: function(data)
             {
                 delete Changes[i];
-                alert(data);
+                //alert(data);
                 if ( pid() == i )
                 {
                     $('#EditPeople').removeClass('modified');
@@ -230,6 +244,50 @@ function save()
         });
     }
 }
+
+
+
+function insert_person()
+{
+    if ( !IDs ) { return; }
+    $.ajax({
+        type: 'POST',
+        url: '/bewerken/json/invoegen',
+        data: {'failsafe': 'ja'},
+        success: function(data)
+        {
+            if ( ! data ) { alert("Invoegen ging mis. Sorry."); return; }
+            //alert(data);
+            IDs[IDs.length] = data;
+            select_index(IDs.length-1);
+        },
+        dataType: 'json'
+    });
+}
+function delete_person()
+{
+    if ( !confirm('Weet je het zeker?') ) { return; }
+    if ( !confirm('Het verwijderen van personen is doorgaans niet de bedoeling. \n' + 
+                  'Waarschijnlijk volstaat het om deze persoon uit te schrijven bij alle groepen.\n' +
+                  'Weet je echt zeker dat je deze persoon COMPLEET WILT WISSEN?') ) { return; }
+    if ( !confirm('Ik vraag het nog één keer. \n'+
+                  'Weet je het echt echt zeker?') ) { return; }
+    $.ajax({
+        type: 'POST',
+        url: '/bewerken/json/verwijderen',
+        data: {'pers_id': pid(), 'weetjehetzeker': 'ja'},
+        success: function(data)
+        {
+            if (data)
+            {
+                location.hash = '';
+                reload();
+            }
+        },
+        dataType: 'json'
+    });
+}
+
 
 
 function search()
