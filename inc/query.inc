@@ -18,6 +18,7 @@ class Query
     private $_file = "";
     
     private $_texts;
+    private $_parameters;
     
     private $_Title = 'Naamloze query';
     private $_Description = 'Een query zonder naam. Geen idee wat hij doet.';
@@ -26,7 +27,7 @@ class Query
     
     function execute()
     {
-        $comm = new Command( $this->_texts, DB::ro() );
+        $comm = new Command( $this->_texts, DB::ro(), array_keys($this->_parameters) );
         
         #TODO: Iets met parameters.
         return $comm->execute(array());
@@ -59,10 +60,17 @@ class Query
     }
     private function load_parameters_from_xml( $parameters_node )
     {
+        $this->_parameters = array();
         if ( ! $parameters_node ) { return; }
-        if ( $parameters_node->childNodes->length > 0 )
+        foreach ( $parameters_node->childNodes as $param )
         {
-            throw new Exception( "Parameters zijn nog niet af." );
+            if ( ! is_a( $param, 'DOMElement' ) ) { continue; }
+            
+            $paramtype = AP::first_child( $param );
+            if ( ! $paramtype ) { throw new Exception( "Parameter ".$param->getAttribute('name')." heeft geen type." ); }
+            $P = array( 'type' => $paramtype->nodeName );
+            
+            $this->_parameters[$param->getAttribute('Name')] = $P;
         }
     }
     private function load_body_from_xml( $body_node )
@@ -94,7 +102,10 @@ class Query
                 return $this->_Category;
             case "file":
                 return $this->_file;
+            case "Parameters":
+                return $this->_parameters;
         }
+        throw new Exception( "Onbekend lid [{$name}]." );
     }
     
     
@@ -184,6 +195,15 @@ class AP
             }
         }
         return $rv->item(0);
+    }
+    static function first_child( DOMElement $elt )
+    {
+        foreach ( $elt->childNodes as $cn )
+        {
+            if ( ! is_a( $cn, 'DOMElement' ) ) { continue; }
+            return $cn;
+        }
+        return null;
     }
 }
 
