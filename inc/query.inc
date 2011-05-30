@@ -1,6 +1,7 @@
 <?php
 
 require_once( "inc/db.inc" );
+require_once( "inc/parameters.inc" );
 
 class Query
 {
@@ -29,8 +30,8 @@ class Query
     {
         $comm = new Command( $this->_texts, DB::ro(), array_keys($this->_parameters) );
         
-        #TODO: Iets met parameters.
-        return $comm->execute(array());
+        $pv = process_parameters( $this );
+        return $comm->execute( $pv );
     }
     
     
