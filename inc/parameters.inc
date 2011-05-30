@@ -38,12 +38,37 @@ function process_parameters( Query $Q )
     if ( count($rv) == count($params) ) { return $rv; }
     
     # Zoniet, maak een mooi formuliertje voor elke parameter.
-    header( "content-type: text/plain" );
+    ?><!DOCTYPE html>
+<html>
+    <head>
+        <title><?=$Q->Title?></title>
+        
+        <link type="text/css" href="/css/common.css" rel="stylesheet" />	
+        <link type="text/css" href="/css/humanity/jquery-ui-1.8.12.custom.css" rel="stylesheet" />	
+		<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
+<?php
+?>
+    </head>
+    <body>
+        <h1><?=$Q->Title?></h1>
+
+<?php
     foreach ( $params as $name=>$paramspec )
     {
-        print( "Found parameter [$name] of type [{$paramspec['type']}], and I have no idea what to do with it.\n" );
+        switch ( $paramspec['type'] )
+        {
+            default:
+                print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
+                       "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
+                break;
+        }
     }
+?>
+    </body>
+</html><?php
     exit;
+    
 }
 
 
