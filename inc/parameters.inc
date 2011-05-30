@@ -63,6 +63,7 @@ class QueryParameters
     </head>
     <body>
         <h1><?=$Q->Title?></h1>
+        <form method="get" action="<?=$_SERVER["REQUEST_URI"]?>"
 
 <?php
         foreach ( $params as $name=>$paramspec )
@@ -79,6 +80,10 @@ class QueryParameters
             }
         }
 ?>
+            <p>
+                <input type="submit" value="Query uitvoeren" />
+            </p>
+        </form>
     </body>
 </html><?php
         exit;
