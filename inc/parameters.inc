@@ -2,12 +2,21 @@
 
 
 require_once( 'inc/db.inc' );
+require_once( 'inc/parameters/base.inc' );
 
 class QueryParameters
 {
     static function protected_param_names()
     {
         return array('query');
+    }
+    
+    
+    private static $_types = array();
+    static function add_type( $name, Parameters\Base $pc )
+    {
+        # TODO: Iets met duplicaten.
+        QueryParameters::$_types[ $name ] = $pc;
     }
     
     
@@ -49,6 +58,7 @@ class QueryParameters
 		<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
 		<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
 <?php
+        include('inc/parameters/string.inc');
 ?>
     </head>
     <body>
@@ -57,12 +67,15 @@ class QueryParameters
 <?php
         foreach ( $params as $name=>$paramspec )
         {
-            switch ( $paramspec['type'] )
+            $handler = @QueryParameters::$_types[$paramspec['type']];
+            if ( $handler )
             {
-                default:
-                    print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
-                           "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
-                    break;
+                $handler->form( $name, $paramspec, @$rv[$name] );
+            }
+            else
+            {
+                print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
+                       "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
             }
         }
 ?>
