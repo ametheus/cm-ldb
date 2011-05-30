@@ -3,42 +3,43 @@
 
 require_once( 'inc/db.inc' );
 
-
-function protected_param_names()
+class QueryParameters
 {
-    return array('query');
-}
-
-
-
-function process_parameters( Query $Q )
-{
-    $params = $Q->Parameters;
-    $ppn = protected_param_names();
-    
-    if ( count($params) == 0 ) { return array(); }
-    
-    $rv = array();
-    
-    foreach ( $params as $name=>$paramspec )
+    static function protected_param_names()
     {
-        if ( in_array($name,$ppn) )
-        {
-            throw new Exception( "Parameter name [{$name}] is reserved.  Query: " . $Q->file );
-        }
-        
-        if ( array_key_exists($name, $_REQUEST) )
-        {
-            $rv[$name] = $_REQUEST[$name];
-            continue;
-        }
+        return array('query');
     }
     
-    # Controleer of er genoeg informatie is
-    if ( count($rv) == count($params) ) { return $rv; }
     
-    # Zoniet, maak een mooi formuliertje voor elke parameter.
-    ?><!DOCTYPE html>
+    
+    static function process( Query $Q )
+    {
+        $params = $Q->Parameters;
+        $ppn = QueryParameters::protected_param_names();
+        
+        if ( count($params) == 0 ) { return array(); }
+        
+        $rv = array();
+        
+        foreach ( $params as $name=>$paramspec )
+        {
+            if ( in_array($name,$ppn) )
+            {
+                throw new Exception( "Parameter name [{$name}] is reserved.  Query: " . $Q->file );
+            }
+            
+            if ( array_key_exists($name, $_REQUEST) )
+            {
+                $rv[$name] = $_REQUEST[$name];
+                continue;
+            }
+        }
+        
+        # Controleer of er genoeg informatie is
+        if ( count($rv) == count($params) ) { return $rv; }
+        
+        # Zoniet, maak een mooi formuliertje voor elke parameter.
+        ?><!DOCTYPE html>
 <html>
     <head>
         <title><?=$Q->Title?></title>
@@ -54,21 +55,21 @@ function process_parameters( Query $Q )
         <h1><?=$Q->Title?></h1>
 
 <?php
-    foreach ( $params as $name=>$paramspec )
-    {
-        switch ( $paramspec['type'] )
+        foreach ( $params as $name=>$paramspec )
         {
-            default:
-                print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
-                       "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
-                break;
+            switch ( $paramspec['type'] )
+            {
+                default:
+                    print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
+                           "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
+                    break;
+            }
         }
-    }
 ?>
     </body>
 </html><?php
-    exit;
-    
+        exit;
+        
+    }
 }
-
 

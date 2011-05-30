@@ -30,7 +30,7 @@ class Query
     {
         $comm = new Command( $this->_texts, DB::ro(), array_keys($this->_parameters) );
         
-        $pv = process_parameters( $this );
+        $pv = QueryParameters::process( $this );
         return $comm->execute( $pv );
     }
     
