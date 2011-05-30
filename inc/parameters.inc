@@ -59,6 +59,7 @@ class QueryParameters
 		<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
 <?php
         include('inc/parameters/string.inc');
+        include('inc/parameters/integer.inc');
 ?>
     </head>
     <body>
