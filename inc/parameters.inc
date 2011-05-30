@@ -60,6 +60,7 @@ class QueryParameters
 <?php
         include('inc/parameters/string.inc');
         include('inc/parameters/integer.inc');
+        include('inc/parameters/datetime.inc');
 ?>
     </head>
     <body>
