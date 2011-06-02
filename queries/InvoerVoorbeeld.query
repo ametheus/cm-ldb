@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Voorbeeld invoeren</Title>
+        <Description>Laat zien hoe de parameters bij queries werken.</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+    </Header>
+    <Parameters>
+        <Parameter Name="tekst" Title="Woord" Description="Voer een woord in. Of meerdere.">
+            <String>Standaardtekst</String>
+        </Parameter>
+        <Parameter Name="getal" Title="Getal" Description="Voer een getal in tussen de 1 en de 10.">
+            <Integer Min="1" Max="10">7</Integer>
+        </Parameter>
+        <Parameter Name="datum" Title="Datum" Description="Voer een datum in.">
+            <DateTime>2008-01-01T00:00:00</DateTime>
+        </Parameter><!---->
+        <Parameter Name="pick" Title="Kies iets" Description="Kies iets uit deze lijst">
+            <Pick multiple="false">
+                <Subquery><![CDATA[select 1,'a' union select 2,'r' union select 3,'z']]></Subquery>
+            </Pick>
+        </Parameter>
+
+    </Parameters>
+    <Body>
+        <Text Name="Tekst">SELECT @tekst</Text>
+        <Text Name="Getal"> SELECT @getal </Text>
+        <Text Name="Datum"> SELECT @datum </Text>
+        <Text Name="Pick"> SELECT @pick </Text>
+    </Body>
+</Query>

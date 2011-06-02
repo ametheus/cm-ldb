@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://www.collegiummusicum.nl/nerdcie/CMQuery.xsd">
+    <Header>
+        <Title>Koorleden</Title>
+        <Description>Een lijst namen en telefoonnummers van alle koorleden.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+        <Category>Ledenlijsten</Category>
+    </Header>
+    <Body>
+        <Text Name="Sopranen">
+            <![CDATA[
+SELECT
+    Voornaam,
+    Tussenvoegsel,
+    Achternaam,
+    Mobiel
+FROM persoon
+WHERE ( 
+    SELECT Count(1) FROM lidVan
+    WHERE lidVan.pers_id = persoon.pers_id
+        AND van <= now()
+        AND ( tot IS NULL OR tot > NOW() )
+        AND groep_id IN ( 1001, 1002 )
+) > 0
+ORDER BY Voornaam, Achternaam
+]]>
+        </Text>
+        <Text Name="Alten">
+            <![CDATA[
+SELECT
+    Voornaam,
+    Tussenvoegsel,
+    Achternaam,
+    Mobiel
+FROM persoon
+WHERE ( 
+    SELECT Count(1) FROM lidVan
+    WHERE lidVan.pers_id = persoon.pers_id
+        AND van <= now()
+        AND ( tot IS NULL OR tot > NOW() )
+        AND groep_id IN ( 1003, 1004 )
+) > 0
+ORDER BY Voornaam, Achternaam
+]]>
+        </Text>
+        <Text Name="Tenoren">
+            <![CDATA[
+SELECT
+    Voornaam,
+    Tussenvoegsel,
+    Achternaam,
+    Mobiel
+FROM persoon
+WHERE ( 
+    SELECT Count(1) FROM lidVan
+    WHERE lidVan.pers_id = persoon.pers_id
+        AND van <= now()
+        AND ( tot IS NULL OR tot > NOW() )
+        AND groep_id IN ( 1005, 1006 )
+) > 0
+ORDER BY Voornaam, Achternaam
+]]>
+        </Text>
+        <Text Name="Bassen">
+            <![CDATA[
+SELECT
+    Voornaam,
+    Tussenvoegsel,
+    Achternaam,
+    Mobiel
+FROM persoon
+WHERE ( 
+    SELECT Count(1) FROM lidVan
+    WHERE lidVan.pers_id = persoon.pers_id
+        AND van <= now()
+        AND ( tot IS NULL OR tot > NOW() )
+        AND groep_id IN ( 1007, 1008 )
+) > 0
+ORDER BY Voornaam, Achternaam
+]]>
+        </Text>
+    </Body>
+</Query>

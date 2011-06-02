@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Gmail Export</Title>
+        <Description>Alle huidige en oudleden, voor in het adresboek van de Gmail.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+        <Category>Ledenlijsten</Category>
+    </Header>
+    <Parameters>
+    </Parameters>
+    <Body>
+        <Text Name="Iedereen"><![CDATA[
+SELECT
+    CONCAT( Voornaam, ' ', CASE Tussenvoegsel WHEN '' then '' else CONCAT( Tussenvoegsel, ' ' ) END, Achternaam ) AS `Name`,
+    voornaam as `Given Name`,
+    tussenvoegsel as `Additional Name`,
+    achternaam as `Family Name`,
+    '' as `Yomi Name`,
+    '' as `Given Name Yomi`,
+    '' as `Additional Name Yomi`,
+    '' as `Family Name Yomi`,
+    case titel when '' then CASE geslacht when 'man' then 'dhr.' when 'vrouw' then 'mw.' else '' end else titel end as `Name Prefix`,
+    '' as `Name Suffix`,
+    voorletters as `Initials`,
+    '' as `Nickname`,
+    '' as `Short Name`,
+    aangetrouwdenaam as `Maiden Name`,
+    cast( DATE(geboortedatum) AS char ) as `Birthday`,
+    CASE geslacht when 'man' then 'M' when 'vrouw' then 'F' else '' end as `Gender`,
+    concat( plaats, ', ', land ) as `Location`,
+    '' as `Billing Information`,
+    '' as `Directory Server`,
+    '' as `Mileage`,
+    '' as `Occupation`,
+    '' as `Hobby`,
+    '' as `Sensitivity`,
+    '' as `Priority`,
+    '' as `Subject`,
+    CONCAT( 'Lid van ', cast( DATE(lidVan.van) as char ), ' tot ', IFNULL(cast( DATE(lidVan.tot) as char ),'nu') ) as `Notes`,
+    IF ( lidVan.tot IS NULL, 'Leden ::: * My Contacts', 'Oud-leden' ) as `Group Membership`,
+    '* Home' as `E-mail 1 - Type`,
+    email as `E-mail 1 - Value`,
+    '' as `E-mail 2 - Type`,
+    '' as `E-mail 2 - Value`,
+    '' as `E-mail 3 - Type`,
+    '' as `E-mail 3 - Value`,
+    '' as `IM 1 - Type`,
+    '' as `IM 1 - Service`,
+    '' as `IM 1 - Value`,
+    '' as `Phone 1 - Type`,
+    '' as `Phone 1 - Value`,
+    '' as `Phone 2 - Type`,
+    '' as `Phone 2 - Value`,
+    '' as `Phone 3 - Type`,
+    '' as `Phone 3 - Value`,
+    '* Home' as `Address 1 - Type`,
+    '' as `Address 1 - Formatted`,
+    adres as `Address 1 - Street`,
+    `plaats` as `Address 1 - City`,
+    '' as `Address 1 - PO Box`,
+    '' as `Address 1 - Region`,
+    postcode as `Address 1 - Postal Code`,
+    `land` as `Address 1 - Country`,
+    '' as `Address 1 - Extended Address`,
+    '' as `Address 2 - Type`,
+    '' as `Address 2 - Formatted`,
+    '' as `Address 2 - Street`,
+    '' as `Address 2 - City`,
+    '' as `Address 2 - PO Box`,
+    '' as `Address 2 - Region`,
+    '' as `Address 2 - Postal Code`,
+    '' as `Address 2 - Country`,
+    '' as `Address 2 - Extended Address`,
+    '' as `Organization 1 - Type`,
+    '' as `Organization 1 - Name`,
+    '' as `Organization 1 - Yomi Name`,
+    '' as `Organization 1 - Title`,
+    '' as `Organization 1 - Department`,
+    '' as `Organization 1 - Symbol`,
+    '' as `Organization 1 - Location`,
+    '' as `Organization 1 - Job Description`
+FROM persoon
+    JOIN lidVan USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE groep.klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
+    AND lidVan.van IS NOT NULL
+GROUP BY pers_id
+        ]]></Text>
+    </Body>
+</Query>

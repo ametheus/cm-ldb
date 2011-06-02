@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://www.collegiummusicum.nl/nerdcie/CMQuery.xsd">
+    <Header>
+        <Title>Externen</Title>
+        <Description>Geeft een lijst met adressen van externen.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+    </Header>
+    <Body>
+        <Text Name="Iedereen"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 100
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Concertuitnodiging"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 103
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Bestuurswissel"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 101
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Jaarverslag"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 102
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+    </Body>
+</Query>

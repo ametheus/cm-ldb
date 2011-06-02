@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Lid-aan sinds ...</Title>
+        <Description>Laat een lijstje zien van iedereen die op een gegeven datum geen lid was, en nu wel.</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+    </Header>
+    <Parameters>
+        <Parameter Name="datum" Title="Begindatum" Description="Geef een begindatum op.">
+            <DateTime>2009-07-01T00:00:00</DateTime>
+        </Parameter><!---->
+    </Parameters>
+    <Body>
+        <Text Name="Lid-aan"><![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`
+FROM persoon
+WHERE
+  ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
+      AND van <= @datum
+      AND ( tot IS NULL OR tot > @datum )
+    ) = 0
+
+  AND ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ) > 0
+
+ORDER BY Achternaam, Voornaam
+        ]]></Text><!---->
+    </Body>
+</Query>

@@ -1,0 +1,105 @@
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Maillijst leden</Title>
+        <Description>Geeft een maillijst van alle huidige leden.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+        <Category>Ledenlijsten</Category>
+    </Header>
+    <Parameters>
+    </Parameters>
+    <Body>
+        <Text Name="Iedereen">
+            <![CDATA[
+
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`,
+  `email`
+FROM persoon
+WHERE
+  ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ) > 0
+ORDER BY Achternaam, Voornaam
+        ]]>
+        </Text>
+        <!---->
+        <Text Name="Orkest">
+            <![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`,
+  `email`
+FROM persoon
+WHERE
+  ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'orkest' )
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ) > 0
+ORDER BY Achternaam, Voornaam
+        ]]>
+        </Text>
+        <!---->
+        <Text Name="Grootkoor">
+            <![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`,
+  `email`
+FROM persoon
+WHERE
+  ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'grootkoor' )
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ) > 0
+ORDER BY Achternaam, Voornaam
+        ]]>
+        </Text>
+        <!---->
+        <Text Name="Kamerkoor">
+            <![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`,
+  `email`
+FROM persoon
+WHERE
+  ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'kamerkoor' )
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ) > 0
+ORDER BY Achternaam, Voornaam
+        ]]>
+        </Text>
+        <!---->
+    </Body>
+</Query>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://www.collegiummusicum.nl/nerdcie/CMQuery.xsd">
+    <Header>
+        <Title>Oud-leden</Title>
+        <Description>Geeft een lijst met (e-mail)adressen van oud-leden.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+        <Category>Adreslijsten</Category>
+    </Header>
+    <Body>
+        <Text Name="Brief sturen"><![CDATA[
+SELECT 
+	Titel, 
+	CASE Voornaam WHEN '' THEN Voorletters ELSE Voornaam END as `Voornaam`, 
+	Tussenvoegsel, 
+	Achternaam,
+	( 
+		SELECT MIN(van) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+	) as `LidVan`,
+	( 
+		SELECT MAX(tot) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+	) as `LidTot`,
+	Adres, 
+	Postcode,
+	Plaats,
+	Land
+FROM persoon
+WHERE Email = ''
+	AND Adres != ''
+	AND ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+			AND lidVan.van < NOW() AND lidVan.tot IS NOT NULL AND lidVan.tot < NOW() AND lidVan.tot > '1936-03-17' 
+	) > 0
+	AND ( sterftedatum IS NULL OR sterftedatum < '1200-01-01' )
+ORDER BY LidTot, Achternaam, Voornaam
+]]></Text>
+        <Text Name="Mailen"><![CDATA[
+SELECT 
+	Titel, 
+	CASE Voornaam WHEN '' THEN Voorletters ELSE Voornaam END as `Voornaam`, 
+	Tussenvoegsel, 
+	Achternaam,
+	( 
+		SELECT MIN(van) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+	) as `LidVan`,
+	( 
+		SELECT MAX(tot) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+	) as `LidTot`,
+	Email
+FROM persoon
+WHERE Email != ''
+	AND ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+			AND lidVan.van < NOW() AND lidVan.tot IS NOT NULL AND lidVan.tot < NOW() AND lidVan.tot > '1936-03-17' 
+	) > 0
+	AND ( sterftedatum IS NULL OR sterftedatum < '1200-01-01' )
+ORDER BY LidTot, Achternaam, Voornaam
+]]></Text>
+        <Text Name="Alles"><![CDATA[
+SELECT 
+	Titel, 
+	CASE Voornaam WHEN '' THEN Voorletters ELSE Voornaam END as `Voornaam`, 
+	Tussenvoegsel, 
+	Achternaam,
+	( 
+		SELECT MIN(van) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+	) as `LidVan`,
+	( 
+		SELECT MAX(tot) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+	) as `LidTot`,
+	Adres, 
+	Postcode,
+	Plaats,
+	Land,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
+			AND lidVan.van < NOW() AND lidVan.tot IS NOT NULL AND lidVan.tot < NOW() AND lidVan.tot > '1936-03-17' 
+	) > 0
+	AND ( sterftedatum IS NULL OR sterftedatum < '1200-01-01' )
+ORDER BY LidTot, Achternaam, Voornaam
+]]></Text>
+    </Body>
+</Query>
