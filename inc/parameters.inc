@@ -61,6 +61,7 @@ class QueryParameters
         include('inc/parameters/string.inc');
         include('inc/parameters/integer.inc');
         include('inc/parameters/datetime.inc');
+        include('inc/parameters/pick.inc');
 ?>
     </head>
     <body>

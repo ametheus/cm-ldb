@@ -14,11 +14,11 @@ class String extends Base
         $D = ( strlen(@$additional_data["Description"]) > 0 ? $additional_data["Description"] : $name );
         
         ?>
-        <p>
-            <label for="parameter_<?=$name?>"><?=$T?></label>
-            <input type="text" name="<?=$name?>" value="<?=$value_to_display?>" title="<?=$D?>" />
-        </p>
-        <?php
+            <p>
+                <label for="parameter_<?=$name?>"><?=$T?></label>
+                <input type="text" name="<?=$name?>" value="<?=$value_to_display?>" title="<?=$D?>" />
+            </p>
+<?php
     }
 }
 

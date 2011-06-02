@@ -16,11 +16,11 @@ class Integer extends Base
         $D = ( strlen(@$additional_data["Description"]) > 0 ? $additional_data["Description"] : $name );
         
         ?>
-        <p>
-            <label for="parameter_<?=$name?>"><?=$T?></label>
-            <input type="number" step="1" <?=$min?> <?=$max?> name="<?=$name?>" id="parameter_<?=$name?>" value="<?=$v?>" title="<?=$D?>" />
-        </p>
-        <?php
+            <p>
+                <label for="parameter_<?=$name?>"><?=$T?></label>
+                <input type="number" step="1" <?=$min?> <?=$max?> name="<?=$name?>" id="parameter_<?=$name?>" value="<?=$v?>" title="<?=$D?>" />
+            </p>
+<?php
     }
 }
 
