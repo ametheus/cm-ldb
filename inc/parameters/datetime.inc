@@ -11,10 +11,13 @@ class DateTime extends Base
         $min = ( is_numeric(@$additional_data["Min"]) ? "min={$additional_data["Min"]}" : "" );
         $max = ( is_numeric(@$additional_data["Max"]) ? "max={$additional_data["Max"]}" : "" );
         
+        $T = ( strlen(@$additional_data["title"]) > 0 ? $additional_data["title"] : $name );
+        $D = ( strlen(@$additional_data["desc"])  > 0 ? $additional_data["desc"]  : $name );
+        
         ?>
         <p>
-            <label for="parameter_<?=$name?>"><?=$name?></label>
-            <input type="date" <?=$min?> <?=$max?> name="<?=$name?>" id="parameter_<?=$name?>" value="<?=$v?>" />
+            <label for="parameter_<?=$name?>"><?=$T?></label>
+            <input type="date" <?=$min?> <?=$max?> name="<?=$name?>" id="parameter_<?=$name?>" value="<?=$v?>" title="<?=$D?>" />
         </p>
         <?php
     }

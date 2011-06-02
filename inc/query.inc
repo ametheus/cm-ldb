@@ -69,7 +69,11 @@ class Query
             
             $paramtype = AP::first_child( $param );
             if ( ! $paramtype ) { throw new Exception( "Parameter ".$param->getAttribute('name')." heeft geen type." ); }
-            $P = array( 'type' => $paramtype->nodeName );
+            $P = array(
+                'type' => $paramtype->nodeName,
+                'title' => @$param->getAttribute('Title'),
+                'desc' => @$param->getAttribute('Description')
+            );
             
             $this->_parameters[$param->getAttribute('Name')] = $P;
         }
