@@ -6,13 +6,14 @@ class DateTime extends Base
 {
     function form( $name, $additional_data, $value )
     {
-        $v = ( preg_match( '/^\\d{4}-\\d{2}-\\d{2}/', $value ) ? $value : @$additional_data["default"] );
+        $v = ( preg_match( '/^\\d{4}-\\d{2}-\\d{2}/', $value, $A ) ? $A[0] : @$additional_data["default"] );
+        $v = ( preg_match( '/^\\d{4}-\\d{2}-\\d{2}/', $v,     $A ) ? $A[0] : date("Y-m-d") );
         
         $min = ( is_numeric(@$additional_data["Min"]) ? "min={$additional_data["Min"]}" : "" );
         $max = ( is_numeric(@$additional_data["Max"]) ? "max={$additional_data["Max"]}" : "" );
         
-        $T = ( strlen(@$additional_data["title"]) > 0 ? $additional_data["title"] : $name );
-        $D = ( strlen(@$additional_data["desc"])  > 0 ? $additional_data["desc"]  : $name );
+        $T = ( strlen(@$additional_data["Title"])       > 0 ? $additional_data["Title"] : $name );
+        $D = ( strlen(@$additional_data["Description"]) > 0 ? $additional_data["Description"] : $name );
         
         ?>
         <p>

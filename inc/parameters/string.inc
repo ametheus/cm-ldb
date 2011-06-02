@@ -10,8 +10,8 @@ class String extends Base
     {
         $value_to_display = ( $value ? $value : @$additional_data['default'] );
         
-        $T = ( strlen(@$additional_data["title"]) > 0 ? $additional_data["title"] : $name );
-        $D = ( strlen(@$additional_data["desc"])  > 0 ? $additional_data["desc"]  : $name );
+        $T = ( strlen(@$additional_data["Title"])       > 0 ? $additional_data["Title"] : $name );
+        $D = ( strlen(@$additional_data["Description"]) > 0 ? $additional_data["Description"] : $name );
         
         ?>
         <p>

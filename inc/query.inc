@@ -69,11 +69,23 @@ class Query
             
             $paramtype = AP::first_child( $param );
             if ( ! $paramtype ) { throw new Exception( "Parameter ".$param->getAttribute('name')." heeft geen type." ); }
-            $P = array(
-                'type' => $paramtype->nodeName,
-                'title' => @$param->getAttribute('Title'),
-                'desc' => @$param->getAttribute('Description')
-            );
+            
+            $P = array( 'type' => $paramtype->nodeName, 'default' => "" );
+            
+            foreach ( $param->attributes     as $key => $val ) { $P[$key] = $val->value; }
+            foreach ( $paramtype->attributes as $key => $val ) { $P[$key] = $val->value; }
+            foreach ( $paramtype->childNodes as $cn )
+            {
+                if ( is_a($cn,'DOMElement') )
+                {
+                    $P[ $cn->nodeName ] = $cn->textContent;
+                }
+                else
+                {
+                    $P[ 'default' ] .= $cn->textContent;
+                }
+            }
+            $P['default'] = chop($P['default']);
             
             $this->_parameters[$param->getAttribute('Name')] = $P;
         }

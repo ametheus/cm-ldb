@@ -12,8 +12,8 @@ class Integer extends Base
         $min = ( is_numeric(@$additional_data["Min"]) ? "min={$additional_data["Min"]}" : "" );
         $max = ( is_numeric(@$additional_data["Max"]) ? "max={$additional_data["Max"]}" : "" );
         
-        $T = ( strlen(@$additional_data["title"]) > 0 ? $additional_data["title"] : $name );
-        $D = ( strlen(@$additional_data["desc"])  > 0 ? $additional_data["desc"]  : $name );
+        $T = ( strlen(@$additional_data["Title"])       > 0 ? $additional_data["Title"] : $name );
+        $D = ( strlen(@$additional_data["Description"]) > 0 ? $additional_data["Description"] : $name );
         
         ?>
         <p>
