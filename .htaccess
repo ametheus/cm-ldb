@@ -7,7 +7,7 @@ AuthUserFile /etc/apache2/ledendatabase.htpasswd
 
 RewriteEngine On
 
-RewriteRule ^query/(.*)$            exec-query.php?query=$1
+RewriteRule ^query/(.*)$            exec-query.php?query=$1                    [QSA]
 
 RewriteRule ^bewerken$              edit-people.php
 RewriteRule ^bewerken/json/(.*)$    edit-people.php?json=$1
