@@ -403,7 +403,7 @@ function append_relatie( relatie )
     {
         li += "Kennis";
     }
-    li = $(li + ' van ' + opid + '</li>');
+    li = $(li + ' van ' + Naam.van(opid) + '</li>');
     li.click(function(){alert(relatie);});
     $("#Relaties").append(li);
 }

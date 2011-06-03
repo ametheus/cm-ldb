@@ -35,6 +35,13 @@ if ( $_GET["json"] == "IDs" )
     $PA = Adapters\Persoon::IDs();
     print_pers_ids( $PA->execute(array()) );
 }
+elseif (( $_GET["json"] == "namen" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
+{
+    $PA = Adapters\Persoon::Namen();
+    $args = array( 'pers_id'=>$_REQUEST["pers_id"] );
+    if ( is_numeric(@$_REQUEST["dist"]) ) { $args["dist"] = $_REQUEST["dist"]; }
+    print(json_encode($PA->execute( $args )));
+}
 elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
 {
     $Detail = Adapters\Persoon::Detail();
