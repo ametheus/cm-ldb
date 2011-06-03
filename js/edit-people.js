@@ -178,6 +178,8 @@ function update_fields()
     $('#Field-Opm')              .val(d['opm']);
     
     $('#EditPeople').removeClass('loading');
+    
+    load_sgr( pid() );
 }
 
 function get_new_details()
@@ -323,5 +325,43 @@ function search_this()
         },
         dataType: 'json'
     });
+}
+
+
+
+
+var SGR = {};
+var SGRtimer = null;
+function load_sgr( pers_id )
+{
+    $("td.special_label ul").html('');
+    $("td.special_label").addClass('loading');
+    $("#Secties").html("Loading S-G-R for " + pers_id);
+    if ( SGRtimer ) { clearTimeout( SGRtimer ); }
+    SGRtimer = setTimeout(function(){actually_load_sgr(pers_id);}, 500 );
+}
+function actually_load_sgr( pers_id )
+{
+    $.ajax({
+        type: 'GET',
+        url: '/bewerken/json/SGR',
+        success: function(data)
+        {
+            SGR[pers_id] = data;
+            if ( pid() == pers_id ) { sgr_loaded(); }
+        },
+        dataType: 'json'
+    });
+}
+function sgr_loaded()
+{
+    var sgr = SGR[pid()];
+    if ( ! sgr ) { alert( "Not found!" ); return; }
+    
+    $("#Secties").html( sgr["studies"].length + " studies, " + 
+                        sgr["groepen"].length + " groepen, en " + 
+                        sgr["relaties"].length + " relaties." );
+    
+    $("td.special_label").removeClass('loading');
 }
 

@@ -92,3 +92,17 @@
 
 
 
+
+td.special_label
+{
+}
+td.loading
+{
+    background-color: lime; /* TODO: spinner */
+}
+td.special_label ul
+{
+    min-height: 50px;
+}
+
+
