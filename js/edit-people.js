@@ -179,7 +179,7 @@ function update_fields()
     
     $('#EditPeople').removeClass('loading');
     
-    load_sgr( pid() );
+    SGR.load( pid() );
 }
 
 function get_new_details()
@@ -330,80 +330,3 @@ function search_this()
 
 
 
-var SGR = {};
-var SGRtimer = null;
-function load_sgr( pers_id )
-{
-    $("td.special_label ul").html('');
-    $("td.special_label").addClass('loading');
-    if ( SGRtimer ) { clearTimeout( SGRtimer ); }
-    SGRtimer = setTimeout(function(){actually_load_sgr(pers_id);}, 500 );
-}
-function actually_load_sgr( pers_id )
-{
-    $.ajax({
-        type: 'GET',
-        url: '/bewerken/json/SGR',
-        data: {'pers_id': pers_id},
-        success: function(data)
-        {
-            SGR[pers_id] = data;
-            if ( pid() == pers_id ) { sgr_loaded(); }
-        },
-        dataType: 'json'
-    });
-}
-function sgr_loaded()
-{
-    var sgr = SGR[pid()];
-    if ( ! sgr ) { alert( "Not found!" ); return; }
-    
-    var n = sgr["studies"].length;
-    for ( var i = 0; i < n; i++ ) { append_studie( sgr["studies"][i] ); }
-    n = sgr["groepen"].length;
-    for ( var i = 0; i < n; i++ ) { append_groep( sgr["groepen"][i] ); }
-    n = sgr["relaties"].length;
-    for ( var i = 0; i < n; i++ ) { append_relatie( sgr["relaties"][i] ); }
-    
-    $("td.special_label").removeClass('loading');
-    
-}
-function append_studie( studie )
-{
-    var li = $('<li>'+studie["studienaam"]+
-               (studie["afgestudeerd"]>0?' (A)':'')+'</li>');
-    li.click(function(){alert(studie);});
-    $("#Studies").append(li);
-}
-function append_groep( groep )
-{
-    var li = $('<li>'+groep["klasse"]+' : '+groep["groepsnaam"]+
-               ' ('+groep["van"].substr(0,4)+'-'+
-               (groep["tot"]?groep["tot"].substr(0,4):'heden')+')</li>');
-    li.click(function(){alert(groep["van"]);});
-    $("#Secties").append(li);
-}
-function append_relatie( relatie )
-{
-    var opid = ( relatie["pers_id_1"] == pid() ? relatie["pers_id_2"] : relatie["pers_id_1"] );
-    var li = '<li>';
-    if ( relatie["relatie"] == 'partner' )
-    {
-        li += "Partner";
-    }
-    else if (( relatie["relatie"] == 'ouder' ) && ( pid() == relatie["pers_id_1"] ))
-    {
-        li += "Ouder";
-    }
-    else if (( relatie["relatie"] == 'ouder' ) && ( pid() == relatie["pers_id_2"] ))
-    {
-        li += "Kind";
-    }
-    else
-    {
-        li += "Kennis";
-    }
-    li = $(li + ' van ' + Naam.van(opid) + '</li>');
-    li.click(function(){alert(relatie);});
-    $("#Relaties").append(li);
-}
