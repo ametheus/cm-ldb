@@ -176,34 +176,6 @@ EOT;
         if ( !Persoon::$_Delete ) { return Persoon::_Delete(); }
         return Persoon::$_Delete;
     }
-    
-    
-    private static $_SGR = false;
-    private static function _SGR()
-    {
-        $Qs = array(
-            'studies' => "SELECT studie_id, studienaam,
-                            case afgestudeerd when 'ja' then 1 else 0 end as afgestudeerd
-                          FROM studie
-                            JOIN doetStudie USING ( studie_id )
-                          WHERE pers_id = @pers_id
-                          ORDER BY studienaam",
-            'groepen' => "SELECT groep_id, klasse, groepsnaam, van, tot
-                          FROM lidVan
-                            JOIN groep USING ( groep_id )
-                          WHERE pers_id = @pers_id
-                          ORDER BY van",
-            'relaties'=> "SELECT * FROM relaties
-                          WHERE pers_id_1 = @pers_id OR pers_id_2 = @pers_id"
-        );
-        Persoon::$_SGR = new \Command( $Qs, \DB::ro(), array('pers_id') );
-        return Persoon::$_SGR;
-    }
-    static function SGR()
-    {
-        if ( !Persoon::$_SGR ) { return Persoon::_SGR(); }
-        return Persoon::$_SGR;
-    }
 }
 
 

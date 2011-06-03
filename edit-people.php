@@ -2,6 +2,7 @@
 
 
 require_once( "inc/adapters/persoon.inc" );
+require_once( "inc/adapters/SGR.inc" );
 
 //header( "Content-type: text/plain" );
 
@@ -79,7 +80,7 @@ elseif ( $_GET["json"] == "verwijderen" )
 }
 elseif ( $_GET["json"] == "SGR" )
 {
-    $DA = Adapters\Persoon::SGR();
+    $DA = Adapters\SGR::Load();
     $rv = $DA->execute(array('pers_id'=>$_REQUEST["pers_id"]));
     print( json_encode($rv) );
 }
