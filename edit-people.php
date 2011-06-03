@@ -72,13 +72,9 @@ elseif ( $_GET["json"] == "verwijderen" )
 }
 elseif ( $_GET["json"] == "SGR" )
 {
-    print( '{' .
-           '"studies":[{"studie_id":135,"studienaam":"Tussenjaar","afgestudeerd":0}],' .
-           '"groepen":[' .
-                '{"groep_id":3015,"klasse":"orkest","groepsnaam":"Altviool","van":"2006-09-01","tot":"2010-01-14"},' .
-                '{"groep_id":2048,"klasse":"commissie","groepsnaam":"Nerdcie","van":"2008-09-01","tot":""}' .
-           '],' .
-           '"relaties":[{"pers_id": 2021,"relatie": "anders"}]}' );
+    $DA = Adapters\Persoon::SGR();
+    $rv = $DA->execute(array('pers_id'=>$_REQUEST["pers_id"]));
+    print( json_encode($rv) );
 }
 else
 {

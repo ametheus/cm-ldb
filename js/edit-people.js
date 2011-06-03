@@ -345,6 +345,7 @@ function actually_load_sgr( pers_id )
     $.ajax({
         type: 'GET',
         url: '/bewerken/json/SGR',
+        data: {'pers_id': pers_id},
         success: function(data)
         {
             SGR[pers_id] = data;
