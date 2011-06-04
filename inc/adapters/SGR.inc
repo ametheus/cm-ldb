@@ -32,6 +32,24 @@ class SGR
         if ( !SGR::$_Load ) { return SGR::_Load(); }
         return SGR::$_Load;
     }
+    
+    
+    private static $_Groepen = false;
+    private static function _Groepen()
+    {
+        $Q = <<<EOT
+            SELECT groep_id, klasse, groepsnaam
+            FROM groep
+            ORDER BY groep_id
+EOT;
+        SGR::$_Groepen = new \Command( $Q, \DB::ro() );
+        return SGR::$_Groepen;
+    }
+    static function Groepen()
+    {
+        if ( !SGR::$_Groepen ) { return SGR::_Groepen(); }
+        return SGR::$_Groepen;
+    }
 }
 
 

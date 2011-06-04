@@ -10,6 +10,28 @@ require_once( "inc/adapters/SGR.inc" );
 //$IDs = $PA->execute(array());
 
 
+function Groepen()
+{
+    $DA = Adapters\SGR::Groepen();
+    $g = $DA->execute();
+    $klasse = false;
+    $rv = "\n";
+    foreach ( $g as $groep )
+    {
+        if ( $groep["klasse"] != $klasse )
+        {
+            if ( $klasse ) { print( "                    </optgroup>\n" ); }
+            $klasse = $groep["klasse"];
+            print( "                    <optgroup label=\"" .
+                  htmlentities(ucfirst($klasse)) .
+                  "\">\n" );
+        }
+        print( "                        <option value=\"{$groep["groep_id"]}\">{$groep["groepsnaam"]}</option>\n" );
+    }
+}
+
+
+
 if ( ! isset($_GET["json"]) )
 {
     include( "edit-people.html" );

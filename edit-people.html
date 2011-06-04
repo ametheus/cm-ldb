@@ -5,7 +5,7 @@
         
         <link rel="stylesheet" href="/css/common.css" />
         <link rel="stylesheet" href="/css/edit-people.css" />
-        <link rel="stylesheet" href="/css/humanity.css" />
+        <link rel="stylesheet" href="/css/humanity/jquery-ui-1.8.12.custom.css" />
         
         <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/jquery-ui.js"></script>
@@ -124,6 +124,22 @@
                     <td colspan="2" class="special_label"><ul id="Relaties" /></td>
                 </tr>
             </table>
+        </div>
+        <div style="display: none;">
+            <div class="slc_dialog" id="GroepenEditor">
+                <p>
+                    <label for="groep_id">Groep</label>
+                    <select id="groep_id"><?=Groepen()?></select>
+                </p>
+                <p>
+                    <label for="van">Van</label>
+                    <input id="van" type="date" />
+                </p>
+                <p>
+                    <label for="tot">Tot</label>
+                    <input id="tot" type="date" />
+                </p>
+            </div>
         </div>
     </body>
 </html>

@@ -35,7 +35,7 @@ var SGR = {
         var n = sgr["studies"].length;
         for ( var i = 0; i < n; i++ ) { SGR.append_studie( sgr["studies"][i] ); }
         n = sgr["groepen"].length;
-        for ( var i = 0; i < n; i++ ) { SGR.append_groep( sgr["groepen"][i] ); }
+        for ( var i = 0; i < n; i++ ) { SGR.Groep.append( sgr["groepen"][i] ); }
         n = sgr["relaties"].length;
         for ( var i = 0; i < n; i++ ) { SGR.append_relatie( sgr["relaties"][i] ); }
         
@@ -48,14 +48,6 @@ var SGR = {
                    (studie["afgestudeerd"]>0?' (A)':'')+'</li>');
         li.click(function(){alert(studie);});
         $("#Studies").append(li);
-    },
-    append_groep: function( groep )
-    {
-        var li = $('<li>'+groep["klasse"]+' : '+groep["groepsnaam"]+
-                   ' ('+groep["van"].substr(0,4)+'-'+
-                   (groep["tot"]?groep["tot"].substr(0,4):'heden')+')</li>');
-        li.click(function(){alert(groep["van"]);});
-        $("#Secties").append(li);
     },
     append_relatie: function( relatie )
     {
@@ -80,6 +72,27 @@ var SGR = {
         li = $(li + ' van ' + Naam.van(opid) + '</li>');
         li.click(function(){alert(relatie);});
         $("#Relaties").append(li);
-    }
+    },
     
+    
+    Groep: {
+        append: function( groep )
+        {
+            var li = $('<li>'+groep["klasse"]+' : '+groep["groepsnaam"]+
+                       ' ('+groep["van"].substr(0,4)+'-'+
+                       (groep["tot"]?groep["tot"].substr(0,4):'heden')+')</li>');
+            li.click(function(){SGR.Groep.edit(groep);});
+            $("#Secties").append(li);
+        },
+        
+        edit: function( groep )
+        {
+            $(this).css('background-color', 'red');
+            $("#GroepenEditor").dialog();
+            
+            $("#GroepenEditor #groep_id").val(groep["groep_id"]);
+            $("#GroepenEditor #van").val(groep["van"]);
+            $("#GroepenEditor #tot").val(groep["tot"]);
+        }
+    }
 };
