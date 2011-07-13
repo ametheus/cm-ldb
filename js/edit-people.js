@@ -227,6 +227,7 @@ function any_changes()
 
 function save()
 {
+    SGR.save();
     for ( i in Changes )
     {
         $.ajax({

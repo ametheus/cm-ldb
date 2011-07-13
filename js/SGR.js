@@ -147,6 +147,24 @@ var SGR = {
                 tot: zero( groep.tot )
             };
         }
+    },
+    
+    save: function()
+    {
+        var trans = escape(JSON.stringify({
+            groepen: SGR.Groep.transaction
+        }));
+        
+        $.ajax({
+            type: 'POST',
+            url: '/bewerken/json/wijzig-SGR',
+            data: {transaction: trans},
+            success: function(data)
+            {
+                SGR.Groep.transaction = [];
+            },
+            dataType: 'html'
+        });
     }
 };
 
@@ -167,26 +185,6 @@ $(function()
         SGR.Groep.current[1].html(SGR.Groep.fmt(SGR.Groep.current[0]));
         
         $("#GroepenEditor").dialog("close");
-    });
-    
-    $("#IDNav-save").click(function(){
-        var trans = escape(JSON.stringify({
-            groepen: SGR.Groep.transaction
-        }));
-        
-        alert(trans);
-        
-        $.ajax({
-            type: 'POST',
-            url: '/bewerken/json/wijzig-SGR',
-            data: {transaction: trans},
-            success: function(data)
-            {
-                SGR.Groep.transaction = [];
-            },
-            dataType: 'html'
-        });
-
     });
 });
 
