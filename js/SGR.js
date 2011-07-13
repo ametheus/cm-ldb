@@ -1,5 +1,4 @@
 
-
 var SGR = {
     
     cache: {},
@@ -85,6 +84,8 @@ var SGR = {
             $("#Secties").append(li);
         },
         
+        current: null,
+        
         edit: function( groep )
         {
             $(this).css('background-color', 'red');
@@ -94,20 +95,57 @@ var SGR = {
                 width: 350
             });
             
-            $("#GroepenEditor #groep_id").val(groep["groep_id"]);
-            $("#GroepenEditor #van").val(groep["van"]);
-            $("#GroepenEditor #tot").val(groep["tot"]);
-            
-            $("#GroepenEditor #save").unbind('click');
-            $("#GroepenEditor #save").click(function(){
-                SGR.Groep.change( pid() + '*' + groep["groep_id"] + '*' + groep["van"] );
-                $("#GroepenEditor").dialog("close");
-            });
+            SGR.Groep.current = groep;
+            if ( groep )
+            {
+                $("#GroepenEditor #groep_id").val(groep["groep_id"]);
+                $("#GroepenEditor #van").val(groep["van"]);
+                $("#GroepenEditor #tot").val(groep["tot"]);
+            }
+            else
+            {
+                $("#GroepenEditor .resetable").val(null);
+                
+                $("#GroepenEditor #save").click(function(){
+                    SGR.Groep.change( null );
+                    $("#GroepenEditor").dialog("close");
+                });
+            }
         },
         
-        change: function( key )
+        change: function( new_groep )
         {
-            alert( "Attempting to change entry [" + key + "].\nThusfar, not much luck." );
-        }
+            SGR.Groep.transaction.push( [pid(), SGR.Groep.current, new_groep] );
+        },
+        
+        transaction: []
     }
 };
+
+$(function()
+{
+    $("#GroepenEditor #save").click(function(){
+        
+        new_groep = {
+            groep_id: $("#GroepenEditor #groep_id").val(),
+            van: $("#GroepenEditor #van").val(),
+            tot: $("#GroepenEditor #tot").val()
+        };
+        
+        SGR.Groep.change( new_groep );
+        $("#GroepenEditor").dialog("close");
+    });
+});
+
+
+function duck_compare( A, B )
+{
+    // Perform a shallow comparison of dict's A and B. Returns true if they're
+    // ostensibly equal.
+    
+    for ( i in A )
+    {
+        if (( ! ( i in B ) ) || ( A[i] != B[i] )) { return false; }
+    }
+    return true;
+}
