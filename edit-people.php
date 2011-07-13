@@ -109,7 +109,49 @@ elseif ( $_GET["json"] == "SGR" )
 elseif ( $_GET["json"] == "wijzig-SGR" )
 {
     $transaction = json_decode( urldecode($_REQUEST["transaction"]), true );
-    print( count($transaction["groepen"]) );
+    
+    $DG = Adapters\SGR::delete_Groepen();
+    $IG = Adapters\SGR::insert_Groepen();
+    $UG = Adapters\SGR::update_Groepen();
+    
+    function valid_groep( $groep, $check_tot=false )
+    {
+        if ( !is_array($groep) ) { return false; }
+        if ( !is_numeric(@$groep["groep_id"]) ) { return false; }
+        if ( !preg_match(DATE_REGEX,@$groep["van"])) { return false; }
+        if ( $check_tot )
+        {
+            if (( @$groep["tot"] !== null ) && !preg_match(DATE_REGEX,@$groep["tot"]) ) { return false; }
+        }
+        return true;
+    }
+    
+    foreach ( $transaction["groepen"] as $X )
+    {
+        list($pers_id, $voor, $na) = $X;
+        
+        if ( ! is_numeric($pers_id) ) { continue; }
+        if ( $voor === null )
+        {
+            if ( !valid_groep($na,true) ) { continue; }
+            
+            $IG->execute(array('pers_id'=>$pers_id,'groep_id'=>$na["groep_id"],'van'=>$na["van"],'tot'=>$na["tot"]));
+        }
+        elseif ( $na === null )
+        {
+            if ( !valid_groep($voor,false) ) { continue; }
+            
+            $DG->execute(array('pers_id'=>$pers_id,'groep_id'=>$voor["groep_id"],'van'=>$voor["van"]));
+        }
+        else
+        {
+            if ( !valid_groep($na,true) ) { continue; }
+            if ( !valid_groep($voor,false) ) { continue; }
+            
+            $UG->execute(array('pers_id'=>$pers_id,'groep_id'=>$voor["groep_id"],'van'=>$voor["van"],
+                'n_groep_id'=>$na["groep_id"],'n_van'=>$na["van"],'n_tot'=>$na["tot"]));
+        }
+    }
 }
 else
 {
