@@ -88,11 +88,26 @@ var SGR = {
         edit: function( groep )
         {
             $(this).css('background-color', 'red');
-            $("#GroepenEditor").dialog();
+            $("#GroepenEditor").dialog({
+                title: "Bewerk groep",
+                modal: true,
+                width: 350
+            });
             
             $("#GroepenEditor #groep_id").val(groep["groep_id"]);
             $("#GroepenEditor #van").val(groep["van"]);
             $("#GroepenEditor #tot").val(groep["tot"]);
+            
+            $("#GroepenEditor #save").unbind('click');
+            $("#GroepenEditor #save").click(function(){
+                SGR.Groep.change( pid() + '*' + groep["groep_id"] + '*' + groep["van"] );
+                $("#GroepenEditor").dialog("close");
+            });
+        },
+        
+        change: function( key )
+        {
+            alert( "Attempting to change entry [" + key + "].\nThusfar, not much luck." );
         }
     }
 };
