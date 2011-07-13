@@ -106,6 +106,11 @@ elseif ( $_GET["json"] == "SGR" )
     $rv = $DA->execute(array('pers_id'=>$_REQUEST["pers_id"]));
     print( json_encode($rv) );
 }
+elseif ( $_GET["json"] == "wijzig-SGR" )
+{
+    $transaction = json_decode( urldecode($_REQUEST["transaction"]), true );
+    print( count($transaction["groepen"]) );
+}
 else
 {
     print "Onbekend JSON-object. Sorry.";
