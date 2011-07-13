@@ -77,25 +77,27 @@ var SGR = {
     Groep: {
         append: function( groep )
         {
-            var li = $('<li>'+groep["klasse"]+' : '+groep["groepsnaam"]+
-                       ' ('+groep["van"].substr(0,4)+'-'+
-                       (groep["tot"]?groep["tot"].substr(0,4):'heden')+')</li>');
-            li.click(function(){SGR.Groep.edit(groep);});
-            $("#Secties").append(li);
+            var li = $('<li>'+SGR.Groep.fmt(groep)+'</li>');
+            
+            li.click(function(){
+                SGR.Groep.edit( groep, $(this) );
+            });
+            
+            li = $("#Secties").append(li);
         },
         
         current: null,
         
-        edit: function( groep )
+        edit: function( groep, li )
         {
-            $(this).css('background-color', 'red');
+            //li.css('background-color', 'red');
             $("#GroepenEditor").dialog({
                 title: "Bewerk groep",
                 modal: true,
                 width: 350
             });
             
-            SGR.Groep.current = groep;
+            SGR.Groep.current = [ groep, li ];
             if ( groep )
             {
                 $("#GroepenEditor #groep_id").val(groep["groep_id"]);
@@ -105,20 +107,46 @@ var SGR = {
             else
             {
                 $("#GroepenEditor .resetable").val(null);
-                
-                $("#GroepenEditor #save").click(function(){
-                    SGR.Groep.change( null );
-                    $("#GroepenEditor").dialog("close");
-                });
             }
         },
         
         change: function( new_groep )
         {
-            SGR.Groep.transaction.push( [pid(), SGR.Groep.current, new_groep] );
+            var key = SGR.Groep.key( SGR.Groep.current[0] );
+            var ng = SGR.Groep.key( new_groep );
+            
+            if ( duck_compare( key, ng ) ) { return; }
+            
+            SGR.Groep.transaction.push( [pid(), key, ng] );
+            
+            SGR.Groep.current[0] = new_groep;
         },
         
-        transaction: []
+        transaction: [],
+        
+        fmt: function( groep )
+        {
+            return groep["klasse"]+' : '+groep["groepsnaam"]+
+                ' ('+groep["van"].substr(0,4)+'-'+
+                (groep["tot"]?groep["tot"].substr(0,4):'heden')+')';
+        },
+        key: function( groep )
+        {
+            //alert( JSON.stringify(groep) );
+            var zero = function( str )
+            {
+                if ( str == null ) { return null; }
+                if ( typeof(str.length) == 'undefined' ) { return str; }
+                if ( str.length == 0 ) { return null; }
+                return str;
+            }
+            
+            return {
+                groep_id: groep.groep_id,
+                van: zero( groep.van ),
+                tot: zero( groep.tot )
+            };
+        }
     }
 };
 
@@ -128,11 +156,16 @@ $(function()
         
         new_groep = {
             groep_id: $("#GroepenEditor #groep_id").val(),
+            klasse: $("#GroepenEditor #groep_id :selected").attr('klasse'),
+            groepsnaam: $("#GroepenEditor #groep_id :selected").html(),
             van: $("#GroepenEditor #van").val(),
             tot: $("#GroepenEditor #tot").val()
         };
         
         SGR.Groep.change( new_groep );
+        
+        SGR.Groep.current[1].html(SGR.Groep.fmt(SGR.Groep.current[0]));
+        
         $("#GroepenEditor").dialog("close");
     });
 });

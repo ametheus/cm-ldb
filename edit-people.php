@@ -22,11 +22,11 @@ function Groepen()
         {
             if ( $klasse ) { print( "                    </optgroup>\n" ); }
             $klasse = $groep["klasse"];
-            print( "                    <optgroup label=\"" .
-                  htmlentities(ucfirst($klasse)) .
-                  "\">\n" );
+            $rklasse = htmlentities($klasse);
+            print( "                    <optgroup label=\"".ucfirst($rklasse)."\">\n" );
         }
-        print( "                        <option value=\"{$groep["groep_id"]}\">{$groep["groepsnaam"]}</option>\n" );
+        print( "                        <option value=\"{$groep["groep_id"]}\" klasse=\"{$rklasse}\">{$groep["groepsnaam"]}</option>\n" );
+        # Ja, dat is ongeldig HTML5. Sorry, w3c.
     }
 }
 
