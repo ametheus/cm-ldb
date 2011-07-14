@@ -125,7 +125,7 @@ var SGR = {
     }
 };
 
-create_slc( "#Secties", SGR.Groep, "#GroepenEditor" )
+create_slc( "#Secties", SGR.Groep, "#GroepenEditor", "Bewerk groep" )
 
 $(function()
 {

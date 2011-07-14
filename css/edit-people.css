@@ -97,6 +97,16 @@ td.special_label
 {
     vertical-align: top;
 }
+.special_label div.buttons
+{
+    float: right;
+}
+.special_label div.buttons div
+{
+    width: 24px;
+    height: 24px;
+    border: 2px outset;
+}
 td.loading
 {
     background-color: lime; /* TODO: spinner */

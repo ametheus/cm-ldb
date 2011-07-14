@@ -2,9 +2,8 @@
 
 function create_slc( container, CC, editor, title )
 {
-    $(function(){
-        var ul = $(container).append('<ul />');
-    });
+    CC.current = null;
+    CC.transaction = [];
     
     CC.append = function( groep )
     {
@@ -17,12 +16,15 @@ function create_slc( container, CC, editor, title )
         $(container + " ul").append(li);
     };
     
-    CC.current = null;
+    CC.addnew = function()
+    {
+        alert( "Sorry, deze knop werkt nog niet." );
+    };
     
     CC.edit = function( groep, li )
     {
         $(editor).dialog({
-            title: "Bewerk groep",
+            title: title,
             modal: true,
             width: 350
         });
@@ -50,13 +52,21 @@ function create_slc( container, CC, editor, title )
         CC.current[0] = new_groep;
     };
     
-    CC.transaction = [];
-    
     if ( !( "fmt" in CC ) || !( "key" in CC ) || !( "set_fields" in CC ) )
     {
         throw "Code container does not have required functions" +
             "fmt(), key(), and set_fields().";
     }
+    
+    
+    $(function(){
+        var buttons = $('<div class="buttons" />');
+        $(container).append(buttons);
+        
+        buttons.append("<div>add</div>").click(CC.addnew);
+        
+        $(container).append('<ul />');
+    });
 }
 
 
