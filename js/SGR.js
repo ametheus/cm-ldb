@@ -145,6 +145,10 @@ $(function()
         
         $("#GroepenEditor").dialog("close");
     });
+    
+    // TODO: Later weer weghalen als Studies/relaties ook gebruik maken van SLC's
+    $("#Studies").append('<ul />');
+    $("#Relaties").append('<ul />');
 });
 
 

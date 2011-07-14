@@ -2,6 +2,10 @@
 
 function create_slc( container, CC, editor, title )
 {
+    $(function(){
+        var ul = $(container).append('<ul />');
+    });
+    
     CC.append = function( groep )
     {
         var li = $('<li>'+CC.fmt(groep)+'</li>');
