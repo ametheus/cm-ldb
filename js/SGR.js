@@ -75,55 +75,6 @@ var SGR = {
     
     
     Groep: {
-        append: function( groep )
-        {
-            var li = $('<li>'+SGR.Groep.fmt(groep)+'</li>');
-            
-            li.click(function(){
-                SGR.Groep.edit( groep, $(this) );
-            });
-            
-            li = $("#Secties").append(li);
-        },
-        
-        current: null,
-        
-        edit: function( groep, li )
-        {
-            //li.css('background-color', 'red');
-            $("#GroepenEditor").dialog({
-                title: "Bewerk groep",
-                modal: true,
-                width: 350
-            });
-            
-            SGR.Groep.current = [ groep, li ];
-            if ( groep )
-            {
-                $("#GroepenEditor #groep_id").val(groep["groep_id"]);
-                $("#GroepenEditor #van").val(groep["van"]);
-                $("#GroepenEditor #tot").val(groep["tot"]);
-            }
-            else
-            {
-                $("#GroepenEditor .resetable").val(null);
-            }
-        },
-        
-        change: function( new_groep )
-        {
-            var key = SGR.Groep.key( SGR.Groep.current[0] );
-            var ng = SGR.Groep.key( new_groep );
-            
-            if ( duck_compare( key, ng ) ) { return; }
-            
-            SGR.Groep.transaction.push( [pid(), key, ng] );
-            
-            SGR.Groep.current[0] = new_groep;
-        },
-        
-        transaction: [],
-        
         fmt: function( groep )
         {
             return groep["klasse"]+' : '+groep["groepsnaam"]+
@@ -146,6 +97,12 @@ var SGR = {
                 van: zero( groep.van ),
                 tot: zero( groep.tot )
             };
+        },
+        set_fields: function( groep )
+        {
+            $("#GroepenEditor #groep_id").val(groep["groep_id"]);
+            $("#GroepenEditor #van").val(groep["van"]);
+            $("#GroepenEditor #tot").val(groep["tot"]);
         }
     },
     
@@ -167,6 +124,8 @@ var SGR = {
         });
     }
 };
+
+create_slc( "#Secties", SGR.Groep, "#GroepenEditor" )
 
 $(function()
 {
