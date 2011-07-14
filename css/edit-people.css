@@ -95,6 +95,7 @@
 
 td.special_label
 {
+    vertical-align: top;
 }
 td.loading
 {

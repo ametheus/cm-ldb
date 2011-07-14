@@ -10,7 +10,7 @@ function create_slc( container, CC, editor, title )
             CC.edit( groep, $(this) );
         });
         
-        $(container).append(li);
+        $(container + " ul").append(li);
     };
     
     CC.current = null;

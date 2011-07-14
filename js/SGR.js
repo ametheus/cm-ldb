@@ -46,7 +46,7 @@ var SGR = {
         var li = $('<li>'+studie["studienaam"]+
                    (studie["afgestudeerd"]>0?' (A)':'')+'</li>');
         li.click(function(){alert(studie);});
-        $("#Studies").append(li);
+        $("#Studies ul").append(li);
     },
     append_relatie: function( relatie )
     {
@@ -70,7 +70,7 @@ var SGR = {
         }
         li = $(li + ' van ' + Naam.van(opid) + '</li>');
         li.click(function(){alert(relatie);});
-        $("#Relaties").append(li);
+        $("#Relaties ul").append(li);
     },
     
     
