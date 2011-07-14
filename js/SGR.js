@@ -100,6 +100,16 @@ var SGR = {
                 tot: zero( groep.tot )
             };
         },
+        get_fields: function()
+        {
+            return {
+                groep_id: $("#GroepenEditor #groep_id").val(),
+                klasse: $("#GroepenEditor #groep_id :selected").attr('klasse'),
+                groepsnaam: $("#GroepenEditor #groep_id :selected").html(),
+                van: $("#GroepenEditor #van").val(),
+                tot: $("#GroepenEditor #tot").val()
+            };
+        },
         set_fields: function( groep )
         {
             $("#GroepenEditor #groep_id").val(groep["groep_id"]);
@@ -131,21 +141,6 @@ create_slc( "#Secties", SGR.Groep, "#GroepenEditor", "Bewerk groep" )
 
 $(function()
 {
-    $("#GroepenEditor #save").click(function(){
-        
-        new_groep = {
-            groep_id: $("#GroepenEditor #groep_id").val(),
-            klasse: $("#GroepenEditor #groep_id :selected").attr('klasse'),
-            groepsnaam: $("#GroepenEditor #groep_id :selected").html(),
-            van: $("#GroepenEditor #van").val(),
-            tot: $("#GroepenEditor #tot").val()
-        };
-        
-        SGR.Groep.change( new_groep );
-        
-        $("#GroepenEditor").dialog("close");
-    });
-    
     // TODO: Later weer weghalen als Studies/relaties ook gebruik maken van SLC's
     $("#Studies").append('<ul />');
     $("#Relaties").append('<ul />');

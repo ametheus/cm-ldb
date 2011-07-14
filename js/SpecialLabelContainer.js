@@ -60,14 +60,18 @@ function create_slc( container, CC, editor, title )
         }
     };
     
-    if ( !( "fmt" in CC ) || !( "key" in CC ) || !( "set_fields" in CC ) )
+    if ( !( "fmt" in CC ) || !( "key" in CC ) ||
+        !( "get_fields" in CC ) || !( "set_fields" in CC ) )
     {
         throw "Code container does not have required functions" +
-            "fmt(), key(), and set_fields().";
+            "fmt(), key(), get_fields(), and set_fields().";
     }
     
     
     $(function(){
+        
+        // Create buttons, place everything in a nested <div>, and generate
+        // an <ul> below.
         var div = $('<div />');
         div.html($(container).html());
         $(container).html('').append(div);
@@ -78,6 +82,17 @@ function create_slc( container, CC, editor, title )
         buttons.append("<div>add</div>").click(CC.addnew);
         
         $(container).append('<ul />');
+        
+        
+        // Set correct click events on the editor dialog.
+        $(editor + " #save").click(function(){
+            
+            new_groep = CC.get_fields( editor );
+            CC.change( new_groep );
+            
+            $(editor).dialog("close");
+        });
+        
     });
 }
 
