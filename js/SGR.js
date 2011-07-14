@@ -91,6 +91,7 @@ var SGR = {
                 if ( str == null ) { return null; }
                 if ( typeof(str.length) == 'undefined' ) { return str; }
                 if ( str.length == 0 ) { return null; }
+                if ( str.substr(0,4) == "0000" ) { return null; }
                 return str;
             }
             

@@ -39,8 +39,8 @@ class Connection
             $args = "";
             foreach ( $arguments as $k=>$v )
             {
-                $args .= ", @`" . mysql_real_escape_string($k,$this->_dbcon) . "` = " .
-                    "'" . mysql_real_escape_string($v,$this->_dbcon) . "'";
+                $V = ( ( $v === null ) ? "NULL" : "'" . mysql_real_escape_string($v,$this->_dbcon) . "'" );
+                $args .= ", @`" . mysql_real_escape_string($k,$this->_dbcon) . "` = " . $V;
             }
             
             $this->exec( "SET " . substr($args,1) );
