@@ -18,7 +18,7 @@ function create_slc( container, CC, editor, title )
     
     CC.addnew = function()
     {
-        alert( "Sorry, deze knop werkt nog niet." );
+        CC.edit( null, null );
     };
     
     CC.edit = function( groep, li )
@@ -36,7 +36,7 @@ function create_slc( container, CC, editor, title )
         }
         else
         {
-            $(editor)(".resetable").val(null);
+            $(editor + " .resetable").val(null);
         }
     };
     
@@ -50,6 +50,14 @@ function create_slc( container, CC, editor, title )
         CC.transaction.push( [pid(), key, ng] );
         
         CC.current[0] = new_groep;
+        if ( key == null )
+        {
+            CC.append( new_groep );
+        }
+        else
+        {
+            CC.current[1].html(CC.fmt(CC.current[0]));
+        }
     };
     
     if ( !( "fmt" in CC ) || !( "key" in CC ) || !( "set_fields" in CC ) )

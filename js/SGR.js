@@ -84,6 +84,8 @@ var SGR = {
         key: function( groep )
         {
             //alert( JSON.stringify(groep) );
+            if ( groep == null ) { return null; }
+            
             var zero = function( str )
             {
                 if ( str == null ) { return null; }
@@ -141,8 +143,6 @@ $(function()
         
         SGR.Groep.change( new_groep );
         
-        SGR.Groep.current[1].html(SGR.Groep.fmt(SGR.Groep.current[0]));
-        
         $("#GroepenEditor").dialog("close");
     });
     
@@ -156,6 +156,9 @@ function duck_compare( A, B )
 {
     // Perform a shallow comparison of dict's A and B. Returns true if they're
     // ostensibly equal.
+    
+    if (( A == null ) && ( B == null )) { return true; }
+    if (( A == null ) || ( B == null )) { return false; }
     
     for ( i in A )
     {
