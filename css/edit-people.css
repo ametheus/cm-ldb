@@ -100,6 +100,7 @@ td.special_label
 .special_label div.buttons
 {
     float: right;
+    margin-bottom: -10px;
 }
 .special_label div.buttons div
 {

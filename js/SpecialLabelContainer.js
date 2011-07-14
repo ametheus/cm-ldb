@@ -68,8 +68,12 @@ function create_slc( container, CC, editor, title )
     
     
     $(function(){
+        var div = $('<div />');
+        div.html($(container).html());
+        $(container).html('').append(div);
+        
         var buttons = $('<div class="buttons" />');
-        $(container).append(buttons);
+        div.append(buttons);
         
         buttons.append("<div>add</div>").click(CC.addnew);
         
