@@ -54,6 +54,13 @@ function create_slc( container, CC, editor, title )
         {
             CC.append( new_groep );
         }
+        else if ( ng == null )
+        {
+            if ( CC.current[1] )
+            {
+                CC.current[1].remove();
+            }
+        }
         else
         {
             CC.current[1].html(CC.fmt(CC.current[0]));
@@ -93,6 +100,15 @@ function create_slc( container, CC, editor, title )
             $(editor).dialog("close");
         });
         
+        $(editor + " #delete").click(function(){
+            if ( confirm( "Weet je zeker dat je dit item wilt verwijderen?\n" +
+                          "Dit is waarschijnlijk niet wat je wil.") )
+            {
+                CC.change( null );
+                
+                $(editor).dialog("close");
+            }
+        });
     });
 }
 
