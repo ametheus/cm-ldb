@@ -4,6 +4,7 @@ function create_slc( container, CC, editor, title )
 {
     CC.current = null;
     CC.transaction = [];
+    CC.cache = [];
     
     CC.append = function( groep )
     {

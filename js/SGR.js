@@ -1,7 +1,6 @@
 
 var SGR = {
     
-    cache: {},
     timer: null,
     
     load: function( pers_id )
@@ -9,7 +8,16 @@ var SGR = {
         $("td.special_label ul").html('');
         $("td.special_label").addClass('loading');
         if ( SGR.timer ) { clearTimeout( SGR.timer ); }
-        SGR.timer = setTimeout(function(){SGR.actually_load(pers_id);}, 500 );
+        
+        // Check if the selected person is already in the cache
+        if ((pid() in SGR.Studie.cache)&&(pid() in SGR.Groep.cache)&&(pid() in SGR.Relatie.cache))
+        {
+            SGR.loaded();
+        }
+        else
+        {
+            SGR.timer = setTimeout(function(){SGR.actually_load(pers_id);}, 500 );
+        }
     },
     
     actually_load: function( pers_id )
@@ -20,7 +28,10 @@ var SGR = {
             data: {'pers_id': pers_id},
             success: function(data)
             {
-                SGR.cache[pers_id] = data;
+                SGR.Studie.cache[pers_id] = data["studies"];
+                SGR.Groep.cache[pers_id] = data["groepen"];
+                SGR.Relatie.cache[pers_id] = data["relaties"];
+                
                 if ( pid() == pers_id ) { SGR.loaded(); }
             },
             dataType: 'json'
@@ -28,15 +39,12 @@ var SGR = {
     },
     loaded: function()
     {
-        var sgr = SGR.cache[pid()];
-        if ( ! sgr ) { alert( "Not found!" ); return; }
+        if (!((pid() in SGR.Studie.cache)&&(pid() in SGR.Groep.cache)&&(pid() in SGR.Relatie.cache)))
+        { alert( "Not found!" ); return; }
         
-        var n = sgr["studies"].length;
-        for ( var i = 0; i < n; i++ ) { SGR.Studie.append( sgr["studies"][i] ); }
-        n = sgr["groepen"].length;
-        for ( var i = 0; i < n; i++ ) { SGR.Groep.append( sgr["groepen"][i] ); }
-        n = sgr["relaties"].length;
-        for ( var i = 0; i < n; i++ ) { SGR.Relatie.append( sgr["relaties"][i] ); }
+        $.map( SGR.Studie.cache[pid()],  SGR.Studie.append );
+        $.map( SGR.Groep.cache[pid()],   SGR.Groep.append );
+        $.map( SGR.Relatie.cache[pid()], SGR.Relatie.append );
         
         $("td.special_label").removeClass('loading');
         
