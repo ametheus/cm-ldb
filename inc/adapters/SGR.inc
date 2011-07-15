@@ -29,9 +29,10 @@ class SGR
     }
     static function Load()
     {
-        if ( !SGR::$_Load ) { return SGR::_Load(); }
+        if ( ! SGR::$_Load ) { return SGR::_Load(); }
         return SGR::$_Load;
     }
+    
     
     
     private static $_Groepen = false;
@@ -47,9 +48,25 @@ EOT;
     }
     static function Groepen()
     {
-        if ( !SGR::$_Groepen ) { return SGR::_Groepen(); }
+        if ( ! SGR::$_Groepen ) { return SGR::_Groepen(); }
         return SGR::$_Groepen;
     }
+    
+    private static $_Studies = false;
+    private static function _Studies()
+    {
+        $Q = <<<EOT
+        SELECT studie_id, studienaam FROM studie
+        ORDER BY studienaam
+EOT;
+        SGR::$_Studies = new Command( $Q, DB::ro() );
+    }
+    static function Studies()
+    {
+        if ( ! SGR::$_Studies ) { return SGR::_Studies(); }
+        return SGR::$_Studies;
+    }
+    
     
     
     private static $_insert_Groepen = false;
@@ -65,7 +82,7 @@ EOT;
     }
     static function insert_Groepen()
     {
-        if ( !SGR::$_insert_Groepen ) { return SGR::_insert_Groepen(); }
+        if ( ! SGR::$_insert_Groepen ) { return SGR::_insert_Groepen(); }
         return SGR::$_insert_Groepen;
     }
     
@@ -86,7 +103,7 @@ EOT;
     }
     static function delete_Groepen()
     {
-        if ( !SGR::$_delete_Groepen ) { return SGR::_delete_Groepen(); }
+        if ( ! SGR::$_delete_Groepen ) { return SGR::_delete_Groepen(); }
         return SGR::$_delete_Groepen;
     }
     
@@ -110,8 +127,65 @@ EOT;
     }
     static function update_Groepen()
     {
-        if ( !SGR::$_update_Groepen ) { return SGR::_update_Groepen(); }
+        if ( ! SGR::$_update_Groepen ) { return SGR::_update_Groepen(); }
         return SGR::$_update_Groepen;
+    }
+    
+    
+    
+    private static $_insert_Studies = false;
+    private static function _insert_Studies()
+    {
+        $Q = <<<EOT
+        INSERT INTO doetStudie ( pers_id, studie_id, afgestudeerd )
+        VALUES ( @pers_id, @studie_id, @afgestudeerd )
+EOT;
+        SGR::$_insert_Studies = new \Command( $Q, \DB::rw(),
+            array( 'pers_id', 'studie_id', 'afgestudeerd' ) );
+        return SGR::$_insert_Studies;
+    }
+    static function insert_Studies()
+    {
+        if ( ! SGR::$_insert_Studies ) { return SGR::_insert_Studies(); }
+        return SGR::$_insert_Studies;
+    }
+    
+    private static $_delete_Studies = false;
+    private static function _delete_Studies()
+    {
+        $Q = <<<EOT
+        DELETE FROM doetStudie
+        WHERE pers_id = @pers_id
+            AND studie_id = @studie_id
+        LIMIT 1
+EOT;
+        SGR::$_delete_Studies = new \Command( $Q, \DB::rw(),
+            array( 'pers_id', 'studie_id' ) );
+        return SGR::$_delete_Studies;
+    }
+    static function delete_Studies()
+    {
+        if ( ! SGR::$_delete_Studies ) { return SGR::_delete_Studies(); }
+        return SGR::$_delete_Studies;
+    }
+    
+    private static $_update_Studies = false;
+    private static function _update_Studies()
+    {
+        $Q = <<<EOT
+        UPDATE doetStudie SET
+            studie_id = @n_studie_id,
+            afgestudeerd = @n_afgestudeerd
+        WHERE pers_id = @pers_id
+            AND studie_id = @studie_id
+EOT;
+        SGR::$_update_Studies = new \Command( $Q, \DB::rw(),
+            array( 'pers_id', 'studie_id', 'n_studie_id', 'n_afgestudeerd' ) );
+    }
+    static function update_Studies()
+    {
+        if ( ! SGR::$_update_Studies ) { return SGR::_update_Studies(); }
+        return SGR::$_update_Studies;
     }
 }
 
