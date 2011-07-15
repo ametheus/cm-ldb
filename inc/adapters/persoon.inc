@@ -25,6 +25,39 @@ EOT;
     }
     
     
+    private static $_Namen = false;
+    private static function _Namen()
+    {
+        $Q = <<<EOT
+        SELECT
+            pers_id,
+            CONCAT( 
+                CASE titel
+                    WHEN '' THEN 
+                        CASE voornaam WHEN '' THEN voorletters ELSE voornaam END
+                    ELSE
+                        concat( titel, CASE voorletters when '' then '' else concat(' ',voorletters)END )
+                END,
+                ' ', 
+                CASE tussenvoegsel 
+                    WHEN '' THEN '' 
+                    else concat( tussenvoegsel, ' ' ) 
+                END, 
+                achternaam 
+            ) AS `Naam`
+        FROM persoon
+        WHERE ABS( pers_id - @pers_id ) < @dist
+EOT;
+        Persoon::$_Namen = new \Command( $Q, \DB::ro(), array('pers_id'), array('dist'=>5) );
+        return Persoon::$_Namen;
+    }
+    static function Namen()
+    {
+        if ( !Persoon::$_Namen ) { return Persoon::_Namen(); }
+        return Persoon::$_Namen;
+    }
+    
+    
     private static $_Detail = false;
     private static function _Detail()
     {

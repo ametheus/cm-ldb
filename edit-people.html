@@ -5,13 +5,29 @@
         
         <link rel="stylesheet" href="/css/common.css" />
         <link rel="stylesheet" href="/css/edit-people.css" />
-        <link rel="stylesheet" href="/css/humanity.css" />
+        <link rel="stylesheet" href="/css/humanity/jquery-ui-1.8.12.custom.css" />
         
         <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="/js/naam.js"></script>
+        <script type="text/javascript" src="/js/SpecialLabelContainer.js"></script>
+        <script type="text/javascript" src="/js/SGR.js"></script>
         <script type="text/javascript" src="/js/edit-people.js"></script>
+        <script type="text/javascript" src="/js/json2-min.js"></script>
     </head>
     <body>
+        <div style="display: none;">
+            <a id="debug-SGRcache">Laat S/G/R-transcript zien</a>
+            <script type="text/javascript">
+            $("#debug-SGRcache").click(function(){
+                alert( JSON.stringify( {
+                    Studie: SGR.Studie.transaction,
+                    Groep: SGR.Groep.transaction,
+                    Relatie: SGR.Relatie.transaction
+                } ) );
+            });
+            </script>
+        </div>
         <div id="EditPeople">
             <div id="IDNavigator">
                 <a id="IDNav-fist">&nbsp;</a>
@@ -112,11 +128,64 @@
                     <td>&nbsp;</td><td>&nbsp;</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Studies</td>
-                    <td colspan="2">Secties/commissies</td>
-                    <td colspan="2">Relaties</td>
+                    <td colspan="2" id="Studies"  class="special_label">Studies</td>
+                    <td colspan="2" id="Secties"  class="special_label">Secties/commissies</td>
+                    <td colspan="2" id="Relaties" class="special_label">Relaties</td>
                 </tr>
             </table>
+        </div>
+        <div style="display: none;">
+            <div class="slc_dialog" id="GroepenEditor">
+                <p>
+                    <label for="groep_id">Groep</label>
+                    <select id="groep_id" class="resetable"><?=Groepen()?></select>
+                </p>
+                <p>
+                    <label for="van">Van</label>
+                    <input id="van" class="resetable" type="date" />
+                </p>
+                <p>
+                    <label for="tot">Tot</label>
+                    <input id="tot" class="resetable" type="date" />
+                </p>
+                <p>
+                    <input type="button" id="delete" value="Verwijderen" />
+                    <input type="button" id="save" value="Opslaan" style="float: right" />
+                </p>
+            </div>
+            <div class="slc_dialog" id="StudieEditor">
+                <p>
+                    <label for="studie_id">Studie</label>
+                    <select id="studie_id" class="resetable"><?=Studies()?></select>
+                </p>
+                <p>
+                    <input id="afgestudeerd" type="checkbox" class="uncheckable"/>
+                    <label for="afgestudeerd">Afgestudeerd</label>
+                </p>
+                <p>
+                    <input type="button" id="delete" value="Verwijderen" />
+                    <input type="button" id="save" value="Opslaan" style="float: right" />
+                </p>
+            </div>
+            <div class="slc_dialog" id="RelatieEditor">
+                <p>
+                    <label for="pers_id_b">Persoon</label>
+                    <select id="pers_id_b" class="resetable"><?=Namen()?></select>
+                </p>
+                <p>
+                    <label for="type">Relatietype</label>
+                    <select id="type" class="resetable">
+                        <option value="ouder">Ouder van ...</option>
+                        <option value="kind">Kind van ...</option>
+                        <option value="partner">Partner van ...</option>
+                        <option value="overig">Anders / onbekend</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="button" id="delete" value="Verwijderen" />
+                    <input type="button" id="save" value="Opslaan" style="float: right" />
+                </p>
+            </div>
         </div>
     </body>
 </html>

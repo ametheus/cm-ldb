@@ -92,3 +92,33 @@
 
 
 
+
+td.special_label
+{
+    vertical-align: top;
+}
+.special_label div.buttons
+{
+    float: right;
+    margin-bottom: -10px;
+}
+.special_label div.buttons div
+{
+    width: 24px;
+    height: 24px;
+    border: 2px outset;
+}
+.slc_dialog input, .slc_dialog select
+{
+    max-width: 270px;
+}
+td.loading
+{
+    background-color: lime; /* TODO: spinner */
+}
+td.special_label ul
+{
+    min-height: 50px;
+}
+
+

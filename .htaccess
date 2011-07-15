@@ -10,7 +10,7 @@ RewriteEngine On
 RewriteRule ^query/(.*)$            exec-query.php?query=$1                    [QSA]
 
 RewriteRule ^bewerken$              edit-people.php
-RewriteRule ^bewerken/json/(.*)$    edit-people.php?json=$1
+RewriteRule ^bewerken/json/(.*)$    edit-people.php?json=$1                    [QSA]
 
 RewriteRule ^css/humanity.css$      css/humanity/jquery-ui-1.8.12.custom.css
 RewriteRule ^js/jquery.js$          js/jquery-1.5.1.min.js
