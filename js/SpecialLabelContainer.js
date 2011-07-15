@@ -37,6 +37,7 @@ function create_slc( container, CC, editor, title )
         else
         {
             $(editor + " .resetable").val(null);
+            $(editor + " .uncheckable").attr('checked',false);
         }
     };
     
