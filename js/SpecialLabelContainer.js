@@ -46,18 +46,32 @@ function create_slc( container, CC, editor, title )
     {
         var key = CC.key( CC.current[0] );
         var ng = CC.key( new_groep );
+        var c = CC.cache[pid()];
         
         if ( duck_compare( key, ng ) ) { return; }
         
         CC.transaction.push( [pid(), key, ng] );
-        
         CC.current[0] = new_groep;
+        
+        
         if ( key == null )
         {
+            c.push( new_groep );
             CC.append( new_groep );
+            return;
         }
-        else if ( ng == null )
+        
+        
+        if ( ng == null )
         {
+            // Remove the item from the cache
+            for ( var i = 0; i < c.length; i++ )
+            {
+                if ( !duck_compare( key, c[i] ) ) { continue; }
+                c.splice( i, 1 );
+                break;
+            }
+            // Remove the item from the DOM
             if ( CC.current[1] )
             {
                 CC.current[1].remove();
@@ -65,6 +79,14 @@ function create_slc( container, CC, editor, title )
         }
         else
         {
+            // Modify the cache
+            for ( var i = 0; i < c.length; i++ )
+            {
+                if ( !duck_compare( key, c[i] ) ) { continue; }
+                c[i] = new_groep;
+                break;
+            }
+            // Set the new text
             CC.current[1].html(CC.fmt(CC.current[0]));
         }
     };
