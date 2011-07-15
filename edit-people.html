@@ -16,10 +16,10 @@
         <script type="text/javascript" src="/js/json2-min.js"></script>
     </head>
     <body>
-        <div>
-            <a id="debug">Debug-ding 1</a>
+        <div style="display: none;">
+            <a id="debug-SGRcache">Laat S/G/R-transcript zien</a>
             <script type="text/javascript">
-            $("#debug").click(function(){
+            $("#debug-SGRcache").click(function(){
                 alert( JSON.stringify( {
                     Studie: SGR.Studie.transaction,
                     Groep: SGR.Groep.transaction,
