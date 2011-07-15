@@ -36,7 +36,7 @@ var SGR = {
         n = sgr["groepen"].length;
         for ( var i = 0; i < n; i++ ) { SGR.Groep.append( sgr["groepen"][i] ); }
         n = sgr["relaties"].length;
-        for ( var i = 0; i < n; i++ ) { SGR.append_relatie( sgr["relaties"][i] ); }
+        for ( var i = 0; i < n; i++ ) { SGR.Relatie.append( sgr["relaties"][i] ); }
         
         $("td.special_label").removeClass('loading');
         
@@ -125,11 +125,37 @@ var SGR = {
         }
     },
     
+    Relatie: {
+        types: {partner:'Partner',ouder:'Ouder',kind:'Kind',anders:'Kennis'},
+        fmt: function( rel )
+        {
+            var opid = rel["pers_id"];
+            return SGR.Relatie.types[rel["relatie"]] + ' van ' + Naam.van(opid);
+        },
+        key: function( rel )
+        {
+            return rel;
+        },
+        get_fields: function()
+        {
+            return {
+                pers_id: $("#RelatieEditor #pers_id_b").val(),
+                relatie: $("#RelatieEditor #type").val()
+            };
+        },
+        set_fields: function( rel )
+        {
+            $("#RelatieEditor #pers_id_b").val( rel["pers_id"] );
+            $("#RelatieEditor #type").val( rel["relatie"] );
+        }
+    },
+    
     save: function()
     {
         var trans = escape(JSON.stringify({
             studies: SGR.Studie.transaction,
-            groepen: SGR.Groep.transaction
+            groepen: SGR.Groep.transaction,
+            relaties: SGR.Relatie.transaction
         }));
         
         $.ajax({
@@ -140,18 +166,15 @@ var SGR = {
             {
                 SGR.Studie.transaction = [];
                 SGR.Groep.transaction = [];
+                SGR.Relatie.transaction = [];
+                if ( data.length > 0 ) { alert(data); }
             },
             dataType: 'html'
         });
     }
 };
 
-create_slc( "#Secties", SGR.Groep, "#GroepenEditor", "Bewerk groep" )
-create_slc( "#Studies", SGR.Studie, "#StudieEditor", "Bewerk studie" )
-
-$(function()
-{
-    // TODO: Later weer weghalen als Studies/relaties ook gebruik maken van SLC's
-    $("#Relaties").append('<ul />');
-});
+create_slc( "#Secties", SGR.Groep, "#GroepenEditor", "Bewerk groep" );
+create_slc( "#Studies", SGR.Studie, "#StudieEditor", "Bewerk studie" );
+create_slc( "#Relaties", SGR.Relatie, "#RelatieEditor", "Bewerk relatie" );
 

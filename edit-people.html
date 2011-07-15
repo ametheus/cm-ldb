@@ -20,7 +20,11 @@
             <a id="debug">Debug-ding 1</a>
             <script type="text/javascript">
             $("#debug").click(function(){
-                alert( JSON.stringify( {Studie: SGR.Studie.transaction,Groep: SGR.Groep.transaction} ) )
+                alert( JSON.stringify( {
+                    Studie: SGR.Studie.transaction,
+                    Groep: SGR.Groep.transaction,
+                    Relatie: SGR.Relatie.transaction
+                } ) );
             });
             </script>
         </div>

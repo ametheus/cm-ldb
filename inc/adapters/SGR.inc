@@ -213,7 +213,7 @@ EOT;
         INSERT INTO relaties ( pers_id_1, pers_id_2, relatie )
         VALUES ( @pers_id_1, @pers_id_2, @relatie )
 EOT;
-        SGR::$_insert_Relaties = new \Command( $Q, \DB::ro(),
+        SGR::$_insert_Relaties = new \Command( $Q, \DB::rw(),
             array( 'pers_id_1', 'pers_id_2', 'relatie' ) );
         return SGR::$_insert_Relaties;
     }
@@ -231,7 +231,7 @@ EOT;
         WHERE ( pers_id_1 = @pers_id_1 AND pers_id_2 = @pers_id_2 )
             OR ( pers_id_1 = @pers_id_2 AND pers_id_2 = @pers_id_1 )
 EOT;
-        SGR::$_delete_Relaties = new \Command( $Q, \DB::ro(),
+        SGR::$_delete_Relaties = new \Command( $Q, \DB::rw(),
             array( 'pers_id_1', 'pers_id_2' ) );
         return SGR::$_delete_Relaties;
     }
