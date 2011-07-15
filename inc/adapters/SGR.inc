@@ -21,8 +21,22 @@ class SGR
                             JOIN groep USING ( groep_id )
                           WHERE pers_id = @pers_id
                           ORDER BY van",
-            'relaties'=> "SELECT * FROM relaties
-                          WHERE pers_id_1 = @pers_id OR pers_id_2 = @pers_id"
+            'relaties'=> "
+                        SELECT * FROM (
+                          SELECT
+                            pers_id_2 as pers_id,
+                            relatie
+                          FROM relaties
+                          WHERE pers_id_1 = @pers_id
+                          
+                          UNION
+                          
+                          SELECT
+                            pers_id_1 as pers_id,
+                            CASE relatie WHEN 'ouder' THEN 'kind' ELSE relatie END AS relatie
+                          FROM relaties
+                          WHERE pers_id_2 = @pers_id
+                        ) prelaties GROUP BY pers_id ORDER BY pers_id"
         );
         SGR::$_Load = new \Command( $Qs, \DB::ro(), array('pers_id') );
         return SGR::$_Load;

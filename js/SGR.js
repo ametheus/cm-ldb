@@ -43,26 +43,11 @@ var SGR = {
     },
     append_relatie: function( relatie )
     {
-        var opid = ( relatie["pers_id_1"] == pid() ? relatie["pers_id_2"] : relatie["pers_id_1"] );
+        var opid = relatie["pers_id"];
         var li = '<li>';
-        if ( relatie["relatie"] == 'partner' )
-        {
-            li += "Partner";
-        }
-        else if (( relatie["relatie"] == 'ouder' ) && ( pid() == relatie["pers_id_1"] ))
-        {
-            li += "Ouder";
-        }
-        else if (( relatie["relatie"] == 'ouder' ) && ( pid() == relatie["pers_id_2"] ))
-        {
-            li += "Kind";
-        }
-        else
-        {
-            li += "Kennis";
-        }
-        li = $(li + ' van ' + Naam.van(opid) + '</li>');
-        li.click(function(){alert(relatie);});
+        var types = {partner:'Partner',ouder:'Ouder',kind:'Kind',anders:'Kennis'};
+        li = $('<li>' + types[relatie["relatie"]] + ' van ' + Naam.van(opid) + '</li>');
+        li.click(function(){alert(JSON.stringify(relatie));});
         $("#Relaties ul").append(li);
     },
     
