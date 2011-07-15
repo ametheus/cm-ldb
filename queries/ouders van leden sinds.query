@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Ouders van nieuwe leden</Title>
+        <Description>Alle ouders van leden die lid zijn geworden sinds...</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+    </Header>
+    <Parameters>
+        <Parameter Name="begin" Title="Lid sinds..." Description="Bekijk ouders van leden die lid zijn sinds...">
+            <DateTime />
+        </Parameter>
+    </Parameters>
+    <Body>
+        <Text Name="Ouders"><![CDATA[
+SELECT
+    CONCAT(
+        case ouder.titel
+            when '' then
+                case ouder.voornaam
+                    when '' then 'fam.'
+                    else ouder.voornaam
+                end
+            else
+                case ouder.voorletters
+                    when '' then ouder.titel
+                    else concat( ouder.titel, ' ', ouder.voorletters )
+                end
+        end,
+        ' ',
+        CASE ouder.tussenvoegsel WHEN '' THEN '' ELSE CONCAT( ouder.tussenvoegsel, ' ' ) END,
+        ouder.achternaam
+    ) as `Naam`,
+    CONCAT(
+        kind.voornaam,
+        ' ',
+        CASE kind.tussenvoegsel WHEN '' THEN '' ELSE CONCAT( kind.tussenvoegsel, ' ' ) END,
+        kind.achternaam
+    ) as `Ouder van`,
+    ouder.email,
+    ouder.telefoon,
+    ouder.mobiel,
+    ouder.adres,
+    ouder.postcode,
+    ouder.plaats,
+    ouder.land,
+    case (
+        select count(1) from lidVan 
+        where lidVan.pers_id = ouder.pers_id
+            and lidVan.groep_id = 1
+            and van <= now() and ( tot is null or tot > now() )
+    ) when 0 then 'neen' else 'ja' end as `Donateur`
+from persoon as ouder
+    inner join relaties on
+        ( ouder.pers_id = relaties.pers_id_1
+            and relaties.relatie = 'ouder' )
+    inner join persoon as kind on
+        ( kind.pers_id = relaties.pers_id_2 )
+where
+    -- Kind is nog lid
+    ( select count(1) from lidVan join groep using ( groep_id )
+    where lidVan.pers_id = kind.pers_id
+        and groep.klasse in ( 'grootkoor', 'kamerkoor', 'orkest' )
+        and van <= now() and ( tot is null or tot > now() )
+    ) > 0
+    -- Kind is lid geworden vanaf @begin
+    and ( select min(van)
+        from lidVan
+        where lidVan.pers_id = kind.pers_id
+    ) >= @begin
+    ]]></Text>
+    </Body>
+</Query>

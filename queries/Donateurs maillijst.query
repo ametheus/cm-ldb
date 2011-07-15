@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://www.collegiummusicum.nl/nerdcie/CMQuery.xsd">
+    <Header>
+        <Title>Donateurs maillijst</Title>
+        <Description>Geeft een lijst met e-mailadressen van donateurs, voorzover bekend.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+    </Header>
+    <Body>
+        <Text Name="Alles"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE Email != ''
+	AND ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 1
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Mensen die gemaild willen worden"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Email
+FROM persoon
+WHERE Email != ''
+	AND ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 1
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Mensen die een brief willen"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats
+FROM persoon
+WHERE Email = ''
+	AND ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 1
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+    </Body>
+</Query>

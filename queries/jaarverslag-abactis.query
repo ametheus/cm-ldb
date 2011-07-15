@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Jaarverslag abactis</Title>
+        <Description>Alles wat een abactis weten moet.</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+    </Header>
+    <Parameters>
+        <Parameter Name="begin" Title="Begindatum" Description="Geef een begindatum op.">
+            <DateTime>2009-07-01T00:00:00</DateTime>
+        </Parameter><!---->
+        <Parameter Name="eind"  Title="Einddatum"  Description="Geef een einddatum op.">
+            <DateTime>2009-07-01T00:00:00</DateTime>
+        </Parameter><!---->
+    </Parameters>
+    <Body>
+        <Text Name="Ingehamerd"><![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`,
+  van AS `Ingehamerd`
+FROM persoon
+    JOIN lidVan USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE
+    groep.klasse IN ( 'grootkoor', 'orkest' )
+        AND van >= @begin AND van < @eind
+GROUP BY pers_id
+ORDER BY Achternaam, Voornaam
+        ]]></Text><!---->
+        <!--<Text Name="Parametertext">
+            SELECT cast( @begin as char ) as `begin`, Cast( DATE_ADD( @eind, interval 3 day ) as char ) as `eind`;
+        </Text>-->
+        <Text Name="Uitgehamerd"><![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`,
+  tot AS `Uitgehamerd`
+FROM persoon
+    JOIN lidVan USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE
+    groep.klasse IN ( 'grootkoor', 'orkest' )
+        AND tot >= @begin AND tot < @eind
+GROUP BY pers_id
+ORDER BY Achternaam, Voornaam
+        ]]></Text><!---->
+        <Text Name="Voor"><![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`
+FROM persoon
+WHERE ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'grootkoor', 'orkest' )
+      AND van <= @begin
+      AND ( tot IS NULL OR tot > @begin )
+    ) > 0
+ORDER BY Achternaam, Voornaam
+        ]]></Text><!---->
+        <Text Name="Na"><![CDATA[
+SELECT
+  CONCAT(
+    voornaam,
+    ' ',
+    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
+    achternaam
+  ) as `Naam`
+FROM persoon
+WHERE
+    ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'grootkoor', 'orkest' )
+      AND van <= @eind
+      AND ( tot IS NULL OR tot > @eind )
+    ) > 0
+ORDER BY Achternaam, Voornaam
+        ]]></Text><!---->
+        <Text Name="Commissies"><![CDATA[
+SELECT 
+    CONCAT(
+        Voornaam,
+        CASE Tussenvoegsel WHEN '' THEN ' ' ELSE CONCAT( ' ', Tussenvoegsel, ' ' ) END,
+        Achternaam
+    ) AS `Naam`,
+    groepsnaam as `Commissie`,
+    IF( ( van > @begin and van < @eind ), van, NULL ) as `Ingehamerd`,
+    IF( ( tot > @begin and tot < @eind ), tot, NULL ) as `Uitgehamerd`
+FROM lidVan
+    JOIN persoon USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE
+    klasse = 'commissie'
+    AND (
+        ( van > @begin and van < @eind )
+        OR
+        ( tot > @begin and tot < @eind )
+    )
+ORDER BY 2, 3, 4, achternaam
+        ]]></Text>
+    </Body>
+</Query>

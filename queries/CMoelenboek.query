@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Uitdraai CMoelenboek</Title>
+        <Description>Geeft een uitdraai die je voor het CMoelenboek kunt gebruiken.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+        <Category>Ledenlijsten</Category>
+    </Header>
+    <Parameters>
+    </Parameters>
+    <Body>
+        <Text Name="Monstertabel"><![CDATA[
+SELECT
+  Voornaam,
+  Tussenvoegsel as Tussenvoegsels,
+  Achternaam,
+  adres as Straat,
+  Postcode,
+  Plaats,
+  mobiel as Mobieletelefoonnummer,
+  telefoon as Vastetelefoonnummer,
+  Email,
+  voorletters as Initialen,
+  Geslacht,
+  ( SELECT groepsnaam FROM groep
+      JOIN lidVan USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse = 'orkest'
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ORDER BY van DESC
+    LIMIT 1
+    ) as Orkest,
+  ( SELECT groepsnaam FROM groep
+      JOIN lidVan USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse = 'grootkoor'
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ORDER BY van DESC
+    LIMIT 1
+    ) as Grootkoor,
+  ( SELECT groepsnaam FROM groep
+      JOIN lidVan USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse = 'kamerkoor'
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ORDER BY van DESC
+    LIMIT 1
+    ) as Kamerkoor,
+  ( SELECT MIN(van) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
+      AND van <= NOW()
+    ) as `Lidaan (= lid sinds)`,
+  group_concat( studienaam ) as Studie,
+  Geboortedatum
+FROM persoon
+    LEFT JOIN doetStudie USING ( pers_id )
+    LEFT JOIN studie USING ( studie_id )
+WHERE
+  ( SELECT COUNT(1) FROM lidVan
+      JOIN groep USING ( groep_id )
+    WHERE lidVan.pers_id = persoon.pers_id
+      AND groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
+      AND van <= NOW()
+      AND ( tot IS NULL OR tot > NOW() )
+    ) > 0
+group by pers_id
+ORDER BY Achternaam, Voornaam
+        ]]></Text><!---->
+    </Body>
+</Query>

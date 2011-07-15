@@ -1,0 +1,48 @@
+===  Roadmap  ===
+
+*  Queries
+   *  Basaal                        check       v3.2.0
+*  Bewerken
+   *  Laten zien                    check       
+   *  Wijzigen                      check       v3.2.1
+   *  Zoeken                        check       v3.2.2
+   *  Toevoegen/verwijderen         check       v3.2.3
+*  Queries
+   *  Parameters                    check       v3.2.4
+   *  Studies/secties/relaties      check       v3.2.5
+*  Queries
+   *  OpenOffice
+   *  Maillijst
+*  Snel opzoeken
+*  Queries
+   *  Adresstickers
+*  Vergrootglas (WTMB)
+*  Queries
+   *  Grafieken
+   *  Editor
+*  Core
+   *  Logging
+   *  Login met Google-ding
+*  Bewerken
+   *  Personen samenvoegen
+   *  Studies samenvoegen
+
+
+
+
+===  FMF  ===
+
+*  UTF-8 in Q-resultaat
+*  UTF-8 in de database
+*  Mooiere exceptions
+*  Linkje naar het beginscherm in het Q-resultaat,
+   of openen in een nieuw venster
+*  XSD intern
+*  Foutmelding als Q-dir niet bestaat
+*  0000-00-00 wegwerken
+*  Spinner.gif
+*  klikken op datum-jetzer maakt geen wijzig-event
+*  Opslaan kan nog per persoon mis gaan;
+   Misschien een "x van y opgeslagen..." toevoegen.
+*  Personpicker
+

@@ -17,6 +17,10 @@ class Config
 }
 
 
+define( "DATE_FREGEX", "[0-9]{4}-[0-9]{2}-[0-9]{2}" );
+define( "DATE_REGEX", "/".DATE_FREGEX."/" );
+
+
 class Connection
 {
     private $_dbcon;
@@ -35,8 +39,8 @@ class Connection
             $args = "";
             foreach ( $arguments as $k=>$v )
             {
-                $args .= ", @`" . mysql_real_escape_string($k,$this->_dbcon) . "` = " .
-                    "'" . mysql_real_escape_string($v,$this->_dbcon) . "'";
+                $V = ( ( $v === null ) ? "NULL" : "'" . mysql_real_escape_string($v,$this->_dbcon) . "'" );
+                $args .= ", @`" . mysql_real_escape_string($k,$this->_dbcon) . "` = " . $V;
             }
             
             $this->exec( "SET " . substr($args,1) );

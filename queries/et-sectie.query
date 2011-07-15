@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="http://tempuri.org/CMQuery.xsd">
+    <Header>
+        <Title>Wie speelden/zongen er ...</Title>
+        <Description>Oud-leden van instrument/stemgroep X</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+        <Category>Ledenlijsten</Category>
+    </Header>
+    <Parameters>
+        <Parameter Name="comm" Title="Kies een commissie" Description="Kies een commissie">
+            <Pick multiple="false">
+                <Subquery><![CDATA[SELECT groep_id, CONCAT( klasse, ': ', groepsnaam ) FROM groep 
+					WHERE klasse IN ('grootkoor', 'kamerkoor', 'orkest') ORDER BY klasse, groep_id]]>
+				</Subquery>
+            </Pick>
+        </Parameter>
+    </Parameters>
+    <Body>
+        <Text Name="Commissielijst">
+            <![CDATA[
+        SELECT
+            CONCAT( 
+                voornaam, ' ', 
+                CASE tussenvoegsel 
+                    WHEN '' then '' 
+                    else concat( tussenvoegsel, ' ' ) 
+                END, 
+                achternaam 
+            ) AS `Naam`,
+            YEAR( DATE_SUB( tot, INTERVAL 50 DAY ) ) AS `Jaar`,
+			`mobiel`,
+            `e-mail`
+        FROM persoon
+            JOIN lidVan USING ( `pers_id` )
+        WHERE groep_id = @comm
+            AND van < NOW() AND tot IS NOT NULL AND tot <= NOW()
+        ORDER BY voornaam, achternaam
+        ]]></Text>
+    </Body>
+</Query>

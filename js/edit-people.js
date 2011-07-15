@@ -178,6 +178,8 @@ function update_fields()
     $('#Field-Opm')              .val(d['opm']);
     
     $('#EditPeople').removeClass('loading');
+    
+    SGR.load( pid() );
 }
 
 function get_new_details()
@@ -225,6 +227,7 @@ function any_changes()
 
 function save()
 {
+    SGR.save();
     for ( i in Changes )
     {
         $.ajax({
@@ -324,4 +327,7 @@ function search_this()
         dataType: 'json'
     });
 }
+
+
+
 
