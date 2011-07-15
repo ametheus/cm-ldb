@@ -59,7 +59,8 @@ EOT;
         SELECT studie_id, studienaam FROM studie
         ORDER BY studienaam
 EOT;
-        SGR::$_Studies = new Command( $Q, DB::ro() );
+        SGR::$_Studies = new \Command( $Q, \DB::ro() );
+        return SGR::$_Studies;
     }
     static function Studies()
     {

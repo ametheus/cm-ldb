@@ -29,6 +29,18 @@ function Groepen()
         # Ja, dat is ongeldig HTML5. Sorry, w3c.
     }
 }
+function Studies()
+{
+    $DA = Adapters\SGR::Studies();
+    $s = $DA->execute();
+    $rv = "\n";
+    foreach ( $s as $studie )
+    {
+        $sn = htmlentities(ucfirst( $studie["studienaam"] ));
+        $rv .= "                        <option value=\"{$studie["studie_id"]}\"\">{$sn}</option>\n";
+    }
+    return $rv . "                    ";
+}
 
 
 
