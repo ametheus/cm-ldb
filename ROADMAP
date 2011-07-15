@@ -40,7 +40,6 @@
 *  XSD intern
 *  Foutmelding als Q-dir niet bestaat
 *  0000-00-00 wegwerken
-*  Spinner.gif
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
    Misschien een "x van y opgeslagen..." toevoegen.

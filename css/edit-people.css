@@ -114,7 +114,9 @@ td.special_label
 }
 td.loading
 {
-    background-color: lime; /* TODO: spinner */
+    background-image: url(/img/spinner.gif);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 td.special_label ul
 {
