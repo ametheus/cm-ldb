@@ -182,6 +182,7 @@ EOT;
 EOT;
         SGR::$_update_Studies = new \Command( $Q, \DB::rw(),
             array( 'pers_id', 'studie_id', 'n_studie_id', 'n_afgestudeerd' ) );
+        return SGR::$_update_Studies;
     }
     static function update_Studies()
     {

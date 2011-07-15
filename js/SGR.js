@@ -143,6 +143,7 @@ var SGR = {
     save: function()
     {
         var trans = escape(JSON.stringify({
+            studies: SGR.Studie.transaction,
             groepen: SGR.Groep.transaction
         }));
         
@@ -152,6 +153,7 @@ var SGR = {
             data: {transaction: trans},
             success: function(data)
             {
+                SGR.Studie.transaction = [];
                 SGR.Groep.transaction = [];
             },
             dataType: 'html'

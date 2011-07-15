@@ -122,10 +122,21 @@ elseif ( $_GET["json"] == "wijzig-SGR" )
 {
     $transaction = json_decode( urldecode($_REQUEST["transaction"]), true );
     
+    $DS = Adapters\SGR::delete_Studies();
+    $IS = Adapters\SGR::insert_Studies();
+    $US = Adapters\SGR::update_Studies();
+    
     $DG = Adapters\SGR::delete_Groepen();
     $IG = Adapters\SGR::insert_Groepen();
     $UG = Adapters\SGR::update_Groepen();
     
+    function valid_studie( $studie )
+    {
+        if ( !is_array($studie) ) { return false; }
+        if ( !is_numeric( @$studie["studie_id"] ) ) { return false; }
+        if ( !is_numeric( @$studie["afgestudeerd"] ) ) { return false; }
+        return true;
+    }
     function valid_groep( $groep, $check_tot=false )
     {
         if ( !is_array($groep) ) { return false; }
@@ -138,6 +149,34 @@ elseif ( $_GET["json"] == "wijzig-SGR" )
         return true;
     }
     
+    foreach ( $transaction["studies"] as $X )
+    {
+        list($pers_id, $voor, $na) = $X;
+        
+        if ( ! is_numeric($pers_id) ) { continue; }
+        if ( $voor === null )
+        {
+            if ( !valid_studie($na) ) { continue; }
+            
+            $IS->execute(array('pers_id'=>$pers_id,'studie_id'=>$na["studie_id"],
+                'afgestudeerd'=>( $na["afgestudeerd"] > 0 ? 'ja' : 'neen' )));
+        }
+        elseif ( $na === null )
+        {
+            if ( !valid_studie($voor) ) { continue; }
+            
+            $DS->execute(array('pers_id'=>$pers_id,'studie_id'=>$voor["studie_id"]));
+        }
+        else
+        {
+            if ( !valid_studie($na) ) { continue; }
+            if ( !valid_studie($voor) ) { continue; }
+            
+            $US->execute(array('pers_id'=>$pers_id,
+                'studie_id'=>$voor["studie_id"], 'n_studie_id'=>$na["studie_id"],
+                'n_afgestudeerd'=>( $na["afgestudeerd"] > 0 ? 'ja' : 'neen' )));
+        }
+    }
     foreach ( $transaction["groepen"] as $X )
     {
         list($pers_id, $voor, $na) = $X;
