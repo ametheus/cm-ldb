@@ -203,5 +203,42 @@ EOT;
         if ( ! SGR::$_update_Studies ) { return SGR::_update_Studies(); }
         return SGR::$_update_Studies;
     }
+    
+    
+    
+    private static $_insert_Relaties = false;
+    private static function _insert_Relaties()
+    {
+        $Q = <<<EOT
+        INSERT INTO relaties ( pers_id_1, pers_id_2, relatie )
+        VALUES ( @pers_id_1, @pers_id_2, @relatie )
+EOT;
+        SGR::$_insert_Relaties = new \Command( $Q, \DB::ro(),
+            array( 'pers_id_1', 'pers_id_2', 'relatie' ) );
+        return SGR::$_insert_Relaties;
+    }
+    static function insert_Relaties()
+    {
+        if ( ! SGR::$_insert_Relaties ) { return SGR::_insert_Relaties(); }
+        return SGR::$_insert_Relaties;
+    }
+    
+    private static $_delete_Relaties = false;
+    private static function _delete_Relaties()
+    {
+        $Q = <<<EOT
+        DELETE FROM relaties
+        WHERE ( pers_id_1 = @pers_id_1 AND pers_id_2 = @pers_id_2 )
+            OR ( pers_id_1 = @pers_id_2 AND pers_id_2 = @pers_id_1 )
+EOT;
+        SGR::$_delete_Relaties = new \Command( $Q, \DB::ro(),
+            array( 'pers_id_1', 'pers_id_2' ) );
+        return SGR::$_delete_Relaties;
+    }
+    static function delete_Relaties()
+    {
+        if ( ! SGR::$_delete_Relaties ) { return SGR::_delete_Relaties(); }
+        return SGR::$_delete_Relaties;
+    }
 }
 
