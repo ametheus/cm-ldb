@@ -163,6 +163,25 @@
                     <input type="button" id="save" value="Opslaan" style="float: right" />
                 </p>
             </div>
+            <div class="slc_dialog" id="RelatieEditor">
+                <p>
+                    <label for="pers_id_b">Persoon</label>
+                    <select id="pers_id_b"><?=Namen()?></select>
+                </p>
+                <p>
+                    <label for="type">Relatietype</label>
+                    <select id="type">
+                        <option value="ouder">Ouder van ...</option>
+                        <option value="kind">Kind van ...</option>
+                        <option value="partner">Partner van ...</option>
+                        <option value="overig">Anders / onbekend</option>
+                    </select>
+                </p>
+                <p>
+                    <input type="button" id="delete" value="Verwijderen" />
+                    <input type="button" id="save" value="Opslaan" style="float: right" />
+                </p>
+            </div>
         </div>
     </body>
 </html>

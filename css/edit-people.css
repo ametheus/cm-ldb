@@ -108,6 +108,10 @@ td.special_label
     height: 24px;
     border: 2px outset;
 }
+.slc_dialog input, .slc_dialog select
+{
+    max-width: 270px;
+}
 td.loading
 {
     background-color: lime; /* TODO: spinner */
