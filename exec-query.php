@@ -36,19 +36,20 @@ if ( @$_REQUEST["as"] == "e-mail" )
 		unset( $row["email"] );
 		$ml .= ",\n\"" . implode( " ", $row ) . "\" <" . $em . ">";
 		//$ml .= ",\n" .$row["email"];
+		//$ml .= "," .$row["email"];
 	}
 	$ml = substr($ml,2);
 	
 	//header('Content-type: text/plain');
-	print( '<p>' . urldecode(urldecode('#to%253Dcdelzer%252540codeweavers.com%2526cmid%253D1')) . '</p>' );
-	print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=' .
+	/*print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=' .
 		urlencode($ml) . '">Test de boel hier.</a></p>' );
 	print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?ui=2&view=btop#' .
 		urlencode(urlencode('bcc='.urlencode($ml).'&cmid=1')) .
 		'">Of probeer deze.</a></p>');
 	print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&tf=0&to=#' .
 		urlencode('to='.urlencode($ml)) .
-		'">Of deze.</a></p>');
+		'">Of deze.</a></p>');*/
+	print( '<p><a href="mailto:?bcc='.htmlentities($ml).'">Klik hier om de standaard mailclient te openen.</a></p>' );
 	print( "<p>Of kopieer dit in het BCC-vak: <textarea>".$ml."</textarea></p>" );
 	exit;
 }
