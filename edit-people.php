@@ -142,6 +142,9 @@ elseif ( $_GET["json"] == "wijzig-SGR" )
     $IG = Adapters\SGR::insert_Groepen();
     $UG = Adapters\SGR::update_Groepen();
     
+    $DR = Adapters\SGR::delete_Relaties();
+    $IR = Adapters\SGR::insert_Relaties();
+    
     function valid_studie( $studie )
     {
         if ( !is_array($studie) ) { return false; }
@@ -159,6 +162,12 @@ elseif ( $_GET["json"] == "wijzig-SGR" )
             if (( @$groep["tot"] !== null ) && !preg_match(DATE_REGEX,@$groep["tot"]) ) { return false; }
         }
         return true;
+    }
+    function valid_relatie( $rel )
+    {
+        if ( $rel === null ) { return true; }
+        return ( is_numeric($rel['pers_id']) &&
+            in_array($rel['relatie'],array('ouder','kind','partner','anders')) );
     }
     
     foreach ( $transaction["studies"] as $X )
@@ -213,6 +222,33 @@ elseif ( $_GET["json"] == "wijzig-SGR" )
             
             $UG->execute(array('pers_id'=>$pers_id,'groep_id'=>$voor["groep_id"],'van'=>$voor["van"],
                 'n_groep_id'=>$na["groep_id"],'n_van'=>$na["van"],'n_tot'=>$na["tot"]));
+        }
+    }
+    foreach ( $transaction["relaties"] as $X )
+    {
+        list($pers_id, $voor, $na) = $X;
+        if ( ! is_numeric($pers_id) ) { continue; }
+        if ( (!valid_relatie($voor)) || (!valid_relatie($na)) ) { continue; }
+        
+        if ( $voor !== null )
+        {
+            $DR->execute(array('pers_id_1'=>$pers_id,'pers_id_2'=>$voor['pers_id']));
+        }
+        if ( $na !== null )
+        {
+            $rt = $na['relatie'];
+            /*if ( $rt == 'ouder' )
+            {
+                $IR->execute(array('pers_id_1'=>$pers_id,'pers_id_2'=>$na['pers_id'],'relatie'=>'ouder'));
+            }
+            else*/if ( $rt == 'kind' )
+            {
+                $IR->execute(array('pers_id_1'=>$na['pers_id'],'pers_id_2'=>$pers_id,'relatie'=>'ouder'));
+            }
+            else
+            {
+                $IR->execute(array('pers_id_1'=>$pers_id,'pers_id_2'=>$na['pers_id'],'relatie'=>$rt));
+            }
         }
     }
 }
