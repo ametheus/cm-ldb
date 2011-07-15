@@ -32,7 +32,7 @@ var SGR = {
         if ( ! sgr ) { alert( "Not found!" ); return; }
         
         var n = sgr["studies"].length;
-        for ( var i = 0; i < n; i++ ) { SGR.append_studie( sgr["studies"][i] ); }
+        for ( var i = 0; i < n; i++ ) { SGR.Studie.append( sgr["studies"][i] ); }
         n = sgr["groepen"].length;
         for ( var i = 0; i < n; i++ ) { SGR.Groep.append( sgr["groepen"][i] ); }
         n = sgr["relaties"].length;
@@ -40,13 +40,6 @@ var SGR = {
         
         $("td.special_label").removeClass('loading');
         
-    },
-    append_studie: function( studie )
-    {
-        var li = $('<li>'+studie["studienaam"]+
-                   (studie["afgestudeerd"]>0?' (A)':'')+'</li>');
-        li.click(function(){alert(studie);});
-        $("#Studies ul").append(li);
     },
     append_relatie: function( relatie )
     {
@@ -73,6 +66,34 @@ var SGR = {
         $("#Relaties ul").append(li);
     },
     
+    
+    Studie: {
+        fmt: function( studie )
+        {
+            return studie["studienaam"] + ( studie["afgestudeerd"] > 0 ? ' (A)' : '' );
+        },
+        key: function( studie )
+        {
+            if ( studie == null ) { return null; }
+            return {
+                studie_id: studie["studie_id"],
+                afgestudeerd: studie["afgestudeerd"]
+            };
+        },
+        get_fields: function()
+        {
+            return {
+                studie_id: $("#StudieEditor #studie_id").val(),
+                studienaam: $("#StudieEditor #studie_id :selected").html(),
+                afgestudeerd: ( $("#StudieEditor #afgestudeerd").attr('checked') ? 1 : 0 )
+            };
+        },
+        set_fields: function( studie )
+        {
+            $("#StudieEditor #studie_id").val(studie["studie_id"]);
+            $("#StudieEditor #afgestudeerd").attr('checked', ( studie["afgestudeerd"] > 0 ) );
+        }
+    },
     
     Groep: {
         fmt: function( groep )
@@ -139,11 +160,11 @@ var SGR = {
 };
 
 create_slc( "#Secties", SGR.Groep, "#GroepenEditor", "Bewerk groep" )
+create_slc( "#Studies", SGR.Studie, "#StudieEditor", "Bewerk studie" )
 
 $(function()
 {
     // TODO: Later weer weghalen als Studies/relaties ook gebruik maken van SLC's
-    $("#Studies").append('<ul />');
     $("#Relaties").append('<ul />');
 });
 
