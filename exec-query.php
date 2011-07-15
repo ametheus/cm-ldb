@@ -10,6 +10,11 @@ if ( ! $Q )
     die( "Query niet gevonden." );
 }
 
+function I($n)
+{
+	return str_repeat(' ',4*$n);
+}
+
 $Result = $Q->execute();
 
 if ( @$_REQUEST["as"] == "e-mail" )
@@ -87,27 +92,33 @@ foreach ( array_keys($Result) as $table )
 <?php
 foreach ( $Result as $table=>$data )
 {
-    if ( count($data) == 0 ) { continue; }
     $tid = preg_replace('/[^a-zA-Z0-9]/','',$table);
     print( "            <div id=\"table-$tid\">\n" );
-    print( "            <table>\n" );
-    print( "                <tr>\n" );
-    foreach ( array_keys($data[0]) as $col )
-    {
-        print( "                    <th>{$col}</th>\n" );
-    }
-    print( "                </tr>\n" );
-    foreach ( $data as $row )
-    {
-        print( "                <tr>\n" );
-        foreach ( $row as $val )
-        {
-            print( "                    <td>{$val}</td>\n" );
-        }
-        print( "                </tr>\n" );
-    }
-    print( "            </table>\n" );
-    print( "            </div>\n" );
+    if ( count($data) > 0 )
+	{
+		print( I(4)."<table>\n" );
+		print( I(5)."<thead>\n" );
+		print( I(6)."<tr>\n" );
+		foreach ( array_keys($data[0]) as $col )
+		{
+			print( I(7)."<th>{$col}</th>\n" );
+		}
+		print( I(6)."</tr>\n" );
+		print( I(5)."</tbody>\n" );
+		print( I(5)."<thead>\n" );
+		foreach ( $data as $row )
+		{
+			print( I(6)."<tr>\n" );
+			foreach ( $row as $val )
+			{
+				print( I(7)."<td>{$val}</td>\n" );
+			}
+			print( I(6)."</tr>\n" );
+		}
+		print( I(5)."</tbody>\n" );
+		print( I(4)."</table>\n" );
+	}
+    print( I(3)."</div>\n" );
 }
 ?>
         </div>
