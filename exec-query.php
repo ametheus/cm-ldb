@@ -12,6 +12,30 @@ if ( ! $Q )
 
 $Result = $Q->execute();
 
+if ( @$_REQUEST["as"] == "e-mail" )
+{
+	// https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=test
+	$tn = @$_REQUEST["table"];
+	$table = @$Result[$tn];
+	if ( ! $table )
+	{
+		throw new Exception( "Er is geen tabel met de naam \"{$tn}\"." );
+	}
+	
+	$ml = "";
+	foreach ( $table as $row )
+	{
+		if ( ! array_key_exists( "email", $row ) )
+		{
+			throw new Exception( "Dit is volgens mij geen maillijst." );
+		}
+		if ( ! preg_match(EMAIL_REGEX,$row["email"]) ) { continue; }
+		$ml .= ",\n" . $row["email"];
+	}
+	
+	header('Content-type: text/plain');
+	print( substr($ml,2) );
+}
 
 
 
