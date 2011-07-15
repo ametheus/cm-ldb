@@ -227,23 +227,17 @@ elseif ( $_GET["json"] == "wijzig-SGR" )
     foreach ( $transaction["relaties"] as $X )
     {
         list($pers_id, $voor, $na) = $X;
-        if ( ! is_numeric($pers_id) ) {print("Exit at ".__LINE__.".\n"); continue; }
-        if ( (!valid_relatie($voor)) || (!valid_relatie($na)) ) {print("Exit at ".__LINE__.".\n"); continue; }
+        if ( ! is_numeric($pers_id) ) { continue; }
+        if ( (!valid_relatie($voor)) || (!valid_relatie($na)) ) { continue; }
         
         if ( $voor !== null )
         {
             $DR->execute(array('pers_id_1'=>$pers_id,'pers_id_2'=>$voor['pers_id']));
-            print( "Removing {$pers_id}-{$voor['pers_id']}.\n" );
         }
         if ( $na !== null )
         {
-            print( "Adding {$pers_id}-{$na['pers_id']}.\n" );
             $rt = $na['relatie'];
-            /*if ( $rt == 'ouder' )
-            {
-                $IR->execute(array('pers_id_1'=>$pers_id,'pers_id_2'=>$na['pers_id'],'relatie'=>'ouder'));
-            }
-            else*/if ( $rt == 'kind' )
+            if ( $rt == 'kind' )
             {
                 $IR->execute(array('pers_id_1'=>$na['pers_id'],'pers_id_2'=>$pers_id,'relatie'=>'ouder'));
             }
