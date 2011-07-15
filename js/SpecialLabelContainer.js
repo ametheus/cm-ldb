@@ -114,3 +114,19 @@ function create_slc( container, CC, editor, title )
 
 
 
+
+function duck_compare( A, B )
+{
+    // Perform a shallow comparison of dict's A and B. Returns true if they're
+    // ostensibly equal.
+    
+    if (( A == null ) && ( B == null )) { return true; }
+    if (( A == null ) || ( B == null )) { return false; }
+    
+    for ( i in A )
+    {
+        if (( ! ( i in B ) ) || ( A[i] != B[i] )) { return false; }
+    }
+    return true;
+}
+
