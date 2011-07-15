@@ -29,21 +29,25 @@ if ( @$_REQUEST["as"] == "e-mail" )
 	}
 	
 	$ml = "";
-	foreach ( $table as $row )
+	if ( count($table) > 0 )
 	{
-		if ( ! array_key_exists( "email", $row ) )
+		$ec = array_key_exists( "email", $table[0] ) ? 'email' : 'Email';
+		if ( ! array_key_exists( $ec, $table[0] ) )
 		{
 			throw new Exception( "Dit is volgens mij geen maillijst." );
 		}
-		if ( ! preg_match(EMAIL_REGEX,$row["email"]) ) { continue; }
-		
-		$em = $row["email"];
-		unset( $row["email"] );
-		$ml .= ",\n\"" . implode( " ", $row ) . "\" <" . $em . ">";
-		//$ml .= ",\n" .$row["email"];
-		//$ml .= "," .$row["email"];
+		foreach ( $table as $row )
+		{
+			if ( ! preg_match(EMAIL_REGEX,$row[$ec]) ) { continue; }
+			
+			$em = $row[$ec];
+			unset( $row[$ec] );
+			$ml .= ",\n\"" . implode( " ", $row ) . "\" <" . $em . ">";
+			//$ml .= ",\n" .$em;
+			//$ml .= "," .$em;
+		}
+		$ml = substr($ml,2);
 	}
-	$ml = substr($ml,2);
 	
 	//header('Content-type: text/plain');
 	/*print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=' .
@@ -93,7 +97,15 @@ foreach ( array_keys($Result) as $table )
 foreach ( $Result as $table=>$data )
 {
     $tid = preg_replace('/[^a-zA-Z0-9]/','',$table);
-    print( "            <div id=\"table-$tid\">\n" );
+    print( I(3)."<div id=\"table-$tid\">\n" );
+	print( I(4)."<div>\n" );
+	print( I(5)."<span class=\"total_count\">Totaal: <strong>".count($data)."</strong>.</span>\n" );
+	if ( isset($data[0]) && (isset($data[0]['email']) || isset($data[0]['Email'])) )
+	{
+		print( I(5)."<a href=\"/query/".$_GET["query"]."?as=e-mail&table=$table\">Openen als maillijst</a>\n" );
+	}
+	print( I(5)."\n" );
+	print( I(4)."</div>\n" );
     if ( count($data) > 0 )
 	{
 		print( I(4)."<table>\n" );
