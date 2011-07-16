@@ -8,8 +8,17 @@ class Openoffice
     {
         header("Content-type: text/plain" );
         print( "Een echt .ods-bestand gaat nu even niet lukken.\n".
-            "In plaats daarvan krijg je het [content.xml]-bestand: \n\n".
-            Openoffice::content_file( $result ) );
+            "In plaats daarvan krijg je een bestandsnaam: \n\n".
+            Openoffice::create_zip( $result ) );
+    }
+    
+    private static function create_zip( $result, $filename=false )
+    {
+        if ( $filename === false ) { $filename = tempnam( '/tmp', 'LDB_ods_' ); }
+        
+        // TODO: Load zip file with data.
+        
+        return $filename;
     }
     
     private static function manifest_file( $result )
@@ -38,9 +47,10 @@ class Openoffice
         
         $rv .= "<office:document-meta office:version=\"1.2\" grddl:transformation=\"http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl\">\n";
         $rv .= "\t<office:meta>\n";
+        
         # TODO: Gebruikersnaam
-        $rv .= "\t\t<meta:initial-creator>".'De database'."</meta:initial-creator>\n";
-        $rv .= "\t\t<dc:creator>".'De database'."</dc:creator>\n";
+        $rv .= "\t\t<meta:initial-creator>"    .    'De database'    .    "</meta:initial-creator>\n";
+        $rv .= "\t\t<dc:creator>"   .               'De database'    .    "</dc:creator>\n";
         $rv .= "\t\t<meta:creation-date>".date('c')."</meta:creation-date>\n";
         $rv .= "\t\t<dc:date>".date('c')."</dc:date>\n";
         $rv .= "\t\t<meta:editing-duration>PT0M1S</meta:editing-duration><!-- Probably even shorter. -->\n";
