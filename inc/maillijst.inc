@@ -37,8 +37,9 @@ class Maillijst
             var clippy = new ZeroClipboard.Client( '<?=mysql_escape_string($id)?>' );
             clippy.setText( '<?=mysql_escape_string($clip)?>' );
             
-            $("#redir").attr('href','<?=$URL?>').html('Klik hier om verder te gaan.');
-            //$("#spinner").remove();
+            clippy.addEventListener( 'complete', function(client, text) {
+                window.open( '<?=$URL?>' );
+            } );
         });
         </script><?php
     }
