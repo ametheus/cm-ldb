@@ -8,8 +8,8 @@ class Openoffice
     {
         header("Content-type: text/plain" );
         print( "Een echt .ods-bestand gaat nu even niet lukken.\n".
-            "In plaats daarvan krijg je het [settings.xml]-bestand: \n\n".
-            Openoffice::settings_file( $result ) );
+            "In plaats daarvan krijg je het [content.xml]-bestand: \n\n".
+            Openoffice::content_file( $result ) );
     }
     
     private static function manifest_file( $result )
@@ -19,7 +19,7 @@ class Openoffice
         $rv .= "<manifest:manifest>\n";
         $rv .= "\t<manifest:file-entry manifest:media-type=\"application/vnd.oasis.opendocument.spreadsheet\" manifest:version=\"1.2\" manifest:full-path=\"/\"/>\n";
         $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"content.xml\"/>\n";
-        $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"styles.xml\"/>\n";
+        //$rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"styles.xml\"/>\n";
         $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n";
         $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"settings.xml\"/>\n";
         $rv .= "</manifest:manifest>";
@@ -147,6 +147,84 @@ class Openoffice
         $rv .= "    </config:config-item-set> \n";
         $rv .= "  </office:settings> \n";
         $rv .= "</office:document-settings>";
+        
+        return $rv;
+    }
+    
+    private static function content_file( $result )
+    {
+        $rv = "";
+        
+        $rv .= "<office:document-content xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\" xmlns:rpt=\"http://openoffice.org/2005/report\" grddl:transformation=\"http://docs.oasis-open.org/office/1.2/xslt/odf2rdf.xsl\" xmlns:math=\"http://www.w3.org/1998/Math/MathML\" xmlns:field=\"urn:openoffice:names:experimental:ooo-ms-interop:xmlns:field:1.0\" xmlns:ooo=\"http://openoffice.org/2004/office\" xmlns:form=\"urn:oasis:names:tc:opendocument:xmlns:form:1.0\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:of=\"urn:oasis:names:tc:opendocument:xmlns:of:1.2\" xmlns:dom=\"http://www.w3.org/2001/xml-events\" xmlns:oooc=\"http://openoffice.org/2004/calc\" xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\" xmlns:script=\"urn:oasis:names:tc:opendocument:xmlns:script:1.0\" xmlns:presentation=\"urn:oasis:names:tc:opendocument:xmlns:presentation:1.0\" xmlns:tableooo=\"http://openoffice.org/2009/table\" xmlns:css3t=\"http://www.w3.org/TR/css3-text/\" xmlns:grddl=\"http://www.w3.org/2003/g/data-view#\" xmlns:dr3d=\"urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0\" xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\" office:version=\"1.2\" xmlns:number=\"urn:oasis:names:tc:opendocument:xmlns:datastyle:1.0\" xmlns:ooow=\"http://openoffice.org/2004/writer\" xmlns:xforms=\"http://www.w3.org/2002/xforms\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:formx=\"urn:openoffice:names:experimental:ooxml-odf-interop:xmlns:form:1.0\" xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:draw=\"urn:oasis:names:tc:opendocument:xmlns:drawing:1.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:meta=\"urn:oasis:names:tc:opendocument:xmlns:meta:1.0\" xmlns:svg=\"urn:oasis:names:tc:opendocument:xmlns:svg-compatible:1.0\" xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\" xmlns:chart=\"urn:oasis:names:tc:opendocument:xmlns:chart:1.0\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\"> \n";
+        $rv .= "  <office:scripts /> \n";
+        $rv .= "  <office:font-face-decls> \n";
+        $rv .= "    <style:font-face svg:font-family=\"Arial\" style:font-family-generic=\"swiss\" style:font-pitch=\"variable\" style:name=\"Arial\" /> \n";
+        $rv .= "    <style:font-face svg:font-family=\"&apos;DejaVu Sans&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\" style:name=\"DejaVu Sans\" /> \n";
+        $rv .= "    <style:font-face svg:font-family=\"&apos;Droid Sans Fallback&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\" style:name=\"Droid Sans Fallback\" /> \n";
+        $rv .= "    <style:font-face svg:font-family=\"&apos;Lohit Hindi&apos;\" style:font-family-generic=\"system\" style:font-pitch=\"variable\" style:name=\"Lohit Hindi\" /> \n";
+        $rv .= "  </office:font-face-decls> \n";
+        $rv .= "  <office:automatic-styles> \n";
+        $rv .= "    <style:style style:name=\"co1\" style:family=\"table-column\"> \n";
+        $rv .= "      <style:table-column-properties fo:break-before=\"auto\" style:column-width=\"0.8925in\" /> \n";
+        $rv .= "    </style:style> \n";
+        $rv .= "    <style:style style:name=\"ro1\" style:family=\"table-row\"> \n";
+        $rv .= "      <style:table-row-properties fo:break-before=\"auto\" style:use-optimal-row-height=\"true\" style:row-height=\"0.178in\" /> \n";
+        $rv .= "    </style:style> \n";
+        $rv .= "    <style:style style:name=\"ro2\" style:family=\"table-row\"> \n";
+        $rv .= "      <style:table-row-properties fo:break-before=\"auto\" style:use-optimal-row-height=\"true\" style:row-height=\"0.178in\" /> \n";
+        $rv .= "      <style:text-properties fo:font-weight=\"bold\" style:font-weight-asian=\"bold\" style:font-weight-complex=\"bold\"/>\n";
+        $rv .= "    </style:style> \n";
+        $rv .= "    <style:style style:master-page-name=\"Default\" style:name=\"ta1\" style:family=\"table\"> \n";
+        $rv .= "      <style:table-properties table:display=\"true\" style:writing-mode=\"lr-tb\" /> \n";
+        $rv .= "    </style:style> \n";
+        $rv .= "  </office:automatic-styles> \n";
+        $rv .= "  <office:body> \n";
+        $rv .= "    <office:spreadsheet> \n";
+        
+        foreach ( $result as $name => $sheet )
+        {
+            $rv .= "      <table:table table:style-name=\"ta1\" table:print=\"false\" table:name=\"{$name}\"> \n";
+            
+            $columns = ( count($sheet) > 0 ? array_keys($sheet[0]) : array() );
+            
+            $rv .= "        <table:table-column table:style-name=\"co1\" table:default-cell-style-name=\"Default\" table:number-columns-repeated=\"".count($columns)."\" /> \n";
+            
+            # Eerste rij met kolomnamen
+            $rv .= "        <table:table-row table:style-name=\"ro2\"> \n";
+            foreach ( $columns as $col )
+            {
+                $c = htmlspecialchars( $col );
+                $rv .= "          <table:table-cell office:value-type=\"string\"> \n";
+                $rv .= "            <text:p>{$c}</text:p> \n";
+                $rv .= "          </table:table-cell> \n";
+            }
+            $rv .= "        </table:table-row> \n";
+            
+            foreach ( $sheet as $row )
+            {
+                $rv .= "        <table:table-row table:style-name=\"ro1\"> \n";
+                foreach ( $row as $v )
+                {
+                    $v = htmlspecialchars( $v );
+                    if ( strlen($v) > 0 )
+                    {
+                        $rv .= "          <table:table-cell office:value-type=\"string\"> \n";
+                        $rv .= "            <text:p>{$v}</text:p> \n";
+                        $rv .= "          </table:table-cell> \n";
+                    }
+                    else
+                    {
+                        $rv .= "          <table:table-cell />\n";
+                    }
+                }
+                $rv .= "        </table:table-row> \n";
+            }
+            $rv .= "      </table:table> \n";
+        }
+        
+        $rv .= "    </office:spreadsheet> \n";
+        $rv .= "  </office:body> \n";
+        $rv .= "</office:document-content> ";
         
         return $rv;
     }

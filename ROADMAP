@@ -45,4 +45,5 @@
    Misschien een "x van y opgeslagen..." toevoegen.
 *  Personpicker
 *  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
+*  http://php.net/manual/en/function.mysql-field-name.php
 
