@@ -80,6 +80,7 @@ elseif ( @$_REQUEST["as"] == "ods" )
         </script>
     </head>
     <body>
+        <div class="ods"><a href="/query/<?=$_GET["query"]?>?as=ods">Openen in OpenOffice</a></div>
         <div id="Table-tabs">
             <ul>
 <?php
