@@ -16,7 +16,12 @@ class Openoffice
     {
         if ( $filename === false ) { $filename = tempnam( '/tmp', 'LDB_ods_' ); }
         
+        $zf = new ZipArchive();
+        $zf->open( $filename, ZIPARCHIVE::OVERWRITE );
+        
         // TODO: Load zip file with data.
+        
+        $zf->close();
         
         return $filename;
     }
