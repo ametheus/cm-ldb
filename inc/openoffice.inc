@@ -24,6 +24,11 @@ class Openoffice
         
         return $rv;
     }
+    
+    private static function mimetype_file()
+    {
+        return 'application/vnd.oasis.opendocument.spreadsheet';
+    }
 }
 
 
