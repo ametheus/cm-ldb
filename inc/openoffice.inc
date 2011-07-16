@@ -19,6 +19,7 @@ class Openoffice
         $zf = new ZipArchive();
         $zf->open( $filename, ZIPARCHIVE::OVERWRITE );
         
+        $zf->addFile( "img/user-database-48.png", "Thumbnails/thumbnail.png" );
         $zf->addFromString( 'META-INF/manifest.xml', Openoffice::manifest_file( $result ) );
         $zf->addFromString( 'mimetype', Openoffice::mimetype_file() );
         $zf->addFromString( 'meta.xml', Openoffice::meta_file() );
