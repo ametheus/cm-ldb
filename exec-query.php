@@ -87,8 +87,9 @@ foreach ( $Result as $table=>$data )
 	print( I(5)."<span class=\"total_count\">Totaal: <strong>".count($data)."</strong>.</span>\n" );
 	if ( isset($data[0]) && (isset($data[0]['email']) || isset($data[0]['Email'])) )
 	{
-		print( I(5)."<a id=\"maillijstlink_$tid\" href=\"/query/" . $_GET["query"] .
-			"?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a>\n" );
+		print( I(5)."<span style=\"padding: 2px;\" id=\"maillijstlink_$tid\">" .
+			"<a href=\"/query/" . $_GET["query"] .
+			"?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a></span>\n" );
 		Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data) );
 	}
 	print( I(5)."\n" );
