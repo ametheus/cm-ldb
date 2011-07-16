@@ -118,6 +118,23 @@ ZeroClipboard.Client.prototype = {
 		// find X/Y position of domElement
 		var box = ZeroClipboard.getDOMObjectPosition(this.domElement, appendElem);
 		
+		
+		// Size hack [AI]
+		if ( typeof(stylesToAdd) == 'object' )
+		{
+			if (( 'width'  in stylesToAdd ) && ( stylesToAdd.width  > 0 ))
+			{
+				box.width  = stylesToAdd.width;
+				delete stylesToAdd.width;
+			}
+			if (( 'height' in stylesToAdd ) && ( stylesToAdd.height > 0 ))
+			{
+				box.height = stylesToAdd.height;
+				delete stylesToAdd.height;
+			}
+		}
+		
+		
 		// create floating DIV above element
 		this.div = document.createElement('div');
 		var style = this.div.style;

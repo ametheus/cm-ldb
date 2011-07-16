@@ -62,7 +62,7 @@ if ( @$_REQUEST["as"] == "e-mail" )
             padding: 2px;
         }
         </style>
-        <link type="text/css" href="/css/humanity/jquery-ui-1.8.12.custom.css" rel="stylesheet" />    
+        <link type="text/css" href="/css/humanity/jquery-ui-1.8.12.custom.css" rel="stylesheet" />
         <script type="text/javascript" src="/js/jquery.js"></script>
         <script type="text/javascript" src="/js/jquery-ui.js"></script>
         <script type="text/javascript" src="/js/ZeroClipboard.js"></script>
@@ -70,13 +70,6 @@ if ( @$_REQUEST["as"] == "e-mail" )
         <script type="text/javascript">
         $(function(){
             $("#Table-tabs").tabs();
-            
-            $("#Table-tabs").bind( "tabsshow", function(){
-                for ( i in ZeroClipboard.clients )
-                {
-                    ZeroClipboard.clients[i].reposition();
-                }
-            } );
         })
         </script>
     </head>
@@ -100,10 +93,11 @@ foreach ( $Result as $table=>$data )
     print( I(5)."<span class=\"total_count\">Totaal: <strong>".count($data)."</strong>.</span>\n" );
     if ( isset($data[0]) && (isset($data[0]['email']) || isset($data[0]['Email'])) )
     {
-        print( I(5)."<span class=\"maillijstlink\" id=\"maillijstlink_$tid\">" .
-            "<a href=\"/query/" . $_GET["query"] .
+        print( I(5)."<span class=\"maillijstlink\">" .
+            "<a id=\"maillijstlink_$tid\" href=\"/query/" . $_GET["query"] .
             "?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a></span>\n" );
-        Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data) );
+        Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data),
+            array('height' => 18, 'width' => 135) );
     }
     print( I(5)."\n" );
     print( I(4)."</div>\n" );
@@ -135,5 +129,33 @@ foreach ( $Result as $table=>$data )
 }
 ?>
         </div>
+        <script type="text/javascript">
+        $(function(){
+            function reposition_clips()
+            {
+                var ind = $("#Table-tabs").tabs( "option", "selected" );
+                
+                var id = $($("#Table-tabs > div")[ind]).attr('id').substr("table-".length);
+                
+                for ( i in ZeroClipboard.clients )
+                {
+                    var fid = ZeroClipboard.clients[i].domElement.id.
+                        substr("maillijstlink_".length);
+                    
+                    if ( id == fid )
+                    {
+                        ZeroClipboard.clients[i].show();
+                    }
+                    else
+                    {
+                        ZeroClipboard.clients[i].hide();
+                    }
+                }
+            }
+            
+            reposition_clips();
+            $("#Table-tabs").bind( "tabsshow", reposition_clips );
+        })
+        </script>
     </body>
 </html>

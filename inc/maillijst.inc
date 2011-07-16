@@ -19,10 +19,13 @@ class Maillijst
         return $rv;
     }
     
-    static function klembordknop( $id, $clip )
+    static function klembordknop( $id, $clip, $style = array() )
     {
         $URL = Maillijst::gmail_to_link('',false,false,'Plak hier de maillijst',false);
-        $URL = mysql_escape_string( $URL );
+        
+        $id   = mysql_escape_string( $id   );
+        $clip = mysql_escape_string( $clip );
+        $URL  = mysql_escape_string( $URL  );
         ?>
         <script type="text/javascript">
         $(function(){
@@ -34,8 +37,9 @@ class Maillijst
             
             ZeroClipboard.setMoviePath( '/img/ZeroClipboard10.swf' );
             
-            var clippy = new ZeroClipboard.Client( '<?=mysql_escape_string($id)?>' );
-            clippy.setText( '<?=mysql_escape_string($clip)?>' );
+            var clippy = new ZeroClipboard.Client();
+            clippy.glue( '<?=$id?>', undefined, <?=json_encode($style,JSON_FORCE_OBJECT)?> );
+            clippy.setText( '<?=$clip?>' );
             
             clippy.addEventListener( 'complete', function(client, text) {
                 window.open( '<?=$URL?>' );
