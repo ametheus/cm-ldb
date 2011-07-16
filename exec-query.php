@@ -3,6 +3,7 @@
 
 require_once( "inc/db.inc" );
 require_once( "inc/query.inc" );
+require_once( 'inc/maillijst.inc' );
 $Q = Query::query_from_file();
 
 if ( ! $Q )
@@ -19,8 +20,6 @@ $Result = $Q->execute();
 
 if ( @$_REQUEST["as"] == "e-mail" )
 {
-	// https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=test
-	// https://mail.google.com/a/collegiummusicum.nl/?ui=2&view=btop&ver=1s4dmo0mhdqld#to%253Dcdelzer%252540codeweavers.com%2526cmid%253D1
 	$tn = @$_REQUEST["table"];
 	$table = @$Result[$tn];
 	if ( ! $table )
@@ -28,26 +27,11 @@ if ( @$_REQUEST["as"] == "e-mail" )
 		throw new Exception( "Er is geen tabel met de naam \"{$tn}\"." );
 	}
 	
-	$ml = "";
-	if ( count($table) > 0 )
-	{
-		$ec = array_key_exists( "email", $table[0] ) ? 'email' : 'Email';
-		if ( ! array_key_exists( $ec, $table[0] ) )
-		{
-			throw new Exception( "Dit is volgens mij geen maillijst." );
-		}
-		foreach ( $table as $row )
-		{
-			if ( ! preg_match(EMAIL_REGEX,$row[$ec]) ) { continue; }
-			
-			$em = $row[$ec];
-			unset( $row[$ec] );
-			$ml .= ",\n\"" . implode( " ", $row ) . "\" <" . $em . ">";
-			//$ml .= ",\n" .$em;
-			//$ml .= "," .$em;
-		}
-		$ml = substr($ml,2);
-	}
+	header( "Content-type: text/plain" );
+	print( Maillijst::maak_lijst( $table ) );
+	
+	
+	//Clipboard::set_and_redirect( $ml, Clipboard::gmail_to_link('',false,false,"Plak hier de maillijst",false) );
 	
 	//header('Content-type: text/plain');
 	/*print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=' .
@@ -58,8 +42,8 @@ if ( @$_REQUEST["as"] == "e-mail" )
 	print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&tf=0&to=#' .
 		urlencode('to='.urlencode($ml)) .
 		'">Of deze.</a></p>');*/
-	print( '<p><a href="mailto:?bcc='.htmlentities($ml).'">Klik hier om de standaard mailclient te openen.</a></p>' );
-	print( "<p>Of kopieer dit in het BCC-vak: <textarea>".$ml."</textarea></p>" );
+	//print( '<p><a href="mailto:?bcc='.htmlentities($ml).'">Klik hier om de standaard mailclient te openen.</a></p>' );
+	//print( "<p>Of kopieer dit in het BCC-vak: <textarea>".$ml."</textarea></p>" );
 	exit;
 }
 
@@ -73,8 +57,9 @@ if ( @$_REQUEST["as"] == "e-mail" )
         
         <link type="text/css" href="/css/common.css" rel="stylesheet" />	
         <link type="text/css" href="/css/humanity/jquery-ui-1.8.12.custom.css" rel="stylesheet" />	
-		<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
-		<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
+		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript" src="/js/jquery-ui.js"></script>
+		<script type="text/javascript" src="/js/ZeroClipboard.js"></script>
         
         <script type="text/javascript">
         $(function(){
@@ -102,7 +87,9 @@ foreach ( $Result as $table=>$data )
 	print( I(5)."<span class=\"total_count\">Totaal: <strong>".count($data)."</strong>.</span>\n" );
 	if ( isset($data[0]) && (isset($data[0]['email']) || isset($data[0]['Email'])) )
 	{
-		print( I(5)."<a href=\"/query/".$_GET["query"]."?as=e-mail&table=$table\">Openen als maillijst</a>\n" );
+		print( I(5)."<a id=\"maillijstlink_$tid\" href=\"/query/" . $_GET["query"] .
+			"?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a>\n" );
+		Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data) );
 	}
 	print( I(5)."\n" );
 	print( I(4)."</div>\n" );
