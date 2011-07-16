@@ -4,12 +4,16 @@ require_once( "inc/db.inc" );
 
 class Openoffice
 {
-    static function SpreadSheet( $result )
+    static function SpreadSheet( $result, $title = false )
     {
-        header("Content-type: text/plain" );
-        print( "Een echt .ods-bestand gaat nu even niet lukken.\n".
-            "In plaats daarvan krijg je een bestandsnaam: \n\n".
-            Openoffice::create_zip( $result ) );
+        $fn = Openoffice::create_zip( $result );
+        if ( $title === false ) { $title = 'result'; }
+        
+        header( "Content-disposition: attachment;filename={$title}.ods" );
+        header( "Content-type: application/vnd.oasis.opendocument.spreadsheet" );
+        
+        readfile( $fn );
+        unlink( $fn );
     }
     
     private static function create_zip( $result, $filename=false )
