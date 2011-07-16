@@ -19,13 +19,18 @@ class Openoffice
         $zf = new ZipArchive();
         $zf->open( $filename, ZIPARCHIVE::OVERWRITE );
         
-        $zf->addFile( "img/user-database-48.png", "Thumbnails/thumbnail.png" );
+        
+        $zf->addFromString( 'Configurations2/accelerator/current.xml', '' );
         $zf->addFromString( 'META-INF/manifest.xml', Openoffice::manifest_file( $result ) );
+        
         $zf->addFromString( 'mimetype', Openoffice::mimetype_file() );
         $zf->addFromString( 'meta.xml', Openoffice::meta_file() );
         $zf->addFromString( 'settings.xml', Openoffice::settings_file( $result ) );
         $zf->addFromString( 'content.xml', Openoffice::content_file( $result ) );
         $zf->addFromString( 'styles.xml', Openoffice::style_file() );
+        
+        $zf->addFile( "img/user-database-48.png", "Thumbnails/thumbnail.png" );
+        
         
         $zf->close();
         
@@ -34,17 +39,30 @@ class Openoffice
     
     private static function manifest_file( $result )
     {
-        $rv = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
-        
-        $rv .= "<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\">\n";
-        $rv .= "\t<manifest:file-entry manifest:media-type=\"application/vnd.oasis.opendocument.spreadsheet\" manifest:version=\"1.2\" manifest:full-path=\"/\"/>\n";
-        $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"content.xml\"/>\n";
-        //$rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"styles.xml\"/>\n";
-        $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"meta.xml\"/>\n";
-        $rv .= "\t<manifest:file-entry manifest:media-type=\"text/xml\" manifest:full-path=\"settings.xml\"/>\n";
-        $rv .= "</manifest:manifest>";
-        
-        return $rv;
+        return <<<EOT
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest:manifest xmlns:manifest="urn:oasis:names:tc:opendocument:xmlns:manifest:1.0">
+ <manifest:file-entry manifest:media-type="application/vnd.oasis.opendocument.spreadsheet" manifest:version="1.2" manifest:full-path="/"/>
+ <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="content.xml"/>
+ <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="styles.xml"/>
+ <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="meta.xml"/>
+ <manifest:file-entry manifest:media-type="image/png" manifest:full-path="Thumbnails/thumbnail.png"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Thumbnails/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/current.xml"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/accelerator/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/progressbar/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/floater/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/popupmenu/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/toolpanel/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/menubar/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/toolbar/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/Bitmaps/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/images/"/>
+ <manifest:file-entry manifest:media-type="" manifest:full-path="Configurations2/statusbar/"/>
+ <manifest:file-entry manifest:media-type="application/vnd.sun.xml.ui.configuration" manifest:full-path="Configurations2/"/>
+ <manifest:file-entry manifest:media-type="text/xml" manifest:full-path="settings.xml"/>
+</manifest:manifest>
+EOT;
     }
     
     private static function mimetype_file()
