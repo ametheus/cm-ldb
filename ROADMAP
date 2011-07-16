@@ -4,15 +4,15 @@
    *  Basaal                        check       v3.2.0
 *  Bewerken
    *  Laten zien                    check       
-   *  Wijzigen                      check       v3.2.1
-   *  Zoeken                        check       v3.2.2
-   *  Toevoegen/verwijderen         check       v3.2.3
+   *  Wijzigen                      check       
+   *  Zoeken                        check       v3.2.1
+   *  Toevoegen/verwijderen         check       v3.2.2
 *  Queries
-   *  Parameters                    check       v3.2.4
-   *  Studies/secties/relaties      check       v3.2.5
+   *  Parameters                    check       v3.2.3
+   *  Studies/secties/relaties      check       v3.2.4
 *  Queries
+   *  Maillijst                     check       
    *  OpenOffice
-   *  Maillijst
 *  Snel opzoeken
 *  Queries
    *  Adresstickers
@@ -38,11 +38,11 @@
 *  Linkje naar het beginscherm in het Q-resultaat,
    of openen in een nieuw venster
 *  XSD intern
-*  Foutmelding als Q-dir niet bestaat
 *  0000-00-00 wegwerken
-*  Spinner.gif
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
    Misschien een "x van y opgeslagen..." toevoegen.
 *  Personpicker
+*  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
+*  http://php.net/manual/en/function.mysql-field-name.php
 

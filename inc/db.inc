@@ -8,17 +8,27 @@ if ( ! Auth::check() )
     exit;
 }
 
-
 class Config
 {
     static $query_dir = 'queries';
     
-    # Database connectivity is configured below.
+    private static $version = '3.2.5';
+    static function version() { return Config::$version; }
+    static function short_app() { return "Ledendatabase v" . Config::$version; }
+    static function full_app()  { return "LSKO Collegium Musicum - Ledendatabase - v" . Config::$version; }
+    static function version_ua() { return "LSKO_Collegium_Musicum-Ledendatabase/" . Config::$version; }
+    
+    # Note: Database connectivity is configured below.
 }
 
 
 define( "DATE_FREGEX", "[0-9]{4}-[0-9]{2}-[0-9]{2}" );
 define( "DATE_REGEX", "/".DATE_FREGEX."/" );
+
+# A regular expression to validate an e-mail address according to RFC 2822.
+# Source: http://www.regular-expressions.info/email.html
+define( "EMAIL_FREGEX", '(?:[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*|"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])' );
+define( "EMAIL_REGEX", "/".EMAIL_FREGEX."/" );
 
 
 class Connection

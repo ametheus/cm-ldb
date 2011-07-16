@@ -16,7 +16,7 @@ var SGR = {
         }
         else
         {
-            SGR.timer = setTimeout(function(){SGR.actually_load(pers_id);}, 500 );
+            SGR.timer = setTimeout(function(){SGR.actually_load(pers_id);}, 300 );
         }
     },
     

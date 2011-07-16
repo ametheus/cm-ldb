@@ -128,7 +128,7 @@ class Query
     
     static function queries_in_dir( $dir )
     {
-        $dh = opendir( $dir );
+        $dh = @opendir( $dir );
         if ( ! $dh ) { return array(); }
         
         $rv = array();
