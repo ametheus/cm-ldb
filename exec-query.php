@@ -49,7 +49,7 @@ if ( @$_REQUEST["as"] == "e-mail" )
 }
 elseif ( @$_REQUEST["as"] == "ods" )
 {
-    Openoffice::SpreadSheet( $Result );
+    Openoffice::SpreadSheet( $Result, $Q->Title );
     exit;
 }
 
