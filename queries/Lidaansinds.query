@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Lid-aan sinds ...</Title>
         <Description>Laat een lijstje zien van iedereen die op een gegeven datum geen lid was, en nu wel.</Description>

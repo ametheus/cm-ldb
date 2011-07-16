@@ -1,4 +1,5 @@
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Maillijst leden</Title>
         <Description>Geeft een maillijst van alle huidige leden.</Description>

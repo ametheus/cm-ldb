@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Ouders van nieuwe leden</Title>
         <Description>Alle ouders van leden die lid zijn geworden sinds...</Description>
