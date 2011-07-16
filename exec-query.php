@@ -4,6 +4,7 @@
 require_once( "inc/db.inc" );
 require_once( "inc/query.inc" );
 require_once( 'inc/maillijst.inc' );
+require_once( 'inc/openoffice.inc' );
 $Q = Query::query_from_file();
 
 if ( ! $Q )
@@ -44,6 +45,11 @@ if ( @$_REQUEST["as"] == "e-mail" )
         '">Of deze.</a></p>');*/
     //print( '<p><a href="mailto:?bcc='.htmlentities($ml).'">Klik hier om de standaard mailclient te openen.</a></p>' );
     //print( "<p>Of kopieer dit in het BCC-vak: <textarea>".$ml."</textarea></p>" );
+    exit;
+}
+elseif ( @$_REQUEST["as"] == "ods" )
+{
+    Openoffice::SpreadSheet( $Result );
     exit;
 }
 
