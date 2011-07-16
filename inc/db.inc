@@ -8,12 +8,16 @@ if ( ! Auth::check() )
     exit;
 }
 
-
 class Config
 {
     static $query_dir = 'queries';
     
-    # Database connectivity is configured below.
+    private static $version = '3.2.5';
+    static function version() { return Config::$version; }
+    static function short_app() { return "Ledendatabase v" . Config::$version; }
+    static function full_app()  { return "LSKO Collegium Musicum - Ledendatabase - v" . Config::$version; }
+    
+    # Note: Database connectivity is configured below.
 }
 
 
