@@ -19,7 +19,11 @@ class Openoffice
         $zf = new ZipArchive();
         $zf->open( $filename, ZIPARCHIVE::OVERWRITE );
         
-        // TODO: Load zip file with data.
+        $zf->addFromString( 'META-INF/manifest.xml', Openoffice::manifest_file( $result ) );
+        $zf->addFromString( 'mimetype', Openoffice::mimetype_file() );
+        $zf->addFromString( 'meta.xml', Openoffice::meta_file() );
+        $zf->addFromString( 'settings.xml', Openoffice::settings_file( $result ) );
+        $zf->addFromString( 'content.xml', Openoffice::content_file( $result ) );
         
         $zf->close();
         
