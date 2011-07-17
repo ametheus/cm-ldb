@@ -11,6 +11,7 @@
         <script type="text/javascript" src="/js/jquery-ui.js"></script>
         <script type="text/javascript" src="/js/naam.js"></script>
         <script type="text/javascript" src="/js/SpecialLabelContainer.js"></script>
+        <script type="text/javascript" src="/js/PersonPicker.js"></script>
         <script type="text/javascript" src="/js/SGR.js"></script>
         <script type="text/javascript" src="/js/edit-people.js"></script>
         <script type="text/javascript" src="/js/json2-min.js"></script>
@@ -133,6 +134,14 @@
                     <td colspan="2" id="Relaties" class="special_label">Relaties</td>
                 </tr>
             </table>
+        </div>
+        <div>
+            <input class="PersonPicker" style="width: 200px;" />
+            <script>
+            $(function(){
+                PersonPicker.create( "input.PersonPicker" );
+            });
+            </script>
         </div>
         <div style="display: none;">
             <div class="slc_dialog" id="GroepenEditor">

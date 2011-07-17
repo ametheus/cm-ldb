@@ -89,6 +89,12 @@ elseif (( $_GET["json"] == "namen" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
     if ( is_numeric(@$_REQUEST["dist"]) ) { $args["dist"] = $_REQUEST["dist"]; }
     print(json_encode($PA->execute( $args )));
 }
+elseif (( $_GET["json"] == "personpick" ) && ( isset($_REQUEST["q"]) ))
+{
+    $PA = Adapters\Persoon::PersonPick();
+    $args = array( 'q'=>$_REQUEST["q"] );
+    print(json_encode($PA->execute( $args )));
+}
 elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
 {
     $Detail = Adapters\Persoon::Detail();
