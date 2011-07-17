@@ -41,18 +41,6 @@ function Studies()
     }
     return $rv . "                    ";
 }
-function Namen()
-{
-    $DA = Adapters\Persoon::Namen();
-    $n = $DA->execute(array('pers_id'=>0,'dist'=>10000000));
-    $rv = "\n";
-    foreach ( $n as $P )
-    {
-        $pn = htmlentities($P['Naam']);
-        $rv .= "                        <option value=\"{$P["pers_id"]}\"\">{$pn}</option>\n";
-    }
-    return $rv . "                    ";
-}
 
 
 

@@ -18,6 +18,9 @@ $(function()
     $('#IDNav-last').click(function(){select_index(IDs.length);});
     
     PersonPicker.create( '#IDNav-searchbox', select_id );
+    PersonPicker.create( '#RelatieEditor #pers_id_b', function(id){
+        SGR.Relatie.actual_actual_pers_id = id;
+    } );
     
     $('#IDNav-insert').click(insert_person);
     $('#IDNav-delete').click(delete_person);
