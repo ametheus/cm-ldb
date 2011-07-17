@@ -15,7 +15,7 @@
    *  OpenOffice                    check       v3.2.5
 *  Core
    *  Login met Google-ding         check       
-*  Snel opzoeken
+*  Snel opzoeken                    check       v3.2.6
 *  Queries
    *  Adresstickers
 *  Vergrootglas (WTMB)
@@ -40,8 +40,8 @@
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
    Misschien een "x van y opgeslagen..." toevoegen.
-*  Personpicker
 *  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
 *  http://php.net/manual/en/function.mysql-field-name.php
 *  Cryptografisch ondertekend cookie
+*  'Kind van' werkt nog niet helemaal.
 
