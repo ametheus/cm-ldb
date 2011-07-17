@@ -10,6 +10,7 @@ RewriteEngine On
 RewriteRule ^query/(.*)$            exec-query.php?query=$1                    [QSA]
 
 RewriteRule ^login$                 login.php
+RewriteRule ^logout$                login.php
 
 RewriteRule ^bewerken$              edit-people.php
 RewriteRule ^bewerken/json/(.*)$    edit-people.php?json=$1                    [QSA]

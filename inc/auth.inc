@@ -6,12 +6,19 @@ class Auth
     {
         return ( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) == "/login" );
     }
-    
-    static function deny_access( $why = false, $error_code = false )
+    private static function logout_page()
     {
-        header( "HTTP/1.1 401 Unauthorized" );
+        return ( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) == "/logout" );
+    }
+    
+    static function deny_access( $why = false, $error_code = false, $send_header = true )
+    {
+        if ( $send_header )
+        {
+            header( "HTTP/1.1 401 Unauthorized" );
+        }
         
-        if ( ! Auth::login_page() )
+        if (( ! Auth::login_page() ) && $send_header )
         {
             header( "Location: /login?continue=" . urlencode($_SERVER["REQUEST_URI"]) );
             
@@ -32,7 +39,15 @@ class Auth
      */
     static function check()
     {
-        if ( session_id() == "" )
+        if ( Auth::logout_page() )
+        {
+            session_destroy();
+            header( 'HTTP/1.1 302 Found' );
+            header( 'Location: /' );
+            
+            Auth::deny_access( false, false, false );
+        }
+        elseif ( session_id() == "" )
         {
             Auth::deny_access( false );
         }
