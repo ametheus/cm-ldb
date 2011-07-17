@@ -43,6 +43,13 @@ function LoQ()
         </div>
         <div id="Modules">
             <a id="Mod-Bewerken" href="/bewerken"><div>Bewerken</div></a>
+            <a id="Mod-Logout" href="/logout">
+                <div>
+                    Uitloggen
+                    <br />
+                    <span style="font-size: 75%; color: #999999;">Ingelogd als <?=Auth::username()?></span>
+                </div>
+            </a>
         </div>
     </body>
 </html>

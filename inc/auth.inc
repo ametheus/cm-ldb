@@ -90,6 +90,11 @@ class Auth
         return 0;
     }
     
+    static function username()
+    {
+        return $_SESSION["e-mail"];
+    }
+    
     private static function enticate( $username, $password )
     {
         require_once( "Net/SMTP.php" );
