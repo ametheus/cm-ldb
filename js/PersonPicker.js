@@ -4,7 +4,7 @@ var PersonPicker = {
     
     cache: {},
     
-    create: function( elt )
+    create: function( elt, cb )
     {
         $(elt).autocomplete({
             
@@ -31,6 +31,11 @@ var PersonPicker = {
                         }
                     }
                 );
+            },
+            
+            select: function( event, ui )
+            {
+                cb( ui.item.id );
             }
             
         });
