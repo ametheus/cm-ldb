@@ -9,6 +9,8 @@ RewriteEngine On
 
 RewriteRule ^query/(.*)$            exec-query.php?query=$1                    [QSA]
 
+RewriteRule ^login$                 login.php
+
 RewriteRule ^bewerken$              edit-people.php
 RewriteRule ^bewerken/json/(.*)$    edit-people.php?json=$1                    [QSA]
 
@@ -20,12 +22,6 @@ RewriteRule ^js/jquery-ui.js$       js/jquery-ui-1.8.12.custom.min.js
 
 
 
-<Files ~ "\.php$">
-    require valid-user
-</Files>
-<Files "">
-    require valid-user
-</Files>
 
 <Files ~ "\.(inc|html)">
     order allow,deny

@@ -63,7 +63,7 @@
                 <td valign="top"> 
                     <!-- login box --> 
                     <div id="login"> 
-                        <form id="gaia_loginform" action="/login?continue=<?=urlencode($_SERVER["REQUEST_URI"])?>" method="post" onsubmit="return(gaia_onLoginSubmit());"> 
+                        <form id="gaia_loginform" method="post" action="/login?continue=<?=urlencode(@$_REQUEST["continue"])?>" method="post" onsubmit="return(gaia_onLoginSubmit());"> 
                             <div id="gaia_loginbox"> 
                                 <table class="form-noindent" cellspacing="3" cellpadding="5" width="100%" border="0"> 
                                     <tr> 
