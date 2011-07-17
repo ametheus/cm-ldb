@@ -1,0 +1,77 @@
+
+body,td,div,p,a,font,span {font-family: arial,sans-serif}
+body {margin:1em 0;}
+h1 { font-size:1.3em; font-weight:normal; margin:0 0 0.4em; }
+.intro { margin:0 1em 0.5em 0 }
+.c {width: 4; height: 0}
+.footer { text-align:center; margin:1em 0 }
+ 
+.tl {padding: 0; width: 4; text-align: left; vertical-align: top}
+.tr {padding: 0; width: 4; text-align: right; vertical-align: top}
+.bl {padding: 0; width: 4; text-align: left; vertical-align: bottom}
+.br {padding: 0; width: 4; text-align: right; vertical-align: bottom}
+ 
+.caption {color:#000000; white-space:nowrap; background:#E8EEFA; text-align:center}
+.form-noindent {background-color: #ffffff; border: #C3D9FF 1px solid}
+.feature-image {padding: 15px 0 0 0; width:48px; vertical-align: top; text-align: right; }
+.feature-description {padding: 20px 0 0 10px; vertical-align: top; text-align: left; }
+.signup_btn {cursor: pointer; margin: 10px 0 -20px 0; text-align: center; }
+.signup_btn_link {color: #000; text-align: center; text-align: center; text-decoration: none; padding: 0 7px; font-weight: bold; font-size: 14px; white-space: nowrap; }
+ 
+.SPRITE_signup_button_grey_l { background:no-repeat url(https://mail.google.com/mail/help/images/greybtn.png) 0 0; width: 14px; height: 45px }
+.SPRITE_signup_button_grey_m { background:no-repeat url(https://mail.google.com/mail/help/images/greybtn.png) -14px 0; height: 45px }
+.SPRITE_signup_button_grey_r { background:no-repeat url(https://mail.google.com/mail/help/images/greybtn.png) -365px 0; width: 15px; height: 45px }
+.SPRITE_cell {background: no-repeat url(//www.google.com/images/icons/feature/sprite_mail_hp.png) 0 -126px; width: 42px; height: 42px; float: right }
+.SPRITE_search_new {background:no-repeat url(//www.google.com/images/icons/feature/sprite_mail_hp.png) 0 -84px; width: 42px; height: 42px; float: right }
+.SPRITE_spam_new {background:no-repeat url(//www.google.com/images/icons/feature/sprite_mail_hp.png) 0 -42px; width: 42px; height: 42px; float: right }
+.SPRITE_storage {background:no-repeat url(//www.google.com/images/icons/feature/sprite_mail_hp.png) 0 0; width: 42px; height: 42px; float: right }
+.SPRITE_feed_icon {background: no-repeat url(//www.google.com/images/icons/feature/sprite_mail_hp.png) -16px -184px; width: 16px; height: 16px }
+.SPRITE_corner_bl {background:no-repeat url(https://mail.google.com/mail/help/images/login_corners_sprite.png) 0 0; width: 4px; height: 4px; font-size:2px }
+.SPRITE_corner_br {background:no-repeat url(https://mail.google.com/mail/help/images/login_corners_sprite.png) -4px 0; width: 4px; height: 4px; font-size:2px }
+.SPRITE_corner_tl {background:no-repeat url(https://mail.google.com/mail/help/images/login_corners_sprite.png) 0 -4px; width: 4px; height: 4px; font-size:2x }
+.SPRITE_corner_tr {background:no-repeat url(https://mail.google.com/mail/help/images/login_corners_sprite.png) -4px -4px; width: 4px; height: 4px; font-size:2px }
+
+
+
+
+#highlight { float:left; padding-top:0.6em; margin:2em 2em 0 0; border-top:1px solid #ddd; min-width:160px }
+#highlight h2 { font-size:1em; margin:0 0 0.2em }
+.time{ color:#999; margin:0; display:inline; padding:0 0 0 0.8em;}
+.post{ padding:0; padding-top:2px; }
+.snippet{ margin:0.3em 0 0 }
+.feed-heading { color:#999; float:left; margin:1.05em 0.3em 0 0 }
+#feed-icons { list-style:none; margin:1em 0 0; padding:0; text-indent:-10000px; overflow:hidden }
+#feed-icons li { width:16px; height:16px; float:left; margin-right:0.5em  }
+#feed-icons li a { display:block; width:16px; height:16px; background-image:url(//www.google.com/images/icons/feature/sprite_mail_hp.png); background-repeat:no-repeat }
+.feed-blogger a { background-position: -16px -168px; }
+.feed-twitter a { background-position: 0 -168px; }
+.feed-facebook a { background-position: 0 -184px; }
+.feed-buzz a { background-position: 0 -200px }
+.feed-rss a { background-position: -16px -184px; }
+
+
+
+
+div.errormsg { color: red; font-size: smaller; font-family:arial,sans-serif; }
+font.errormsg { color: red; font-size: smaller; font-family:arial,sans-serif; }  
+
+
+
+
+.gaia.le.lbl { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+.gaia.le.fpwd { font-family: Arial, Helvetica, sans-serif; font-size: 70%; }
+.gaia.le.chusr { font-family: Arial, Helvetica, sans-serif; font-size: 70%; }
+.gaia.le.val { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+.gaia.le.button { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+.gaia.le.rem { font-family: Arial, Helvetica, sans-serif; font-size: smaller; }
+ 
+.gaia.captchahtml.desc { font-family: arial, sans-serif; font-size: smaller; } 
+.gaia.captchahtml.cmt { font-family: arial, sans-serif; font-size: smaller; font-style: italic; }
+
+
+
+
+#gaia_table td:nth-child(2)
+{
+    text-align: left;
+}
