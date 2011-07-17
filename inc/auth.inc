@@ -35,10 +35,12 @@ class Auth
     
     /**
      * Check user privileges.
-     * @return int Privilege level 1-4, where 4 is the highest.
+     * @return int Privilege level 1-4, where 4 is the highest. Or 0.
      */
     static function check()
     {
+        session_start();
+        
         if ( Auth::logout_page() )
         {
             session_destroy();
@@ -47,14 +49,26 @@ class Auth
             
             Auth::deny_access( false, false, false );
         }
-        elseif ( session_id() == "" )
+        elseif ( ! isset($_SESSION['e-mail']) )
         {
             if ( isset($_POST['username']) && isset($_POST['password']) )
             {
-                if ( Auth::enticate( $_POST['username'], $_POST['password'] ) )
+                $em = Auth::enticate( $_POST['username'], $_POST['password'] );
+                if ( $em !== false )
                 {
-                    header( "content-type: text/plain" );
-                    die( "Hoera!" );
+                    $_SESSION["e-mail"] = $em;
+                    
+                    // TODO: Generate session signature.
+                    
+                    //session_write_close();
+                    
+                    if ( Auth::login_page() && isset($_REQUEST["continue"]) )
+                    {
+                        header( "HTTP/1.1 302 Found" );
+                        header( "Location: " . str_replace("\n","",$_REQUEST["continue"]) );
+                    }
+                    
+                    return Auth::priv_level( $em );
                 }
                 else
                 {
@@ -67,15 +81,10 @@ class Auth
         }
         else
         {
-            session_start();
-            
             // TODO: Verify session signature.
             
             
-            // TODO: Implement layered, less hard-coded privileges.
-            if ( $_SESSION['e-mail'] == 'nerdcie@collegiummusicum.nl' ) { return 4; }
-            if ( $_SESSION['e-mail'] == 'bestuur@collegiummusicum.nl' ) { return 3; }
-            if ( substr($_SESSION['e-mail'],-1*strlen('@collegiummusicum.nl')) == '@collegiummusicum.nl'  ) { return 1; }
+            return Auth::priv_level( $_SESSION['e-mail'] );
         }
         
         return 0;
@@ -109,7 +118,23 @@ class Auth
             return false;
         }
         
-        return true;
+        return "{$username}@{$D}";
+    }
+    
+    /**
+     * Check privileges of $email.
+     * @return int Privilege level 1-4, where 4 is the highest. Or 0.
+     */
+    private static function priv_level( $email )
+    {
+        // TODO: Implement layered, less hard-coded privileges.
+        $D = '@collegiummusicum.nl';
+        
+        if ( $email == 'nerdcie'.$D ) { return 4; }
+        if ( $email == 'bestuur'.$D ) { return 3; }
+        if ( substr($email,-1*strlen($D)) == $D  ) { return 1; }
+        
+        return 0;
     }
 }
 
