@@ -49,6 +49,20 @@ class Auth
         }
         elseif ( session_id() == "" )
         {
+            if ( isset($_POST['username']) && isset($_POST['password']) )
+            {
+                if ( Auth::enticate( $_POST['username'], $_POST['password'] ) )
+                {
+                    header( "content-type: text/plain" );
+                    die( "Hoera!" );
+                }
+                else
+                {
+                    Auth::deny_access( "Ongeldige gebruikersnaam <br /> en/of wachtwoord." );
+                    exit;
+                }
+            }
+            
             Auth::deny_access( false );
         }
         else
@@ -65,6 +79,37 @@ class Auth
         }
         
         return 0;
+    }
+    
+    private static function enticate( $username, $password )
+    {
+        require_once( "Net/SMTP.php" );
+        
+        $D = 'collegiummusicum.nl';
+        
+        if ( substr($username,-1*strlen("@$D")) == "@$D" )
+        {
+            $username = substr($username,0,-1*strlen("@$D"));
+        }
+        
+        
+        $SMTP = new Net_SMTP( 'ssl://smtp.gmail.com', 465 );
+        
+        $r = $SMTP->connect(3);
+        if ( is_a( $r, "PEAR_Error" ) )
+        {
+            Auth::deny_access( "Verbinden met Google mislukt." );
+            return false;
+        }
+        
+        $r = $SMTP->auth( "{$username}@{$D}", $password );
+        if ( is_a( $r, "PEAR_Error" ) )
+        {
+            Auth::deny_access( "Ongeldige gebruikersnaam <br /> en/of wachtwoord." );
+            return false;
+        }
+        
+        return true;
     }
 }
 
