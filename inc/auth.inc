@@ -39,7 +39,7 @@ class Auth
      */
     static function check()
     {
-        session_start();
+        @session_start();
         
         if ( Auth::logout_page() )
         {
