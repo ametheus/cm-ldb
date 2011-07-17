@@ -17,8 +17,10 @@ $(function()
     $('#IDNav-next').click(function(){select_index(selectedIndex+1);});
     $('#IDNav-last').click(function(){select_index(IDs.length);});
     
-    $('#IDNav-searchbox').change(search);
-    $('#IDNav-search').click(search);
+    PersonPicker.create( '#IDNav-searchbox', select_id );
+    PersonPicker.create( '#RelatieEditor #pers_id_b', function(id){
+        SGR.Relatie.actual_actual_pers_id = id;
+    } );
     
     $('#IDNav-insert').click(insert_person);
     $('#IDNav-delete').click(delete_person);
@@ -290,44 +292,6 @@ function delete_person()
         dataType: 'json'
     });
 }
-
-
-
-function search()
-{
-    var nst = $('#IDNav-searchbox').val();
-    if ( nst == searchTerm ) { search_next(); return; }
-    searchTerm = nst;
-    search_this();
-}
-function search_next()
-{
-    var s = searches[searchTerm];
-    if ( !s || ( s.length == 0 )) { return; }
-    searchIndex++;
-    if ( searchIndex >= s.length ) { searchIndex = 0; }
-    
-    select_id( s[searchIndex] );
-}
-function search_this()
-{
-    var st = searchTerm;
-    //alert('Searching for ['+st+'].');
-    $.ajax({
-        type: 'POST',
-        url: '/bewerken/json/zoek',
-        data: {'term': st},
-        success: function(data)
-        {
-            //alert( 'Data for ['+st+']: '+data )
-            searches[st] = data;
-            searchIndex = -1;
-            search_next();
-        },
-        dataType: 'json'
-    });
-}
-
 
 
 

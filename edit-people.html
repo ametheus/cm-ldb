@@ -11,6 +11,7 @@
         <script type="text/javascript" src="/js/jquery-ui.js"></script>
         <script type="text/javascript" src="/js/naam.js"></script>
         <script type="text/javascript" src="/js/SpecialLabelContainer.js"></script>
+        <script type="text/javascript" src="/js/PersonPicker.js"></script>
         <script type="text/javascript" src="/js/SGR.js"></script>
         <script type="text/javascript" src="/js/edit-people.js"></script>
         <script type="text/javascript" src="/js/json2-min.js"></script>
@@ -37,7 +38,6 @@
                 <a id="IDNav-last">&nbsp;</a>
                 <div class="separator">&nbsp;</div>
                 <input type="text" id="IDNav-searchbox" />
-                <a id="IDNav-search">&nbsp;</a>
                 <div class="separator">&nbsp;</div>
                 <a id="IDNav-insert">&nbsp;</a>
                 <a id="IDNav-delete">&nbsp;</a>
@@ -170,7 +170,8 @@
             <div class="slc_dialog" id="RelatieEditor">
                 <p>
                     <label for="pers_id_b">Persoon</label>
-                    <select id="pers_id_b" class="resetable"><?=Namen()?></select>
+                    <input id="pers_id_b" type="tekst" class="PersonPicker resetable" />
+                    <input id="actual_pers_id" type="hidden" />
                 </p>
                 <p>
                     <label for="type">Relatietype</label>
