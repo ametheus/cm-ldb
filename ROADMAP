@@ -13,6 +13,8 @@
 *  Queries
    *  Maillijst                     check       
    *  OpenOffice                    check       v3.2.5
+*  Core
+   *  Login met Google-ding         check       
 *  Snel opzoeken
 *  Queries
    *  Adresstickers
@@ -22,7 +24,6 @@
    *  Editor
 *  Core
    *  Logging
-   *  Login met Google-ding
 *  Bewerken
    *  Personen samenvoegen
    *  Studies samenvoegen
@@ -42,4 +43,5 @@
 *  Personpicker
 *  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
 *  http://php.net/manual/en/function.mysql-field-name.php
+*  Cryptografisch ondertekend cookie
 
