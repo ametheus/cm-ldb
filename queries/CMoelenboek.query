@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Uitdraai CMoelenboek</Title>
         <Description>Geeft een uitdraai die je voor het CMoelenboek kunt gebruiken.</Description>

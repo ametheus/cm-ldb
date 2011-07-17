@@ -16,7 +16,7 @@ function LoQ()
         print( I(4)."<h3>$cat</h3>\n" );
         foreach ( $qs as $q )
         {
-            print( I(4)."<a href=\"/query/{$q->file}\" title=\"{$q->Description}\">\n" );
+            print( I(4)."<a href=\"/query/{$q->file}\" title=\"{$q->Description}\" target=\"_new\">\n" );
             print( I(5)."<span class=\"title\">{$q->Title}</span>\n" );
             print( I(5)."<span class=\"description\">{$q->Description}</span>\n" );
             print( I(5)."<span class=\"author\">{$q->Author}</span>\n" );
@@ -43,6 +43,13 @@ function LoQ()
         </div>
         <div id="Modules">
             <a id="Mod-Bewerken" href="/bewerken"><div>Bewerken</div></a>
+            <a id="Mod-Logout" href="/logout">
+                <div>
+                    Uitloggen
+                    <br />
+                    <span style="font-size: 75%; color: #999999;">Ingelogd als <?=Auth::username()?></span>
+                </div>
+            </a>
         </div>
     </body>
 </html>

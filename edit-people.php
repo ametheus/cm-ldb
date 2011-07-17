@@ -41,18 +41,6 @@ function Studies()
     }
     return $rv . "                    ";
 }
-function Namen()
-{
-    $DA = Adapters\Persoon::Namen();
-    $n = $DA->execute(array('pers_id'=>0,'dist'=>10000000));
-    $rv = "\n";
-    foreach ( $n as $P )
-    {
-        $pn = htmlentities($P['Naam']);
-        $rv .= "                        <option value=\"{$P["pers_id"]}\"\">{$pn}</option>\n";
-    }
-    return $rv . "                    ";
-}
 
 
 
@@ -87,6 +75,12 @@ elseif (( $_GET["json"] == "namen" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))
     $PA = Adapters\Persoon::Namen();
     $args = array( 'pers_id'=>$_REQUEST["pers_id"] );
     if ( is_numeric(@$_REQUEST["dist"]) ) { $args["dist"] = $_REQUEST["dist"]; }
+    print(json_encode($PA->execute( $args )));
+}
+elseif (( $_GET["json"] == "personpick" ) && ( isset($_REQUEST["q"]) ))
+{
+    $PA = Adapters\Persoon::PersonPick();
+    $args = array( 'q'=>$_REQUEST["q"] );
     print(json_encode($PA->execute( $args )));
 }
 elseif (( $_GET["json"] == "details" ) && ( is_numeric(@$_REQUEST["pers_id"]) ))

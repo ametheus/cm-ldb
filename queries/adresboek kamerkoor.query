@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsdd">
     <Header>
         <Title>Adresboek kamerkoorleden</Title>
         <Description>Geeft een lijst van huidige en ex-kamerkoorleden, voor in het adresboek van de kamerkoormail.</Description>

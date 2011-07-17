@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Wie zitten er in de ...</Title>
         <Description>Selecteer een commissie, en je krijgt een lijstje met de huidige commissieleden.</Description>

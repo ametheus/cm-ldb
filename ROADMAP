@@ -13,7 +13,9 @@
 *  Queries
    *  Maillijst                     check       
    *  OpenOffice                    check       v3.2.5
-*  Snel opzoeken
+*  Core
+   *  Login met Google-ding         check       
+*  Snel opzoeken                    check       v3.2.6
 *  Queries
    *  Adresstickers
 *  Vergrootglas (WTMB)
@@ -22,7 +24,6 @@
    *  Editor
 *  Core
    *  Logging
-   *  Login met Google-ding
 *  Bewerken
    *  Personen samenvoegen
    *  Studies samenvoegen
@@ -35,14 +36,12 @@
 *  UTF-8 in Q-resultaat
 *  UTF-8 in de database
 *  Mooiere exceptions
-*  Linkje naar het beginscherm in het Q-resultaat,
-   of openen in een nieuw venster
-*  XSD intern
 *  0000-00-00 wegwerken
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
    Misschien een "x van y opgeslagen..." toevoegen.
-*  Personpicker
 *  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
 *  http://php.net/manual/en/function.mysql-field-name.php
+*  Cryptografisch ondertekend cookie
+*  'Kind van' werkt nog niet helemaal.
 

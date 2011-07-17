@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://www.collegiummusicum.nl/nerdcie/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Koorleden</Title>
         <Description>Een lijst namen en telefoonnummers van alle koorleden.</Description>

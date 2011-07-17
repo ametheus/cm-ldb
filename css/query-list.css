@@ -114,6 +114,8 @@ div.query_list h3
     
     background-position: 4px 2px;
     background-repeat: no-repeat;
+    
+    margin-bottom: 15px;
 }
 #Modules a div
 {
@@ -137,8 +139,7 @@ div.query_list h3
     padding: 3px 1px 1px 3px; /* T R B L */
     background-position: 5px 3px;
 }
-#Mod-Bewerken
-{
-    background-image: url(/img/bewerken-2.png)
-}
+
+#Mod-Bewerken    { background-image: url(/img/bewerken-2.png); }
+#Mod-Logout      { background-image: url(/img/logout.png); }
 

@@ -6,3 +6,8 @@ body
     font-family: sans-serif;
 }
 
+input.PersonPicker
+{
+    width: 200px;
+}
+

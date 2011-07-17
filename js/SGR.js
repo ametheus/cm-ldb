@@ -147,15 +147,16 @@ var SGR = {
         get_fields: function()
         {
             return {
-                pers_id: $("#RelatieEditor #pers_id_b").val(),
+                pers_id: SGR.Relatie.actual_actual_pers_id,
                 relatie: $("#RelatieEditor #type").val()
             };
         },
         set_fields: function( rel )
         {
-            $("#RelatieEditor #pers_id_b").val( rel["pers_id"] );
+            $("#RelatieEditor #pers_id_b").val( Naam.van( rel["pers_id"] ) );
             $("#RelatieEditor #type").val( rel["relatie"] );
-        }
+        },
+        actual_actual_pers_id: 0
     },
     
     save: function()

@@ -57,6 +57,45 @@ EOT;
         return Persoon::$_Namen;
     }
     
+    private static $_PersonPick = false;
+    private static function _PersonPick()
+    {
+        $Q = <<<EOT
+        SELECT
+            pers_id AS id,
+            CONCAT( 
+                CASE titel
+                    WHEN '' THEN 
+                        CASE voornaam WHEN '' THEN voorletters ELSE voornaam END
+                    ELSE
+                        concat( titel, CASE voorletters when '' then '' else concat(' ',voorletters)END )
+                END,
+                ' ', 
+                CASE tussenvoegsel 
+                    WHEN '' THEN '' 
+                    else concat( tussenvoegsel, ' ' ) 
+                END, 
+                achternaam 
+            ) AS `label`
+        FROM persoon
+        WHERE @q != '' AND (
+            achternaam LIKE concat('%',@q,'%') OR
+            voornaam LIKE   concat('%',@q,'%') OR
+            adres LIKE      concat('%',@q,'%') OR
+            email LIKE      concat('%',@q,'%') OR
+            banknummer LIKE concat('%',@q,'%') )
+        ORDER BY pers_id DESC
+        LIMIT 15
+EOT;
+        Persoon::$_PersonPick = new \Command( $Q, \DB::ro(), array('q') );
+        return Persoon::$_PersonPick;
+    }
+    static function PersonPick()
+    {
+        if ( ! Persoon::$_PersonPick ) { return Persoon::_PersonPick(); }
+        return Persoon::$_PersonPick;
+    }
+    
     
     private static $_Detail = false;
     private static function _Detail()

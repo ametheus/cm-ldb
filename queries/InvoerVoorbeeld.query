@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Query xmlns="http://tempuri.org/CMQuery.xsd">
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
         <Title>Voorbeeld invoeren</Title>
         <Description>Laat zien hoe de parameters bij queries werken.</Description>

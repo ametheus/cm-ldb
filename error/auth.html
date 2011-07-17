@@ -1,7 +1,183 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <p>Toegang geweigerd.</p>
-    <p>Reden: <span><?=$Why?></span></p>
-  </body>
+<html lang="en" dir="ltr"> 
+    <head>
+        <link rel="stylesheet" href="/css/login.css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+        <script type="text/javascript" src="/js/blogosphere.js"></script> 
+        <title>LSKO Collegium Musicum - Database - Log in</title> 
+    </head> 
+    <body bgcolor="#ffffff" link="#0000FF" vlink="#0000FF" onload="OnLoad(); importBlogJS();"> 
+        <table width="94%" border="0" align="center" cellpadding="0" cellspacing="0"> 
+            <tr valign="top"> 
+                <td width="1%">
+                    <img src="/img/user-database-48.png" border="0" height="59" alt="Database" align="left"/> 
+                </td> 
+                <td width="99%" bgcolor="#ffffff" valign="top"> 
+                    <table width="100%" cellpadding="1"> 
+                        <tr valign="bottom"> 
+                            <td><div align="right">&nbsp;</div></td> 
+                        </tr> 
+                    </table> 
+                </td> 
+            </tr> 
+        </table> 
+        <table width="94%" align="center" cellpadding="5" cellspacing="1"> 
+            <tr> 
+                <td width="75%" valign="top"> 
+                    <h1>Wederom een nieuwe database.</h1> 
+                    <p class="intro" style="text-align:left"><font size="-1"> 
+                        Gelukkig min of meer dezelfde. Met de browserversie kun je
+                        probleemloos wisselen van besturingssysteem.
+                        Verder hebben we:</font>
+                    </p> 
+                    <table border="0" cellpadding="0" cellspacing="0" width="95%"><tbody> 
+                        <tr> 
+                            <td class="feature-image"><div class="SPRITE_storage" /></td> 
+                            <td class="feature-description"> 
+                                <font size="-1"><b>Flink de ruimte</b><br /> 
+                                Ruimte voor enkele <span id="quota">miljoenen</span> leden zonder te haperen.</font> 
+                            </td> 
+                        </tr> 
+                        <tr> 
+                            <td class="feature-image"><div class="SPRITE_spam_new" /></td> 
+                            <td class="feature-description"> 
+                                <font size="-1"><b>Crashes</b><br /> 
+                                Soms werkt de boel niet, zonder vooraankondiging. Sorry.</font> 
+                            </td> 
+                        </tr> 
+                        <tr> 
+                            <td class="feature-image"><div class="SPRITE_cell" /></td> 
+                            <td class="feature-description"> 
+                                <font size="-1"><b>Ook op je mobiel</b><br /> 
+                                Tenminste, dat staat in de planning. <a href="/ROADMAP">Meer informatie</a></font> 
+                            </td> 
+                        </tr> 
+                    </tbody></table> 
+                    <div id="highlight"> 
+                        <font size='-1'> 
+                        <h2>Het laatste nieuws over de database</h2> 
+                        <div id="feed" class="post"></div> 
+                        </font> 
+                    </div> 
+                </td> 
+                <td valign="top"> 
+                    <!-- login box --> 
+                    <div id="login"> 
+                        <form id="gaia_loginform" method="post" action="/login?continue=<?=urlencode(@$_REQUEST["continue"])?>" method="post" onsubmit="return(gaia_onLoginSubmit());"> 
+                            <div id="gaia_loginbox"> 
+                                <table class="form-noindent" cellspacing="3" cellpadding="5" width="100%" border="0"> 
+                                    <tr> 
+                                        <td valign="top" style="text-align:center" nowrap="nowrap" bgcolor="#e8eefa"> 
+                                            <div class="loginBox"> 
+                                                <table id="gaia_table" align="center" border="0" cellpadding="1" cellspacing="0"> 
+                                                    <tr> 
+                                                        <td colspan="2" align="center"> 
+                                                            <font size="-1">Aanmelden met je</font> 
+                                                            <table> 
+                                                                <tr> 
+                                                                    <td valign="top"> 
+                                                                        <img src="https://www.google.com/a/cpanel/collegiummusicum.nl/images/logo.gif" alt="LSKO Collegium Musicum" /> 
+                                                                    </td> 
+                                                                    <td valign="middle"> 
+                                                                        <font size="+0"><b>Account</b></font> 
+                                                                    </td> 
+                                                                </tr> 
+                                                            </table> 
+                                                        </td> 
+                                                    </tr> 
+                                                    <tr> 
+                                                        <td colspan="2" align="center"> </td> 
+                                                    </tr> 
+                                                    <tr id="email-row"> 
+                                                        <td nowrap="nowrap"> <div align="right"> <span class="gaia le lbl"> Gebruikersnaam: </span> </div> </td> 
+                                                        <td> 
+                                                            <input type="text" name="username" id="Email" size="18" value="<?=@$_POST['username']?>" class='gaia le val' /> 
+                                                        </td> 
+                                                    </tr> 
+                                                    <tr> 
+                                                        <td></td>
+                                                        <td align="left"> <div style="color: #666666; font-size: 75%;"> bijv.: nerdcie </div> </td> 
+                                                    </tr> 
+                                                    <tr id="password-row" class="enabled"> 
+                                                        <td align="right" nowrap="nowrap"> <span class="gaia le lbl"> Wachtwoord: </span> </td> 
+                                                        <td> <input type="password" name="password" id="Passwd" size="18" class="gaia le val" /> </td> 
+                                                    </tr> 
+                                                    <tr> 
+                                                        <td> </td> 
+                                                        <td align="left"> <?php if($Why){?><div class="errormsg">
+                                                            <?=$Why?> [
+                                                            <a target="_blank" name="helpLink" href="/help-<?=(isset($errcode)?$errcode:'me')?>">?</a>
+                                                        ] </div><?php } ?> </td> 
+                                                    </tr> 
+                                                    <tr id="rememberme-row" class="enabled"> 
+                                                        <td align="right" valign="top"> 
+                                                            <input type="checkbox" name="PersistentCookie" id="PersistentCookie" value="yes" /> 
+                                                        </td> 
+                                                        <td> 
+                                                            <label for="PersistentCookie" id="PersistentCookieLabel" class="gaia le rem"> Aangemeld blijven </label> 
+                                                        </td> 
+                                                    </tr> 
+                                                    <tr> 
+                                                        <td> </td> 
+                                                        <td align="left"> <input type="submit" class="gaia le button" name="signIn" id="signIn" value="Log in" /> </td> 
+                                                    </tr> 
+                                                    <tr id="ga-fprow"> 
+                                                        <td colspan="2" height="33.0" class="gaia le fpwd" align="center" valign="bottom"> 
+                                                            <a href="/help-mij-inloggen" target="_top"> Wachtwoord vergeten? </a> 
+                                                        </td> 
+                                                    </tr> 
+                                                </table> 
+                                            </div> 
+                                        </td> 
+                                    </tr> 
+                                </table> 
+                            </div> 
+                            <input type="hidden" name="asts" id="asts" value="" /> 
+                        </form>  
+                        <div id="cc_iframe_parent"></div> 
+                    </div> 
+                    <!-- end login box --> 
+                    <br /> 
+                    <!-- links box (below login box) --> 
+                    <table class="form-noindent" cellpadding="0" width="100%" bgcolor="#E8EEFA" id="links"> 
+                        <tr bgcolor="#E8EEFA"> 
+                            <td valign="top"> 
+                                <div align="center" style="margin:10 0"> 
+                                    <font size="-1">Voor het eerst hier?</font> 
+                                    <table cellspacing="0" cellpadding="0" align="center"  class="signup_btn"  onclick="window.location='http://mail.google.com/mail/signup';"><tr> 
+                                        <td class="SPRITE_signup_button_grey_l"></td> 
+                                        <td class="SPRITE_signup_button_grey_m"><a class="signup_btn_link" href="/aanmelden"> Account aanmaken </a></td> 
+                                        <td class="SPRITE_signup_button_grey_r"></td> 
+                                    </tr></table> 
+                                    <br /><br /> 
+                                    <font size="-1"> <a href="/over">Over de database</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/nieuwe-functies">Nieuwe functies!</a> </font> 
+                                    <br /> 
+                                </div> 
+                            </td> 
+                        </tr> 
+                    </table> 
+                    <!-- end links box (below login box) -->
+                </td>
+            </tr>
+        </table> 
+        <br /> 
+        <div class="footer"> 
+            <font size="-1" color="#666666">
+                &copy; 2009-<?=date('Y')?>
+                -
+                <a href="/voor-bedrijven">Ledendatabase voor bedrijven</a>
+                -
+                <a href="/privacy">Privacybeleid</a> 
+                -
+                <a href="http://hok.collegiummusicum.nl/">Help</a> 
+            </font> 
+        </div> 
+    </body> 
 </html>
+
+<tr>
+<td></td>
+<td align="left">
+
+</td>
+</tr>
