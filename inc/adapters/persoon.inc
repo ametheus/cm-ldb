@@ -62,7 +62,7 @@ EOT;
     {
         $Q = <<<EOT
         SELECT
-            pers_id,
+            pers_id AS id,
             CONCAT( 
                 CASE titel
                     WHEN '' THEN 
@@ -76,7 +76,7 @@ EOT;
                     else concat( tussenvoegsel, ' ' ) 
                 END, 
                 achternaam 
-            ) AS `Naam`
+            ) AS `label`
         FROM persoon
         WHERE @q != '' AND (
             achternaam LIKE concat('%',@q,'%') OR
