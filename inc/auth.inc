@@ -2,11 +2,16 @@
 
 class Auth
 {
+    private static function login_page()
+    {
+        return ( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) == "/login" );
+    }
+    
     static function deny_access( $why = "Verscheidene redenen" )
     {
         header( "HTTP/1.1 401 Unauthorized" );
         
-        if ( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) != "/login" )
+        if ( ! Auth::login_page() )
         {
             header( "Location: /login?continue=" . urlencode($_SERVER["REQUEST_URI"]) );
             
@@ -26,13 +31,24 @@ class Auth
      */
     static function check()
     {
-        if ( ! isset($_SERVER["REMOTE_USER"]) )
+        if ( session_id() == "" )
         {
             Auth::deny_access( false );
         }
+        else
+        {
+            session_start();
+            
+            // TODO: Verify session signature.
+            
+            
+            // TODO: Implement layered, less hard-coded privileges.
+            if ( $_SESSION['e-mail'] == 'nerdcie@collegiummusicum.nl' ) { return 4; }
+            if ( $_SESSION['e-mail'] == 'bestuur@collegiummusicum.nl' ) { return 3; }
+            if ( substr($_SESSION['e-mail'],-1*strlen('@collegiummusicum.nl')) == '@collegiummusicum.nl'  ) { return 1; }
+        }
         
-        // TODO: Implement layered privileges.
-        return 3;
+        return 0;
     }
 }
 
