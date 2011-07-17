@@ -103,8 +103,11 @@
                                                         <td> <input type="password" name="password" id="Passwd" size="18" class="gaia le val" /> </td> 
                                                     </tr> 
                                                     <tr> 
-                                                      <td> </td> 
-                                                      <td align="left"> </td> 
+                                                        <td> </td> 
+                                                        <td align="left"> <?php if($Why){?><div class="errormsg">
+                                                            <?=$Why?> [
+                                                            <a target="_blank" name="helpLink" href="/help-<?=(isset($errcode)?$errcode:'me')?>">?</a>
+                                                        ] </div><?php } ?> </td> 
                                                     </tr> 
                                                     <tr id="rememberme-row" class="enabled"> 
                                                         <td align="right" valign="top"> 
@@ -170,4 +173,11 @@
             </font> 
         </div> 
     </body> 
-</html> 
+</html>
+
+<tr>
+<td></td>
+<td align="left">
+
+</td>
+</tr>

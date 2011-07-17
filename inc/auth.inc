@@ -7,7 +7,7 @@ class Auth
         return ( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) == "/login" );
     }
     
-    static function deny_access( $why = "Verscheidene redenen" )
+    static function deny_access( $why = false, $error_code = false )
     {
         header( "HTTP/1.1 401 Unauthorized" );
         
@@ -19,8 +19,9 @@ class Auth
             $_REQUEST["continue"] = $_GET["continue"] = $_SERVER["REQUEST_URI"];
         }
         
-        global $Why;
+        global $Why, $errcode;
         $Why = $why;
+        $errcode = ( $error_code === false ? 'me' : $error_code );
         include( "error/auth.html" );
         exit;
     }
