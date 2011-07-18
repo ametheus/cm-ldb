@@ -23,6 +23,10 @@ RewriteRule ^js/jquery-ui.js$       js/jquery-ui-1.8.12.custom.min.js
 RewriteRule ^aanmelden$             http://www.collegiummusicum.nl/joomla/index.php?option=com_content&view=article&id=96&Itemid=176  [R=301]
 
 
+php_value session.gc_maxlifetime    86400
+php_value session.cookie_lifetime       0
+
+
 
 <Files ~ "\.(inc|html)">
     order allow,deny
