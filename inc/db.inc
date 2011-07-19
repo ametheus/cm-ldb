@@ -75,10 +75,15 @@ class Connection
         if ( is_array( $query->text ) )
         {
             $rv = array();
+            $fieldinfo = array();
+            
             foreach ( $query->text as $k=>$v )
             {
                 $rv[$k] = $this->exec( $v );
+                $fieldinfo[$k] = $this->_columns;
             }
+            
+            $this->_columns = $fieldinfo;
             return $rv;
         }
         else
@@ -90,6 +95,10 @@ class Connection
     function insert_id()
     {
         return mysql_insert_id( $this->_dbcon );
+    }
+    function field_info()
+    {
+        return $this->_columns;
     }
     
     private function log( $text )
@@ -124,7 +133,6 @@ class Connection
                     'type' => mysql_field_type($rs,$i)
                 );
             }
-            print_r($this->_columns);
         }
         
         $rv = array();
@@ -144,6 +152,8 @@ class Command
     private $_mandatory;
     private $_default;
     
+    private $_fieldinfo;
+    
     function __construct( $text, $connection, $mandatory=array(), $default=array() )
     {
         $this->_text = $text;
@@ -162,6 +172,10 @@ class Command
         {
             return $this->_text;
         }
+        elseif ( $name == "fieldinfo" )
+        {
+            return $this->_fieldinfo;
+        }
     }
     
     function execute( $arguments=array() )
@@ -177,7 +191,13 @@ class Command
         {
             if ( ! array_key_exists($key,$arguments) ) { $arguments[$key] = $val; }
         }
-        return $this->_connection->execute( $this, $arguments );
+        
+        $rv = $this->_connection->execute( $this, $arguments );
+        $this->_fieldinfo = $this->_connection->field_info();
+        
+        //print_r( $this->_fieldinfo );
+        
+        return $rv;
     }
     
     function mandatory_args()
