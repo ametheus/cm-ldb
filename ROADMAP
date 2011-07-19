@@ -42,6 +42,6 @@
    Misschien een "x van y opgeslagen..." toevoegen.
 *  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
 *  http://php.net/manual/en/function.mysql-field-name.php
-*  Cryptografisch ondertekend cookie
+*  'Aangemeld blijven'-ding doet nog niets.
 *  'Kind van' werkt nog niet helemaal.
 
