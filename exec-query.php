@@ -17,6 +17,25 @@ function I($n)
     return str_repeat(' ',4*$n);
 }
 
+function QSA( $map )
+{
+    $qs = "";
+    foreach ( $map as $k => $v )
+    {
+        $qs .= "&" . urlencode($k) . "=" . urlencode($v);
+    }
+    if ( strlen($qs) > 0 ) { $qs = substr($qs,1); }
+    
+    if ( strpos($_SERVER["REQUEST_URI"],'?') !== false )
+    {
+        return $_SERVER["REQUEST_URI"] . '&' . $qs;
+    }
+    else
+    {
+        return $_SERVER["REQUEST_URI"] . '?' . $qs;
+    }
+}
+
 $Result = $Q->execute();
 
 if ( @$_REQUEST["as"] == "e-mail" )
@@ -80,7 +99,7 @@ elseif ( @$_REQUEST["as"] == "ods" )
         </script>
     </head>
     <body>
-        <div class="ods"><a href="/query/<?=$_GET["query"]?>?as=ods">Openen in OpenOffice</a></div>
+        <div class="ods"><a href="<?=QSA(array('as'=>'ods'))?>">Openen in OpenOffice</a></div>
         <div id="Table-tabs">
             <ul>
 <?php
@@ -101,8 +120,9 @@ foreach ( $Result as $table=>$data )
     if ( isset($data[0]) && (isset($data[0]['email']) || isset($data[0]['Email'])) )
     {
         print( I(5)."<span class=\"maillijstlink\">" .
-            "<a id=\"maillijstlink_$tid\" href=\"/query/" . $_GET["query"] .
-            "?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a></span>\n" );
+            "<a id=\"maillijstlink_$tid\" href=\"" .
+            QSA(array('as'=>'e-mail','table'=>$table)) .
+            "\">Openen als maillijst</a></span>\n" );
         Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data),
             array('height' => 18, 'width' => 135) );
     }
