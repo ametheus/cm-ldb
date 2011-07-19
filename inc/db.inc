@@ -34,16 +34,31 @@ define( "EMAIL_REGEX", "/".EMAIL_FREGEX."/" );
 class Connection
 {
     private $_dbcon;
+    private $_log_file = false;
     
-    function __construct( $host, $username, $password, $database )
+    function __construct( $host, $username, $password, $database, $log_file = false )
     {
         $this->_dbcon = mysql_connect( $host, $username, $password );
         mysql_select_db( $database, $this->_dbcon );
-        mysql_set_charset('utf8',$this->_dbcon); 
+        mysql_set_charset('utf8',$this->_dbcon);
+        
+        if ( $log_file !== false )
+        {
+            $this->_log_file = @fopen( $log_file, 'a+' );
+            if ( $this->_log_file )
+            {
+                fwrite( $this->_log_file, "/*/\n" );
+            }
+        }
     }
     
     function execute( Command $query, $arguments )
     {
+        if ( $this->_log_file )
+        {
+            $this->log( sha1(print_r($query->text,true)) . ' - ' . print_r($arguments,true) );
+        }
+        
         if ( count($arguments ) > 0 )
         {
             $args = "";
@@ -74,6 +89,19 @@ class Connection
     function insert_id()
     {
         return mysql_insert_id( $this->_dbcon );
+    }
+    
+    private function log( $text )
+    {
+        if ( !$this->_log_file ) { return; }
+        
+        fwrite(
+            $this->_log_file,
+            date('s') . ' - ' .
+            preg_replace('/\\s+/',' ',Auth::username()) . ' - ' .
+            preg_replace('/\\s+/',' ',$text) .
+            "\n"
+        );
     }
     
     private function exec( $text )
@@ -168,7 +196,8 @@ class DB
                 "localhost",
                 "ldb_rw",
                 "7SHrklIx",
-                "ledendatabase" );
+                "ledendatabase",
+                "/tmp/query_log" );
         }
         else
         {
