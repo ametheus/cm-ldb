@@ -35,6 +35,7 @@ class Connection
 {
     private $_dbcon;
     private $_log_file = false;
+    private $_columns = null;
     
     function __construct( $host, $username, $password, $database, $log_file = false )
     {
@@ -111,6 +112,21 @@ class Connection
         {
             throw new Exception( "MySQL error " . mysql_errno() . ":\n" . mysql_error() . "\nQuery:\n" . $text );
         }
+        
+        if ( is_resource($rs) )
+        {
+            $this->_columns = array();
+            $fields = mysql_num_fields($rs);
+            for ( $i = 0; $i < $fields; $i++ )
+            {
+                $this->_columns[] = array(
+                    'name' => mysql_field_name($rs, $i),
+                    'type' => mysql_field_type($rs,$i)
+                );
+            }
+            print_r($this->_columns);
+        }
+        
         $rv = array();
         while ( $r = @mysql_fetch_assoc( $rs ) )
         {
