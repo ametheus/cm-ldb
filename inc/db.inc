@@ -35,6 +35,7 @@ class Connection
 {
     private $_dbcon;
     private $_log_file = false;
+    private $_columns = null;
     
     function __construct( $host, $username, $password, $database, $log_file = false )
     {
@@ -74,10 +75,15 @@ class Connection
         if ( is_array( $query->text ) )
         {
             $rv = array();
+            $fieldinfo = array();
+            
             foreach ( $query->text as $k=>$v )
             {
                 $rv[$k] = $this->exec( $v );
+                $fieldinfo[$k] = $this->_columns;
             }
+            
+            $this->_columns = $fieldinfo;
             return $rv;
         }
         else
@@ -89,6 +95,10 @@ class Connection
     function insert_id()
     {
         return mysql_insert_id( $this->_dbcon );
+    }
+    function field_info()
+    {
+        return $this->_columns;
     }
     
     private function log( $text )
@@ -111,6 +121,20 @@ class Connection
         {
             throw new Exception( "MySQL error " . mysql_errno() . ":\n" . mysql_error() . "\nQuery:\n" . $text );
         }
+        
+        if ( is_resource($rs) )
+        {
+            $this->_columns = array();
+            $fields = mysql_num_fields($rs);
+            for ( $i = 0; $i < $fields; $i++ )
+            {
+                $this->_columns[] = array(
+                    'name' => mysql_field_name($rs, $i),
+                    'type' => mysql_field_type($rs,$i)
+                );
+            }
+        }
+        
         $rv = array();
         while ( $r = @mysql_fetch_assoc( $rs ) )
         {
@@ -127,6 +151,8 @@ class Command
     private $_connection;
     private $_mandatory;
     private $_default;
+    
+    private $_fieldinfo;
     
     function __construct( $text, $connection, $mandatory=array(), $default=array() )
     {
@@ -146,6 +172,10 @@ class Command
         {
             return $this->_text;
         }
+        elseif ( $name == "fieldinfo" )
+        {
+            return $this->_fieldinfo;
+        }
     }
     
     function execute( $arguments=array() )
@@ -161,7 +191,13 @@ class Command
         {
             if ( ! array_key_exists($key,$arguments) ) { $arguments[$key] = $val; }
         }
-        return $this->_connection->execute( $this, $arguments );
+        
+        $rv = $this->_connection->execute( $this, $arguments );
+        $this->_fieldinfo = $this->_connection->field_info();
+        
+        //print_r( $this->_fieldinfo );
+        
+        return $rv;
     }
     
     function mandatory_args()
