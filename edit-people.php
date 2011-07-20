@@ -25,8 +25,7 @@ function Groepen()
             $rklasse = htmlentities($klasse);
             print( "                    <optgroup label=\"".ucfirst($rklasse)."\">\n" );
         }
-        print( "                        <option value=\"{$groep["groep_id"]}\" klasse=\"{$rklasse}\">{$groep["groepsnaam"]}</option>\n" );
-        # Ja, dat is ongeldig HTML5. Sorry, w3c.
+        print( "                        <option value=\"{$groep["groep_id"]}\" data-klasse=\"{$rklasse}\">{$groep["groepsnaam"]}</option>\n" );
     }
 }
 function Studies()
