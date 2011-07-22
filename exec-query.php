@@ -20,14 +20,23 @@ function I($n)
 
 $Result = $Q->execute();
 
-if ( @$_REQUEST["as"] == "e-mail" )
+function get_a_table()
 {
+    global $Result;
+    
     $tn = @$_REQUEST["table"];
     $table = @$Result[$tn];
     if ( ! $table )
     {
         throw new Exception( "Er is geen tabel met de naam \"{$tn}\"." );
     }
+    
+    return $table;
+}
+
+if ( @$_REQUEST["as"] == "e-mail" )
+{
+    $table = get_a_table();
     
     header( "Content-type: text/plain" );
     print( Maillijst::maak_lijst( $table ) );
@@ -55,12 +64,7 @@ elseif ( @$_REQUEST["as"] == "ods" )
 }
 elseif ( @$_REQUEST["as"] == "stickers" )
 {
-    $tn = @$_REQUEST["table"];
-    $table = @$Result[$tn];
-    if ( ! $table )
-    {
-        throw new Exception( "Er is geen tabel met de naam \"{$tn}\"." );
-    }
+    $table = get_a_table();
     
     Adresstickers::download( $table );
     exit;
