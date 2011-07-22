@@ -5,6 +5,7 @@ require_once( "inc/db.inc" );
 require_once( "inc/query.inc" );
 require_once( 'inc/maillijst.inc' );
 require_once( 'inc/openoffice.inc' );
+require_once( 'inc/adresstickers.inc' );
 $Q = Query::query_from_file();
 
 if ( ! $Q )
@@ -50,6 +51,18 @@ if ( @$_REQUEST["as"] == "e-mail" )
 elseif ( @$_REQUEST["as"] == "ods" )
 {
     Openoffice::SpreadSheet( $Result, $Q->Title );
+    exit;
+}
+elseif ( @$_REQUEST["as"] == "stickers" )
+{
+    $tn = @$_REQUEST["table"];
+    $table = @$Result[$tn];
+    if ( ! $table )
+    {
+        throw new Exception( "Er is geen tabel met de naam \"{$tn}\"." );
+    }
+    
+    Adresstickers::download( $table );
     exit;
 }
 
@@ -105,6 +118,14 @@ foreach ( $Result as $table=>$data )
             "?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a></span>\n" );
         Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data),
             array('height' => 18, 'width' => 135) );
+    }
+    if ( isset($data[0]) && (isset($data[0]['adres'])    || isset($data[0]['Adres']))
+                         && (isset($data[0]['postcode']) || isset($data[0]['Postcode']))
+                         && (isset($data[0]['plaats'])   || isset($data[0]['Plaats']))
+                        ) // TODO: Elegantere manier
+    {
+        print( I(5)."<a id=\"stickerlink_$tid\" href=\"/query/" . $_GET["query"] .
+            "?as=stickers&table=" . urlencode($table) . "\">Adresstickers maken</a></span>\n" );
     }
     print( I(5)."\n" );
     print( I(4)."</div>\n" );
