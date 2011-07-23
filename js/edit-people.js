@@ -162,7 +162,7 @@ function update_fields()
     $('#Field-Voornaam')         .val(d['voornaam']);
     $('#Field-Tussenvoegsel')    .val(d['tussenvoegsel']);
     $('#Field-Titel')            .val(d['titel']);
-    $('#Field-Geslacht')         .val(d['geslacht']);
+    $('#Field-Geslacht')         .val(ucfirst(d['geslacht']));
     $('#Field-Adres')            .val(d['adres']);
     $('#Field-Postcode')         .val(d['postcode']);
     $('#Field-Plaats')           .val(d['plaats']);
@@ -203,8 +203,8 @@ function get_new_details()
     d['telefoon']           = $('#Field-Telefoon').val();
     d['mobiel']             = $('#Field-Mobiel').val();
     d['email']              = $('#Field-Email').val();
-    d['geboortedatum']      = $('#Field-Geboortedatum').val();
-    d['sterftedatum']       = $('#Field-Sterftedatum').val();
+    d['geboortedatum']      = nul($('#Field-Geboortedatum').val());
+    d['sterftedatum']       = nul($('#Field-Sterftedatum').val());
     d['banknummer']         = $('#Field-Banknummer').val();
     d['tenaamstelling']     = $('#Field-Tenaamstelling').val();
     d['nationaliteit']      = $('#Field-Nationaliteit').val();
@@ -212,6 +212,20 @@ function get_new_details()
     d['opm']                = $('#Field-Opm').val();
     
     return d;
+}
+
+function nul( x )
+{
+    if ( x == null ) { return null; }
+    if ( (""+x).length == 0 ) { return null; }
+    if ( (""+x).substr(0,4) == "0000" ) { return null; }
+    
+    return x;
+}
+function ucfirst( s )
+{
+    if ( s.length < 2 ) { return s; }
+    return s.substr(0,1).toUpperCase() + s.substr(1).toLowerCase();
 }
 
 
