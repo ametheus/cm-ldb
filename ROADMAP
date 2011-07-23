@@ -19,7 +19,7 @@
 *  Core
    *  Logging                       check
 *  Queries
-   *  Adresstickers                 check
+   *  Adresstickers                 check       v3.2.7
 *  Vergrootglas (WTMB)
 *  Queries
    *  Grafieken
@@ -36,7 +36,6 @@
 *  UTF-8 in Q-resultaat
 *  UTF-8 in de database
 *  Mooiere exceptions
-*  0000-00-00 wegwerken
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
    Misschien een "x van y opgeslagen..." toevoegen.

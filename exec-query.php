@@ -59,22 +59,6 @@ if ( @$_REQUEST["as"] == "e-mail" )
     
     header( "Content-type: text/plain" );
     print( Maillijst::maak_lijst( $table ) );
-    
-    
-    //Clipboard::set_and_redirect( $ml, Clipboard::gmail_to_link('',false,false,"Plak hier de maillijst",false) );
-    
-    //header('Content-type: text/plain');
-    /*print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=' .
-        urlencode($ml) . '">Test de boel hier.</a></p>' );
-    print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?ui=2&view=btop#' .
-        urlencode(urlencode('bcc='.urlencode($ml).'&cmid=1')) .
-        '">Of probeer deze.</a></p>');
-    print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&tf=0&to=#' .
-        urlencode('to='.urlencode($ml)) .
-        '">Of deze.</a></p>');*/
-    //print( '<p><a href="mailto:?bcc='.htmlentities($ml).'">Klik hier om de standaard mailclient te openen.</a></p>' );
-    //print( "<p>Of kopieer dit in het BCC-vak: <textarea>".$ml."</textarea></p>" );
-    exit;
 }
 elseif ( @$_REQUEST["as"] == "ods" )
 {
@@ -148,8 +132,8 @@ foreach ( $Result as $table=>$data )
                          && (isset($data[0]['plaats'])   || isset($data[0]['Plaats']))
                         ) // TODO: Elegantere manier
     {
-        print( I(5)."<a id=\"stickerlink_$tid\" href=\"/query/" . $_GET["query"] .
-            "?as=stickers&table=" . urlencode($table) . "\">Adresstickers maken</a></span>\n" );
+        print( I(5)."<a id=\"stickerlink_$tid\" href=\"" . QSA(array('as'=>'stickers','table'=>$table)) .
+            "\">Adresstickers maken</a></span>\n" );
     }
     print( I(5)."\n" );
     print( I(4)."</div>\n" );
