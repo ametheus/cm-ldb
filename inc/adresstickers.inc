@@ -20,11 +20,16 @@ class Adresstickers
         $p->SetCreator( Config::full_app(), true );
         
         $p->SetMargins( Adresstickers::$margin, 0, Adresstickers::$margin );
+        $p->SetAutoPageBreak( false );
         
         
         $L = Adresstickers::get_layout();
+        $lines = count(explode("\n",$L));
         $amt = Adresstickers::get_amt();
         $ssize = array( $paper_size[0]/$amt[0], $paper_size[1]/$amt[1] );
+        
+        $W = $ssize[0] - ( 2 * Adresstickers::$margin );
+        $H = 1.05 * $fheight;
         
         $c = 0;
         $max = count($table);
@@ -36,15 +41,18 @@ class Adresstickers
             {
                 for ( $j = 0; $j < $amt[0]; $j++ )
                 {
-                    $p->SetXY( Adresstickers::$margin + ($j * $ssize[0]),  $i * $ssize[1] );
+                    $X = Adresstickers::$margin + ($j * $ssize[0]);
+                    $Y = ($i * $ssize[1]) + ($ssize[1] - $lines*$H*1.2)/2;
+                    $p->SetXY( $X, $Y );
                     
                     $T = $L;
                     foreach ( $table[$c] as $k => $v )
                     {
                         $T = str_ireplace( "<{$k}>", $v, $T );
                     }
-                    $T = trim(preg_replace('/[ ]+/',' ',$T));
-                    $p->MultiCell( $ssize[0] - ( 2 * Adresstickers::$margin ), 1.05 * $fheight, $T );
+                    $T = utf8_decode(trim(preg_replace('/[ ]+/',' ',$T)));
+                    
+                    $p->MultiCell( $W, $H, $T );
                     
                     $c++;
                     if ( $c >= $max ) { break; }
