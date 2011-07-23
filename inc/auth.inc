@@ -78,11 +78,7 @@ EOT;
                     
                     //session_write_close();
                     
-                    if ( Auth::login_page() && isset($_REQUEST["continue"]) )
-                    {
-                        header( "HTTP/1.1 302 Found" );
-                        header( "Location: " . str_replace("\n","",$_REQUEST["continue"]) );
-                    }
+                    Auth::redirect_login_page();
                     
                     return Auth::priv_level( $em );
                 }
@@ -111,11 +107,31 @@ EOT;
                 exit;
             }
             
+            Auth::redirect_login_page();
             
             return Auth::priv_level( $_SESSION['e-mail'] );
         }
         
         return 0;
+    }
+    
+    static function redirect_login_page()
+    {
+        if ( Auth::login_page() )
+        {
+            $C = @$_REQUEST["continue"];
+            
+            if (( strlen($C) == 0 ) || ( $C[0] != '/' ))
+            {
+                $C = "/";
+            }
+            $C = str_replace( "\n", "", $C );
+            
+            header( "HTTP/1.1 302 Found" );
+            header( "Location: " . $C );
+            
+            die( "<a href=\"{$C}\">Klik hier om verder te gaan</a>" );
+        }
     }
     
     static function username()
