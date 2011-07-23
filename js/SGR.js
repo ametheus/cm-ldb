@@ -138,7 +138,7 @@ var SGR = {
         fmt: function( rel )
         {
             var opid = rel["pers_id"];
-            return SGR.Relatie.types[rel["relatie"]] + ' van ' + Naam.van(opid);
+            return SGR.Relatie.types["" + rel["relatie"]] + ' van ' + Naam.van(opid);
         },
         key: function( rel )
         {
@@ -153,6 +153,7 @@ var SGR = {
         },
         set_fields: function( rel )
         {
+            SGR.Relatie.actual_actual_pers_id = rel["pers_id"];
             $("#RelatieEditor #pers_id_b").val( Naam.van( rel["pers_id"] ) );
             $("#RelatieEditor #type").val( rel["relatie"] );
         },
