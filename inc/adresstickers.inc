@@ -21,12 +21,14 @@ class Adresstickers
         
         $p->SetMargins( Adresstickers::$margin, 0, Adresstickers::$margin );
         
+        
         $L = Adresstickers::get_layout();
         $amt = Adresstickers::get_amt();
         $ssize = array( $paper_size[0]/$amt[0], $paper_size[1]/$amt[1] );
         
         $c = 0;
-        while ( $c < 19 )
+        $max = count($table);
+        while ( $c < $max )
         {
             $p->AddPage();
             
@@ -36,13 +38,19 @@ class Adresstickers
                 {
                     $p->SetXY( Adresstickers::$margin + ($j * $ssize[0]),  $i * $ssize[1] );
                     
-                    $p->MultiCell( $ssize[0] - ( 2 * Adresstickers::$margin ), 1.05 * $fheight, Adresstickers::get_layout() );
+                    $T = $L;
+                    foreach ( $table[$c] as $k => $v )
+                    {
+                        $T = str_ireplace( "<{$k}>", $v, $T );
+                    }
+                    $T = trim(preg_replace('/[ ]+/',' ',$T));
+                    $p->MultiCell( $ssize[0] - ( 2 * Adresstickers::$margin ), 1.05 * $fheight, $T );
                     
                     $c++;
-                    if ( $c >= 19 ) { break; }
+                    if ( $c >= $max ) { break; }
                 }
                 
-                if ( $c >= 19 ) { break; }
+                if ( $c >= $max ) { break; }
             }
         }
         
@@ -54,7 +62,7 @@ class Adresstickers
     static function get_layout()
     {
         // TODO: in $_REQUEST zoeken
-        return "<naam>\n<adres>\n<postcode> <plaats>";
+        return "<titel> <voornaam> <tussenvoegsel> <achternaam>\n<adres>\n<postcode> <plaats>";
     }
     
     static function get_amt()
