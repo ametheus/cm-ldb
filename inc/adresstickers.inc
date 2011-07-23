@@ -1,7 +1,7 @@
 <?php
 
 require_once("inc/db.inc");
-require_once('fpdf.php');
+require_once('fpdf/fpdf.php');
 
 class Adresstickers
 {
