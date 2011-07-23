@@ -5,6 +5,7 @@ require_once( "inc/db.inc" );
 require_once( "inc/query.inc" );
 require_once( 'inc/maillijst.inc' );
 require_once( 'inc/openoffice.inc' );
+require_once( 'inc/adresstickers.inc' );
 $Q = Query::query_from_file();
 
 if ( ! $Q )
@@ -17,10 +18,31 @@ function I($n)
     return str_repeat(' ',4*$n);
 }
 
+function QSA( $map )
+{
+    $qs = "";
+    foreach ( $map as $k => $v )
+    {
+        $qs .= "&" . urlencode($k) . "=" . urlencode($v);
+    }
+    if ( strlen($qs) > 0 ) { $qs = substr($qs,1); }
+    
+    if ( strpos($_SERVER["REQUEST_URI"],'?') !== false )
+    {
+        return $_SERVER["REQUEST_URI"] . '&' . $qs;
+    }
+    else
+    {
+        return $_SERVER["REQUEST_URI"] . '?' . $qs;
+    }
+}
+
 $Result = $Q->execute();
 
-if ( @$_REQUEST["as"] == "e-mail" )
+function get_a_table()
 {
+    global $Result;
+    
     $tn = @$_REQUEST["table"];
     $table = @$Result[$tn];
     if ( ! $table )
@@ -28,28 +50,26 @@ if ( @$_REQUEST["as"] == "e-mail" )
         throw new Exception( "Er is geen tabel met de naam \"{$tn}\"." );
     }
     
+    return $table;
+}
+
+if ( @$_REQUEST["as"] == "e-mail" )
+{
+    $table = get_a_table();
+    
     header( "Content-type: text/plain" );
     print( Maillijst::maak_lijst( $table ) );
-    
-    
-    //Clipboard::set_and_redirect( $ml, Clipboard::gmail_to_link('',false,false,"Plak hier de maillijst",false) );
-    
-    //header('Content-type: text/plain');
-    /*print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&fs=1&tf=1&source=mailto&bcc=' .
-        urlencode($ml) . '">Test de boel hier.</a></p>' );
-    print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?ui=2&view=btop#' .
-        urlencode(urlencode('bcc='.urlencode($ml).'&cmid=1')) .
-        '">Of probeer deze.</a></p>');
-    print( '<p><a href="https://mail.google.com/a/collegiummusicum.nl/?view=cm&tf=0&to=#' .
-        urlencode('to='.urlencode($ml)) .
-        '">Of deze.</a></p>');*/
-    //print( '<p><a href="mailto:?bcc='.htmlentities($ml).'">Klik hier om de standaard mailclient te openen.</a></p>' );
-    //print( "<p>Of kopieer dit in het BCC-vak: <textarea>".$ml."</textarea></p>" );
-    exit;
 }
 elseif ( @$_REQUEST["as"] == "ods" )
 {
     Openoffice::SpreadSheet( $Result, $Q->Title );
+    exit;
+}
+elseif ( @$_REQUEST["as"] == "stickers" )
+{
+    $table = get_a_table();
+    
+    Adresstickers::download( $table );
     exit;
 }
 
@@ -80,7 +100,7 @@ elseif ( @$_REQUEST["as"] == "ods" )
         </script>
     </head>
     <body>
-        <div class="ods"><a href="/query/<?=$_GET["query"]?>?as=ods">Openen in OpenOffice</a></div>
+        <div class="ods"><a href="<?=QSA(array('as'=>'ods'))?>">Openen in OpenOffice</a></div>
         <div id="Table-tabs">
             <ul>
 <?php
@@ -101,10 +121,19 @@ foreach ( $Result as $table=>$data )
     if ( isset($data[0]) && (isset($data[0]['email']) || isset($data[0]['Email'])) )
     {
         print( I(5)."<span class=\"maillijstlink\">" .
-            "<a id=\"maillijstlink_$tid\" href=\"/query/" . $_GET["query"] .
-            "?as=e-mail&table=" . urlencode($table) . "\">Openen als maillijst</a></span>\n" );
+            "<a id=\"maillijstlink_$tid\" href=\"" .
+            QSA(array('as'=>'e-mail','table'=>$table)) .
+            "\">Openen als maillijst</a></span>\n" );
         Maillijst::klembordknop( "maillijstlink_$tid", Maillijst::maak_lijst($data),
             array('height' => 18, 'width' => 135) );
+    }
+    if ( isset($data[0]) && (isset($data[0]['adres'])    || isset($data[0]['Adres']))
+                         && (isset($data[0]['postcode']) || isset($data[0]['Postcode']))
+                         && (isset($data[0]['plaats'])   || isset($data[0]['Plaats']))
+                        ) // TODO: Elegantere manier
+    {
+        print( I(5)."<a id=\"stickerlink_$tid\" href=\"" . QSA(array('as'=>'stickers','table'=>$table)) .
+            "\">Adresstickers maken</a></span>\n" );
     }
     print( I(5)."\n" );
     print( I(4)."</div>\n" );

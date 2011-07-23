@@ -12,7 +12,7 @@ class Config
 {
     static $query_dir = 'queries';
     
-    private static $version = '3.2.6';
+    private static $version = '3.2.7';
     static function version() { return Config::$version; }
     static function short_app() { return "Ledendatabase v" . Config::$version; }
     static function full_app()  { return "LSKO Collegium Musicum - Ledendatabase - v" . Config::$version; }
@@ -34,16 +34,32 @@ define( "EMAIL_REGEX", "/".EMAIL_FREGEX."/" );
 class Connection
 {
     private $_dbcon;
+    private $_log_file = false;
+    private $_columns = null;
     
-    function __construct( $host, $username, $password, $database )
+    function __construct( $host, $username, $password, $database, $log_file = false )
     {
         $this->_dbcon = mysql_connect( $host, $username, $password );
         mysql_select_db( $database, $this->_dbcon );
-        mysql_set_charset('utf8',$this->_dbcon); 
+        mysql_set_charset('utf8',$this->_dbcon);
+        
+        if ( $log_file !== false )
+        {
+            $this->_log_file = @fopen( $log_file, 'a+' );
+            if ( $this->_log_file )
+            {
+                fwrite( $this->_log_file, "/*/\n" );
+            }
+        }
     }
     
     function execute( Command $query, $arguments )
     {
+        if ( $this->_log_file )
+        {
+            $this->log( sha1(print_r($query->text,true)) . ' - ' . print_r($arguments,true) );
+        }
+        
         if ( count($arguments ) > 0 )
         {
             $args = "";
@@ -59,10 +75,15 @@ class Connection
         if ( is_array( $query->text ) )
         {
             $rv = array();
+            $fieldinfo = array();
+            
             foreach ( $query->text as $k=>$v )
             {
                 $rv[$k] = $this->exec( $v );
+                $fieldinfo[$k] = $this->_columns;
             }
+            
+            $this->_columns = $fieldinfo;
             return $rv;
         }
         else
@@ -75,6 +96,23 @@ class Connection
     {
         return mysql_insert_id( $this->_dbcon );
     }
+    function field_info()
+    {
+        return $this->_columns;
+    }
+    
+    private function log( $text )
+    {
+        if ( !$this->_log_file ) { return; }
+        
+        fwrite(
+            $this->_log_file,
+            date('s') . ' - ' .
+            preg_replace('/\\s+/',' ',Auth::username()) . ' - ' .
+            preg_replace('/\\s+/',' ',$text) .
+            "\n"
+        );
+    }
     
     private function exec( $text )
     {
@@ -83,6 +121,20 @@ class Connection
         {
             throw new Exception( "MySQL error " . mysql_errno() . ":\n" . mysql_error() . "\nQuery:\n" . $text );
         }
+        
+        if ( is_resource($rs) )
+        {
+            $this->_columns = array();
+            $fields = mysql_num_fields($rs);
+            for ( $i = 0; $i < $fields; $i++ )
+            {
+                $this->_columns[] = array(
+                    'name' => mysql_field_name($rs, $i),
+                    'type' => mysql_field_type($rs,$i)
+                );
+            }
+        }
+        
         $rv = array();
         while ( $r = @mysql_fetch_assoc( $rs ) )
         {
@@ -99,6 +151,8 @@ class Command
     private $_connection;
     private $_mandatory;
     private $_default;
+    
+    private $_fieldinfo;
     
     function __construct( $text, $connection, $mandatory=array(), $default=array() )
     {
@@ -118,6 +172,10 @@ class Command
         {
             return $this->_text;
         }
+        elseif ( $name == "fieldinfo" )
+        {
+            return $this->_fieldinfo;
+        }
     }
     
     function execute( $arguments=array() )
@@ -133,7 +191,13 @@ class Command
         {
             if ( ! array_key_exists($key,$arguments) ) { $arguments[$key] = $val; }
         }
-        return $this->_connection->execute( $this, $arguments );
+        
+        $rv = $this->_connection->execute( $this, $arguments );
+        $this->_fieldinfo = $this->_connection->field_info();
+        
+        //print_r( $this->_fieldinfo );
+        
+        return $rv;
     }
     
     function mandatory_args()
@@ -168,7 +232,8 @@ class DB
                 "localhost",
                 "ldb_rw",
                 "7SHrklIx",
-                "ledendatabase" );
+                "ledendatabase",
+                "/tmp/query_log" );
         }
         else
         {

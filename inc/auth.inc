@@ -2,6 +2,16 @@
 
 class Auth
 {
+    private static $secret_key = <<<EOT
+    This is a cryptographic key, used for digitally signing cookies.
+    
+    You should change the contents of this key to something different from the
+    standard text.
+    
+    Preferably something long, and difficult to guess.
+EOT;
+    
+    
     private static function login_page()
     {
         return ( parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH) == "/login" );
@@ -44,6 +54,9 @@ class Auth
         if ( Auth::logout_page() )
         {
             session_destroy();
+            setcookie( "PHPSESSID", "Empty.", time() - 86400 );
+            setcookie( "sig",       "Empty.", time() - 86400 );
+            
             header( 'HTTP/1.1 302 Found' );
             header( 'Location: /' );
             
@@ -58,15 +71,14 @@ class Auth
                 {
                     $_SESSION["e-mail"] = $em;
                     
-                    // TODO: Generate session signature.
+                    // Generate session signature:
+                    $_SESSION["salt"] = uniqid( rand(), true );
+                    $_COOKIE["sig"] = Auth::signature();
+                    setcookie( "sig", $_COOKIE["sig"], time() + ini_get('session.cookie_lifetime') );
                     
                     //session_write_close();
                     
-                    if ( Auth::login_page() && isset($_REQUEST["continue"]) )
-                    {
-                        header( "HTTP/1.1 302 Found" );
-                        header( "Location: " . str_replace("\n","",$_REQUEST["continue"]) );
-                    }
+                    Auth::redirect_login_page();
                     
                     return Auth::priv_level( $em );
                 }
@@ -81,8 +93,21 @@ class Auth
         }
         else
         {
-            // TODO: Verify session signature.
+            if ( Auth::signature() != @$_COOKIE["sig"] )
+            {
+                session_destroy();
+                setcookie( "PHPSESSID", "Empty.", time() - 86400 );
+                setcookie( "sig",       "Empty.", time() - 86400 );
+                
+                Auth::deny_access(
+                    "Cryptografische ondertekening<br />van het cookie klopt niet.",
+                    "crypto-cookie",
+                    false
+                );
+                exit;
+            }
             
+            Auth::redirect_login_page();
             
             return Auth::priv_level( $_SESSION['e-mail'] );
         }
@@ -90,9 +115,45 @@ class Auth
         return 0;
     }
     
+    static function redirect_login_page()
+    {
+        if ( Auth::login_page() )
+        {
+            $C = @$_REQUEST["continue"];
+            
+            if (( strlen($C) == 0 ) || ( $C[0] != '/' ))
+            {
+                $C = "/";
+            }
+            $C = str_replace( "\n", "", $C );
+            
+            header( "HTTP/1.1 302 Found" );
+            header( "Location: " . $C );
+            
+            die( "<a href=\"{$C}\">Klik hier om verder te gaan</a>" );
+        }
+    }
+    
     static function username()
     {
         return $_SESSION["e-mail"];
+    }
+    
+    static function signature()
+    {
+        if ( !isset($_COOKIE["PHPSESSID"]) ||
+             !isset($_SESSION["e-mail"]) ||
+             !isset($_SESSION["salt"]) )
+        {
+            return "Wrong. Just wrong.";
+        }
+        
+        return sha1(
+            $_COOKIE["PHPSESSID"] .
+            $_SESSION["e-mail"] .
+            $_SESSION["salt"] .
+            Auth::$secret_key
+        );
     }
     
     private static function enticate( $username, $password )

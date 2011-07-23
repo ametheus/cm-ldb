@@ -119,7 +119,7 @@ var SGR = {
         {
             return {
                 groep_id: $("#GroepenEditor #groep_id").val(),
-                klasse: $("#GroepenEditor #groep_id :selected").attr('klasse'),
+                klasse: $("#GroepenEditor #groep_id :selected").attr('data-klasse'),
                 groepsnaam: $("#GroepenEditor #groep_id :selected").html(),
                 van: $("#GroepenEditor #van").val(),
                 tot: $("#GroepenEditor #tot").val()
@@ -138,7 +138,7 @@ var SGR = {
         fmt: function( rel )
         {
             var opid = rel["pers_id"];
-            return SGR.Relatie.types[rel["relatie"]] + ' van ' + Naam.van(opid);
+            return SGR.Relatie.types["" + rel["relatie"]] + ' van ' + Naam.van(opid);
         },
         key: function( rel )
         {
@@ -153,6 +153,7 @@ var SGR = {
         },
         set_fields: function( rel )
         {
+            SGR.Relatie.actual_actual_pers_id = rel["pers_id"];
             $("#RelatieEditor #pers_id_b").val( Naam.van( rel["pers_id"] ) );
             $("#RelatieEditor #type").val( rel["relatie"] );
         },

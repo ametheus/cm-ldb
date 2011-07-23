@@ -16,14 +16,14 @@
 *  Core
    *  Login met Google-ding         check       
 *  Snel opzoeken                    check       v3.2.6
+*  Core
+   *  Logging                       check
 *  Queries
-   *  Adresstickers
+   *  Adresstickers                 check       v3.2.7
 *  Vergrootglas (WTMB)
 *  Queries
    *  Grafieken
    *  Editor
-*  Core
-   *  Logging
 *  Bewerken
    *  Personen samenvoegen
    *  Studies samenvoegen
@@ -36,12 +36,12 @@
 *  UTF-8 in Q-resultaat
 *  UTF-8 in de database
 *  Mooiere exceptions
-*  0000-00-00 wegwerken
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
    Misschien een "x van y opgeslagen..." toevoegen.
 *  'Openen als'-linkjes bij Q-resultaat houden nog geen rekening met parameters.
 *  http://php.net/manual/en/function.mysql-field-name.php
-*  Cryptografisch ondertekend cookie
+*  'Aangemeld blijven'-ding doet nog niets.
 *  'Kind van' werkt nog niet helemaal.
+*  Geen makkelijk overzicht van alle SHA's van alle queries en adapters
 
