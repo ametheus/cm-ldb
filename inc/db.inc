@@ -107,7 +107,7 @@ class Connection
         
         fwrite(
             $this->_log_file,
-            date('s') . ' - ' .
+            date('c') . ' - ' .
             preg_replace('/\\s+/',' ',Auth::username()) . ' - ' .
             preg_replace('/\\s+/',' ',$text) .
             "\n"
