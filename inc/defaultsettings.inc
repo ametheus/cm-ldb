@@ -10,5 +10,25 @@
  * 
  */
 
+// The directory in which to store the default (shared) queries, relative to
+// the document root directory.
 $query_dir = "queries";
+
+
+// Database connection information
+$sql_connection_readonly = array(
+    'hostname' => 'localhost',
+    'username' => '',
+    'password' => '',
+    'database' => '',
+    'log file' => false
+);
+$sql_connection_readwrite = array(
+    'hostname' => 'localhost',
+    'username' => '',
+    'password' => '',
+    'database' => '',
+    'log file' => false
+);
+
 

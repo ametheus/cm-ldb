@@ -31,6 +31,24 @@ class Config
         @include( $filename );
         
         if ( isset($query_dir) ) { Config::$data['query_dir'] = $query_dir; }
+        
+        if ( isset($sql_connection_readonly)  ) { Config::import_connection("sql_readonly", $sql_connection_readonly);  }
+        if ( isset($sql_connection_readwrite) ) { Config::import_connection("sql_readwrite",$sql_connection_readwrite); }
+    }
+    
+    private static function import_connection( $name, $conn )
+    {
+        if ( !array_key_exists($name,Config::$data) )
+        {
+            Config::$data[$name] = array();
+        }
+        foreach ( array('hostname','username','password','database','log file') as $k )
+        {
+            if ( array_key_exists($k,$conn) )
+            {
+                Config::$data[$name][$k] = $conn[$k];
+            }
+        }
     }
 }
 

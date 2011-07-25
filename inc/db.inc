@@ -203,11 +203,14 @@ class DB
     {
         if ( Auth::check() > 0 )
         {
+            $db = Config::get('sql_readonly');
             DB::$_ro = new Connection(
-                "localhost",
-                "ldb_ro",
-                "c9tdOACz",
-                "ledendatabase" );
+                $db['hostname'],
+                $db['username'],
+                $db['password'],
+                $db['database'],
+                $db['log file']
+            );
         }
     }
     
@@ -215,12 +218,14 @@ class DB
     {
         if ( Auth::check() > 2 )
         {
+            $db = Config::get('sql_readwrite');
             DB::$_rw = new Connection(
-                "localhost",
-                "ldb_rw",
-                "7SHrklIx",
-                "ledendatabase",
-                "/tmp/query_log" );
+                $db['hostname'],
+                $db['username'],
+                $db['password'],
+                $db['database'],
+                $db['log file']
+            );
         }
         else
         {

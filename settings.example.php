@@ -9,4 +9,17 @@
  */
 
 
+// Database connection information
+$sql_connection_readonly = array(
+    'username' => 'ldb_ro',
+    'password' => 'change-me',
+    'database' => 'ledendatabase'
+);
+$sql_connection_readwrite = array(
+    'username' => 'ldb_rw',
+    'password' => 'change-me-as-well',
+    'database' => 'ledendatabase',
+    'log file' => '/tmp/query_log'
+);
+
 
