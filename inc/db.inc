@@ -1,5 +1,6 @@
 <?php
 
+require_once( "config.inc" );
 require_once( "auth.inc" );
 
 if ( ! Auth::check() )
@@ -7,20 +8,6 @@ if ( ! Auth::check() )
     Auth::deny_access( "Authorisatie ging grandioos mis." );
     exit;
 }
-
-class Config
-{
-    static $query_dir = 'queries';
-    
-    private static $version = '3.2.7';
-    static function version() { return Config::$version; }
-    static function short_app() { return "Ledendatabase v" . Config::$version; }
-    static function full_app()  { return "LSKO Collegium Musicum - Ledendatabase - v" . Config::$version; }
-    static function version_ua() { return "LSKO_Collegium_Musicum-Ledendatabase/" . Config::$version; }
-    
-    # Note: Database connectivity is configured below.
-}
-
 
 define( "DATE_FREGEX", "[0-9]{4}-[0-9]{2}-[0-9]{2}" );
 define( "DATE_REGEX", "/".DATE_FREGEX."/" );
@@ -107,7 +94,7 @@ class Connection
         
         fwrite(
             $this->_log_file,
-            date('s') . ' - ' .
+            date('c') . ' - ' .
             preg_replace('/\\s+/',' ',Auth::username()) . ' - ' .
             preg_replace('/\\s+/',' ',$text) .
             "\n"
@@ -216,11 +203,14 @@ class DB
     {
         if ( Auth::check() > 0 )
         {
+            $db = Config::get('sql_readonly');
             DB::$_ro = new Connection(
-                "localhost",
-                "ldb_ro",
-                "c9tdOACz",
-                "ledendatabase" );
+                $db['hostname'],
+                $db['username'],
+                $db['password'],
+                $db['database'],
+                $db['log file']
+            );
         }
     }
     
@@ -228,12 +218,14 @@ class DB
     {
         if ( Auth::check() > 2 )
         {
+            $db = Config::get('sql_readwrite');
             DB::$_rw = new Connection(
-                "localhost",
-                "ldb_rw",
-                "7SHrklIx",
-                "ledendatabase",
-                "/tmp/query_log" );
+                $db['hostname'],
+                $db['username'],
+                $db['password'],
+                $db['database'],
+                $db['log file']
+            );
         }
         else
         {

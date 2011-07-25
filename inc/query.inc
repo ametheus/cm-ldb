@@ -176,11 +176,11 @@ class Query
         if ( count($A) != 2 ) { return false; }
         switch ( $A[0] )
         {
-            case Config::$query_dir:
+            case Config::get('query_dir'):
             case 'standaard':
-                if ( file_exists( Config::$query_dir . "/" . $A[1]) )
+                if ( file_exists( Config::get('query_dir') . "/" . $A[1]) )
                 {
-                    return new Query( Config::$query_dir . "/" . $A[1] );
+                    return new Query( Config::get('query_dir') . "/" . $A[1] );
                 }
                 return false;
             case 'persoonlijk':

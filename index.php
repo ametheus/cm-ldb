@@ -9,7 +9,7 @@ function I($n){return str_repeat("    ",$n);}
 
 function LoQ()
 {
-    $queries = Query::queries_in_dir( Config::$query_dir );
+    $queries = Query::queries_in_dir( Config::get('query_dir') );
     $qlist = Query::sort_query_list( $queries );
     foreach ( $qlist as $cat=>$qs )
     {

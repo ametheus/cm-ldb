@@ -1,16 +1,9 @@
 <?php
 
+require_once("inc/config.inc");
+
 class Auth
 {
-    private static $secret_key = <<<EOT
-    This is a cryptographic key, used for digitally signing cookies.
-    
-    You should change the contents of this key to something different from the
-    standard text.
-    
-    Preferably something long, and difficult to guess.
-EOT;
-    
     
     private static function login_page()
     {
@@ -54,8 +47,8 @@ EOT;
         if ( Auth::logout_page() )
         {
             session_destroy();
-            setcookie( "PHPSESSID", "Empty.", time() - 86400 );
-            setcookie( "sig",       "Empty.", time() - 86400 );
+            setcookie( session_name(), "Empty.", time() - 86400 );
+            setcookie( "sig",          "Empty.", time() - 86400 );
             
             header( 'HTTP/1.1 302 Found' );
             header( 'Location: /' );
@@ -96,8 +89,8 @@ EOT;
             if ( Auth::signature() != @$_COOKIE["sig"] )
             {
                 session_destroy();
-                setcookie( "PHPSESSID", "Empty.", time() - 86400 );
-                setcookie( "sig",       "Empty.", time() - 86400 );
+                setcookie( session_name(), "Empty.", time() - 86400 );
+                setcookie( "sig",          "Empty.", time() - 86400 );
                 
                 Auth::deny_access(
                     "Cryptografische ondertekening<br />van het cookie klopt niet.",
@@ -141,7 +134,7 @@ EOT;
     
     static function signature()
     {
-        if ( !isset($_COOKIE["PHPSESSID"]) ||
+        if ( !isset($_COOKIE[session_name()]) ||
              !isset($_SESSION["e-mail"]) ||
              !isset($_SESSION["salt"]) )
         {
@@ -149,10 +142,10 @@ EOT;
         }
         
         return sha1(
-            $_COOKIE["PHPSESSID"] .
+            $_COOKIE[session_name()] .
             $_SESSION["e-mail"] .
             $_SESSION["salt"] .
-            Auth::$secret_key
+            Config::get('secret_key')
         );
     }
     
@@ -160,7 +153,7 @@ EOT;
     {
         require_once( "Net/SMTP.php" );
         
-        $D = 'collegiummusicum.nl';
+        $D = Config::get('default_domain');
         
         if ( substr($username,-1*strlen("@$D")) == "@$D" )
         {
@@ -194,7 +187,7 @@ EOT;
     private static function priv_level( $email )
     {
         // TODO: Implement layered, less hard-coded privileges.
-        $D = '@collegiummusicum.nl';
+        $D = '@' . Config::get('default_domain');
         
         if ( $email == 'nerdcie'.$D ) { return 4; }
         if ( $email == 'bestuur'.$D ) { return 3; }
