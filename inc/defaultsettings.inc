@@ -10,5 +10,5 @@
  * 
  */
 
-
+$query_dir = "queries";
 
