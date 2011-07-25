@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
+    <Header>
+        <Title>Adresstickers</Title>
+        <Description>Spuwt een lijst uit met de adresgegevens van alle leden.</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+        <Category>Adreslijsten</Category>
+    </Header>
+    <Body>
+        <Text Name="Iedereen"><![CDATA[
+            SELECT
+                Titel, Voornaam, Tussenvoegsel, Achternaam,
+                Adres, Postcode, Plaats
+            FROM persoon
+            WHERE ( select count(1) from lidVan
+                    inner join groep on groep.groep_id = lidVan.groep_id 
+                    where lidVan.pers_id = persoon.pers_id
+                        and groep.klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' ) 
+                        and lidVan.van is not null  and lidVan.tot is null ) > 0
+            GROUP BY persoon.pers_id
+            ORDER BY voornaam, achternaam
+        ]]></Text>
+        <Text Name="Grootkoor"><![CDATA[
+            SELECT
+                Titel, Voornaam, Tussenvoegsel, Achternaam,
+                Adres, Postcode, Plaats
+            FROM persoon
+            WHERE ( select count(1) from lidVan
+                    inner join groep on groep.groep_id = lidVan.groep_id 
+                    where lidVan.pers_id = persoon.pers_id
+                        and groep.klasse IN ( 'grootkoor' ) 
+                        and lidVan.van is not null  and lidVan.tot is null ) > 0
+            GROUP BY persoon.pers_id
+            ORDER BY voornaam, achternaam
+        ]]></Text>
+        <Text Name="Kamerkoor"><![CDATA[
+            SELECT
+                Titel, Voornaam, Tussenvoegsel, Achternaam,
+                Adres, Postcode, Plaats
+            FROM persoon
+            WHERE ( select count(1) from lidVan
+                    inner join groep on groep.groep_id = lidVan.groep_id 
+                    where lidVan.pers_id = persoon.pers_id
+                        and groep.klasse IN ( 'kamerkoor' ) 
+                        and lidVan.van is not null  and lidVan.tot is null ) > 0
+            GROUP BY persoon.pers_id
+            ORDER BY voornaam, achternaam
+        ]]></Text>
+        <Text Name="Orkest"><![CDATA[
+            SELECT
+                Titel, Voornaam, Tussenvoegsel, Achternaam,
+                Adres, Postcode, Plaats
+            FROM persoon
+            WHERE ( select count(1) from lidVan
+                    inner join groep on groep.groep_id = lidVan.groep_id 
+                    where lidVan.pers_id = persoon.pers_id
+                        and groep.klasse IN ( 'orkest' ) 
+                        and lidVan.van is not null  and lidVan.tot is null ) > 0
+            GROUP BY persoon.pers_id
+            ORDER BY voornaam, achternaam
+        ]]></Text>
+    </Body>
+</Query>

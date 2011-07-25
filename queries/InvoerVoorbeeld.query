@@ -4,6 +4,7 @@
         <Title>Voorbeeld invoeren</Title>
         <Description>Laat zien hoe de parameters bij queries werken.</Description>
         <Author PersoonID="2021">Thijs van Dijk</Author>
+        <Category>Onderhoudsrapporten</Category>
     </Header>
     <Parameters>
         <Parameter Name="tekst" Title="Woord" Description="Voer een woord in. Of meerdere.">

@@ -4,6 +4,7 @@
         <Title>Donateurs maillijst</Title>
         <Description>Geeft een lijst met e-mailadressen van donateurs, voorzover bekend.</Description>
         <Author PersoonID="2021">Thijs</Author>
+        <Category>Adreslijsten</Category>
     </Header>
     <Body>
         <Text Name="Alles"><![CDATA[

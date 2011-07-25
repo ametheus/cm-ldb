@@ -16,6 +16,9 @@
                 AND A.tussenvoegsel = B.tussenvoegsel
                 AND A.pers_id < ( B.pers_id - 1 )
                 AND ( A.voornaam = '' OR B.voornaam = '' OR A.voornaam = B.voornaam ) )
+                AND (  A.geboortedatum IS NULL OR A.geboortedatum < '1800-01-01'
+                    OR B.geboortedatum IS NULL OR B.geboortedatum < '1800-01-01'
+                    OR A.geboortedatum = B.geboortedatum ) )
         ORDER BY A.pers_id, B.pers_id
 ]]></Text>
     </Body>
