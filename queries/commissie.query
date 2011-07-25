@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
-        <Title>Wie zitten er in de ...</Title>
+        <Title>Wie zitten/zaten er in de ...</Title>
         <Description>Selecteer een commissie, en je krijgt een lijstje met de huidige commissieleden.</Description>
         <Author PersoonID="2021">Thijs van Dijk</Author>
         <Category>Ledenlijsten</Category>
@@ -21,7 +21,7 @@
         </Parameter>
     </Parameters>
     <Body>
-        <Text Name="Commissielijst">
+        <Text Name="Nu">
             <![CDATA[
         SELECT
             CONCAT( 
@@ -38,6 +38,31 @@
             JOIN lidVan USING ( `pers_id` )
         WHERE groep_id = @comm
             AND van <= NOW() AND ( tot IS NULL OR tot > NOW() )
+        ]]></Text>
+        <Text Name="Vroeger">
+            <![CDATA[
+        SELECT
+            CONCAT( 
+                CASE titel
+                    WHEN '' THEN 
+                        CASE voornaam WHEN '' THEN voorletters ELSE voornaam END
+                    ELSE
+                        concat( titel, CASE voorletters when '' then '' else concat(' ',voorletters)END )
+                END,
+                ' ', 
+                CASE tussenvoegsel 
+                    WHEN '' THEN '' 
+                    else concat( tussenvoegsel, ' ' ) 
+                END, 
+                achternaam 
+            ) AS `Naam`,
+            YEAR( DATE_SUB( tot, INTERVAL 50 DAY ) ) AS `Jaar`,
+            email, telefoon, mobiel
+        FROM persoon
+            JOIN lidVan USING ( `pers_id` )
+        WHERE groep_id = @comm
+            AND van < NOW() AND tot IS NOT NULL AND tot <= NOW()
+        ORDER BY voornaam, achternaam
         ]]></Text>
     </Body>
 </Query>

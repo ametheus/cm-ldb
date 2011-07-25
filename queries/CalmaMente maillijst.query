@@ -4,6 +4,7 @@
         <Title>CalmaMente-adreslijst</Title>
         <Description>Een lijst met adressen van alle CalmaMente-leden, en oud-CM'ers.</Description>
         <Author PersoonID="2021">Thijs</Author>
+        <Category>Adreslijsten</Category>
     </Header>
     <Parameters />
     <Body>

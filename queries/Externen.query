@@ -4,6 +4,7 @@
         <Title>Externen</Title>
         <Description>Geeft een lijst met adressen van externen.</Description>
         <Author PersoonID="2021">Thijs</Author>
+        <Category>Adreslijsten</Category>
     </Header>
     <Body>
         <Text Name="Iedereen"><![CDATA[
