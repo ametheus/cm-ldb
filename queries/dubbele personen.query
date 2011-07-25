@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
+    <Header>
+        <Title>Dubbele personen</Title>
+        <Description>Een lijst van personen die mogelijk twee keer in de database staan.</Description>
+        <Author PersoonID="2021">Thijs</Author>
+        <Category>Onderhoudsrapporten</Category>
+    </Header>
+    <Body>
+        <Text Name="Dubbel"><![CDATA[
+        SELECT A.pers_id as `PID A`, A.titel as `Titel A`, A.voornaam as `Voornaam A`, A.tussenvoegsel as `tv A`, A.achternaam as `naam A`, A.aangetrouwdenaam as `a-naam A`, 
+               B.pers_id as `PID B`, B.titel as `Titel B`, B.voornaam as `Voornaam B`, B.tussenvoegsel as `tv B`, B.achternaam as `naam B`, B.aangetrouwdenaam as `a-naam B`
+        FROM persoon as A
+            INNER JOIN persoon as B ON
+            ( A.achternaam = B.achternaam
+                AND A.tussenvoegsel = B.tussenvoegsel
+                AND A.pers_id < ( B.pers_id - 1 )
+                AND ( A.voornaam = '' OR B.voornaam = '' OR A.voornaam = B.voornaam ) )
+        ORDER BY A.pers_id, B.pers_id
+]]></Text>
+    </Body>
+</Query>
