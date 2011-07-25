@@ -23,3 +23,19 @@ $sql_connection_readwrite = array(
 );
 
 
+// The default e-mail domain to authenticate against.
+$default_domain = 'collegiummusicum.nl';
+
+
+// Cryptographic key, used for digitally signing cookies.
+$secret_key = <<<EOT
+    This is a cryptographic key, used for digitally signing cookies.
+    
+    You should change the contents of this key to something different from the
+    standard text.
+    
+    Preferably something long, and difficult to guess.
+EOT;
+
+
+
