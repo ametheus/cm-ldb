@@ -69,7 +69,7 @@ elseif ( @$_REQUEST["as"] == "stickers" )
 {
     $table = get_a_table();
     
-    Adresstickers::download( $table );
+    Adresstickers::download( $table, $Q->Title );
     exit;
 }
 
