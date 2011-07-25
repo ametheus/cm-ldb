@@ -155,7 +155,7 @@ class Query
             return strcmp($a->Title, $b->Title);
         }
         usort($list,"cmp");
-        $rv = array();
+        $rv = array('Ledenlijsten'=>array(),'Adreslijsten'=>array(),'Onderhoudsrapporten'=>array(),'Overig'=>array());
         foreach ( $list as $q )
         {
             if ( ! isset($rv[$q->Category]) )
@@ -167,6 +167,14 @@ class Query
                 $rv[$q->Category][] = $q;
             }
         }
+        
+        foreach ( array('Onderhoudsrapporten','Overig') as $k )
+        {
+            $ov = $rv[$k];
+            unset($rv[$k]);
+            $rv[$k] = $ov;
+        }
+        
         return $rv;
     }
     static function query_from_file()
