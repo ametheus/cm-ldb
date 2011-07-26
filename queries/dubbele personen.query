@@ -15,10 +15,14 @@
             ( A.achternaam = B.achternaam
                 AND A.tussenvoegsel = B.tussenvoegsel
                 AND A.pers_id < ( B.pers_id - 1 )
-                AND ( A.voornaam = '' OR B.voornaam = '' OR A.voornaam = B.voornaam ) )
+                AND ( A.voornaam = '' OR B.voornaam = '' OR A.voornaam = B.voornaam )
                 AND (  A.geboortedatum IS NULL OR A.geboortedatum < '1800-01-01'
                     OR B.geboortedatum IS NULL OR B.geboortedatum < '1800-01-01'
                     OR A.geboortedatum = B.geboortedatum ) )
+        WHERE ( SELECT COUNT(1) FROM relaties WHERE relatie = 'ouder'
+                AND ((pers_id_1 = A.pers_id AND pers_id_2 = B.pers_id) OR (pers_id_1 = B.pers_id AND pers_id_2 = A.pers_id))
+            ) = 0
+            AND ( A.geslacht = 'onbekend' OR B.geslacht = 'onbekend' OR A.geslacht = B.geslacht )
         ORDER BY A.pers_id, B.pers_id
 ]]></Text>
     </Body>
