@@ -34,20 +34,20 @@ class Adresstickers
             $padding
         ) = Adresstickers::get_margins();
         
-        // Paper (printable area) height/width
+        // Paper (printable area) width/height
         $PW = $paper_size[0] - (2 * $MX);
         $PH = $paper_size[1] - (2 * $MY);
         
-        // Block (sticker+margins) height/width
+        // Block (sticker+margins) width/height
         $BW = ( $PW + $DX ) / $amt[0];
         $BH = ( $PH + $DY ) / $amt[1];
         // ( We need to add a virtual separator to the right, as there are $amt[0]-1 separators total. )
         
-        // Sticker height/width
+        // Sticker width/height
         $SW = $BW - $DX;
         $SH = $BH - $DY;
         
-        // Line height/width
+        // Line width/height
         $LW = $SW - 2*$padding;
         $LH = 1.07 * $fheight;
         
@@ -66,8 +66,8 @@ class Adresstickers
             {
                 for ( $j = 0; $j < $amt[0]; $j++ )
                 {
-                    $X = $MX + ($j * $BW);
-                    $Y = $MY + ($i * $BH);
+                    $X = $MX + ($j * $BW) + $padding;
+                    $Y = $MY + ($i * $BH) + $padding + ($SH-$lines*$fheight*1.3)/2;
                     $p->SetXY( $X, $Y );
                     
                     $T = $L;
@@ -100,10 +100,10 @@ Left, top margin:  {$MX}mm / {$MY}mm
 Horizontal, vertical separator:  {$DX}mm / {$DY}mm
 Padding:  {$padding}mm
 
-Paper (printable area) height/width:  {$PW}x{$PH}mm
-Block (sticker+margins) height/width:  {$BW}x{$BH}mm
-Sticker height/width:  {$SH}x{$SW}mm
-Line height/width:  {$LW}x{$LH}mm
+Paper (printable area) width/height:  {$PW}x{$PH}mm
+Block (sticker+margins) width/height:  {$BW}x{$BH}mm
+Sticker width/height:  {$SW}x{$SH}mm
+Line width/height:  {$LW}x{$LH}mm
 
 
 Eccenticities:  {$ex[0]}.
@@ -112,6 +112,9 @@ EOT;
         $p->AddPage();
         $p->SetXY(20,30);
         $p->MultiCell( 150, 1.4*$fheight, $debug_page, 0, 'L' );
+        
+        $p->SetXY(1,1);
+        $p->Cell( $paper_size[0]-2, $paper_size[1]-2, "", 1 );
         
         
         $p->Output( $title, 'I' );
