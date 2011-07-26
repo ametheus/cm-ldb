@@ -33,6 +33,8 @@ class Config
         if ( isset($query_dir) ) { Config::$data['query_dir'] = $query_dir; }
         if ( isset($default_domain) ) { Config::$data['default_domain'] = $default_domain; }
         
+        if ( isset($sticker_logo_file) ) { Config::$data['sticker_logo_file'] = $sticker_logo_file; }
+        
         if ( isset($secret_key) ) { Config::$data['secret_key'] = $secret_key; }
         
         if ( isset($sql_connection_readonly)  ) { Config::import_connection("sql_readonly", $sql_connection_readonly);  }

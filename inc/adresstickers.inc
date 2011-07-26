@@ -55,6 +55,34 @@ class Adresstickers
         $L = Adresstickers::get_layout();
         $lines = count(explode("\n",$L));
         
+        $Ifile = false;
+        $IW = $IH = $IX = $IY = 0;
+        if (( $Ifile = Config::get('sticker_logo_file') ) && ( file_exists($Ifile) ))
+        {
+            list($IW,$IH) = getimagesize($Ifile);
+            // Determine if the aspect ratio of the image is smaller or larger
+            // than that of the sticker
+            
+            if ( ($IW/$IH) > ($SW/$SH) )
+            {
+                // Logo should go in the bottom half
+                $IH = $IH * ($SW/$IW);
+                $IW = $SW;
+                
+                $IX = 0;
+                $IY = $SH - $IH;
+            }
+            else
+            {
+                // Logo should go in the right half
+                $IW = $IW * ($SH/$IH);
+                $IH = $SH;
+                
+                $IX = $SW - $IW;
+                $IY = 0;
+            }
+        }
+        
         $ex = array(0,0);
         $c = 0;
         $max = count($table);
@@ -66,6 +94,16 @@ class Adresstickers
             {
                 for ( $j = 0; $j < $amt[0]; $j++ )
                 {
+                    if ( $Ifile )
+                    {
+                        // Insert logo watermark
+                        $p->Image( $Ifile,
+                            $MX + ($j * $BW) + $IX,
+                            $MY + ($i * $BH) + $IY,
+                            $IW, $IH
+                        );
+                    }
+                    
                     $X = $MX + ($j * $BW) + $padding;
                     $Y = $MY + ($i * $BH) + $padding + ($SH-$lines*$fheight*1.3)/2;
                     $p->SetXY( $X, $Y );
@@ -99,6 +137,9 @@ Paper size:  {$paper_size[0]}x{$paper_size[1]}mm
 Left, top margin:  {$MX}mm / {$MY}mm
 Horizontal, vertical separator:  {$DX}mm / {$DY}mm
 Padding:  {$padding}mm
+
+Logo size:  {$IW}x{$IH}mm
+Logo origin:  [{$IX},{$IY}]
 
 Paper (printable area) width/height:  {$PW}x{$PH}mm
 Block (sticker+margins) width/height:  {$BW}x{$BH}mm
