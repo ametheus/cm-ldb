@@ -63,3 +63,9 @@ down a large rabbit-hole under the hedge.
 EOT;
 
 
+
+// A watermark logo to add to all the envelope labels
+$sticker_logo_file = false;
+
+
+

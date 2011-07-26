@@ -2,7 +2,7 @@
 
 class Config
 {
-    private static $version = '3.2.7b';
+    private static $version = '3.2.7c';
     static function version() { return Config::$version; }
     static function short_app() { return "Ledendatabase v" . Config::$version; }
     static function full_app()  { return "LSKO Collegium Musicum - Ledendatabase - v" . Config::$version; }
@@ -32,6 +32,8 @@ class Config
         
         if ( isset($query_dir) ) { Config::$data['query_dir'] = $query_dir; }
         if ( isset($default_domain) ) { Config::$data['default_domain'] = $default_domain; }
+        
+        if ( isset($sticker_logo_file) ) { Config::$data['sticker_logo_file'] = $sticker_logo_file; }
         
         if ( isset($secret_key) ) { Config::$data['secret_key'] = $secret_key; }
         
