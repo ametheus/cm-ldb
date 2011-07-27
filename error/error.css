@@ -80,4 +80,16 @@ div.notfound div.spacer
     height: 150px;
 }
 
+div.forbidden
+{
+    background-image: url(/error/tumbeasts/orig/tbrun2.png);
+    background-repeat: no-repeat;
+    background-size: 280px;
+    
+    background-position: center right;
+}
+div.forbidden div.spacer
+{
+    height: 150px;
+}
 
