@@ -29,6 +29,7 @@ php_value session.cookie_lifetime   86400
 
 # Deny include files
 RewriteRule ^inc/(.*)$ index.php [F]
+RewriteRule ^create_db.sh$ index.php [F]
 
 # Error handlers
 ErrorDocument 401 /error/auth.html
