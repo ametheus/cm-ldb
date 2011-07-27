@@ -26,12 +26,18 @@ RewriteRule ^aanmelden$             http://www.collegiummusicum.nl/joomla/index.
 php_value session.gc_maxlifetime    86400
 php_value session.cookie_lifetime   86400
 
+# Deny include files
+RewriteRule ^inc/(.*)$ index.php [F]
 
-
-<Files ~ "\.(inc|html)">
-    order allow,deny
-    deny from all
-</Files>
-
+# Error handlers
 ErrorDocument 401 /error/auth.html
+ErrorDocument 403 /error/forbidden.html
+ErrorDocument 404 /error/notfound.html
+ErrorDocument 500 /error/internal.html
 
+
+# Test errors
+RewriteRule ^test-error/401$ login.php [L]
+RewriteRule ^test-error/403$ / [F,L]
+RewriteRule ^test-error/404$ - [L]
+RewriteRule ^test-error/500$ error/exception.php
