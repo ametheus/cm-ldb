@@ -68,7 +68,7 @@ function Studies()
 
 if ( ! isset($_GET["json"]) )
 {
-    include( "edit-people.html" );
+    include( "inc/templates/edit-people.html" );
     exit;
 }
 
