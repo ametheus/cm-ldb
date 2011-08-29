@@ -1,3 +1,7 @@
+//
+// I obtained this from Google. No idea what it does.
+//
+
         blogFeedUrl = 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=' +
           'http://www.blogger.com/feeds/6781693/posts/default&num=1&callback=loadBlogFeed';
         function loadBlogFeed(r){
