@@ -45,10 +45,10 @@ function Groepen()
         {
             if ( $klasse ) { print( "                    </optgroup>\n" ); }
             $klasse = $groep["klasse"];
-            $rklasse = htmlentities($klasse);
+            $rklasse = htmlspecialchars($klasse);
             print( "                    <optgroup label=\"".ucfirst($rklasse)."\">\n" );
         }
-        $rgn = htmlentities($groep["groepsnaam"]);
+        $rgn = htmlspecialchars($groep["groepsnaam"]);
         print( "                        <option value=\"{$groep["groep_id"]}\" data-klasse=\"{$rklasse}\">{$rgn}</option>\n" );
     }
     if ( $klasse ) { print( "                    </optgroup>\n" ); }
