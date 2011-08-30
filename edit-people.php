@@ -48,8 +48,10 @@ function Groepen()
             $rklasse = htmlentities($klasse);
             print( "                    <optgroup label=\"".ucfirst($rklasse)."\">\n" );
         }
-        print( "                        <option value=\"{$groep["groep_id"]}\" data-klasse=\"{$rklasse}\">{$groep["groepsnaam"]}</option>\n" );
+        $rgn = htmlentities($groep["groepsnaam"]);
+        print( "                        <option value=\"{$groep["groep_id"]}\" data-klasse=\"{$rklasse}\">{$rgn}</option>\n" );
     }
+    if ( $klasse ) { print( "                    </optgroup>\n" ); }
 }
 function Studies()
 {
