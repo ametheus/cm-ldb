@@ -40,12 +40,102 @@ SELECT
 FROM persoon
 WHERE ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 100
+			AND lidVan.groep_id IN ( 301, 302, 303, 304 )
 			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
 	) > 0
 ORDER BY Achternaam
 ]]></Text>
-        <Text Name="Concertuitnodiging"><![CDATA[
+        <Text Name="Extern bestuur"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 301
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Externe"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 302
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Concertgenodigde"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 303
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="CM-prominent"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 304
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Oud-Iedereen"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id IN ( 101, 102, 103 )
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Oud-Concertuitnodiging"><![CDATA[
 SELECT 
 	Titel, 
 	Voornaam, 
@@ -63,7 +153,7 @@ WHERE (
 	) > 0
 ORDER BY Achternaam
 ]]></Text>
-        <Text Name="Bestuurswissel"><![CDATA[
+        <Text Name="Oud-Bestuurswissel"><![CDATA[
 SELECT 
 	Titel, 
 	Voornaam, 
@@ -81,7 +171,7 @@ WHERE (
 	) > 0
 ORDER BY Achternaam
 ]]></Text>
-        <Text Name="Jaarverslag"><![CDATA[
+        <Text Name="Oud-Jaarverslag"><![CDATA[
 SELECT 
 	Titel, 
 	Voornaam, 
