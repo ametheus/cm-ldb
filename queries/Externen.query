@@ -40,7 +40,7 @@ SELECT
 FROM persoon
 WHERE ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id IN ( 301, 302, 303, 304 )
+			AND lidVan.groep_id IN ( 301, 302, 303, 304, 4114 )
 			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
 	) > 0
 ORDER BY Achternaam
@@ -117,7 +117,7 @@ WHERE (
 	) > 0
 ORDER BY Achternaam
 ]]></Text>
-        <Text Name="Oud-Iedereen"><![CDATA[
+        <Text Name="Ereleden"><![CDATA[
 SELECT 
 	Titel, 
 	Voornaam, 
@@ -130,61 +130,7 @@ SELECT
 FROM persoon
 WHERE ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id IN ( 101, 102, 103 )
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
-]]></Text>
-        <Text Name="Oud-Concertuitnodiging"><![CDATA[
-SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
-	Adres, 
-	Postcode, 
-	Plaats,
-	Email
-FROM persoon
-WHERE ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 103
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
-]]></Text>
-        <Text Name="Oud-Bestuurswissel"><![CDATA[
-SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
-	Adres, 
-	Postcode, 
-	Plaats,
-	Email
-FROM persoon
-WHERE ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 101
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
-]]></Text>
-        <Text Name="Oud-Jaarverslag"><![CDATA[
-SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
-	Adres, 
-	Postcode, 
-	Plaats,
-	Email
-FROM persoon
-WHERE ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 102
+			AND lidVan.groep_id = 4114
 			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
 	) > 0
 ORDER BY Achternaam
