@@ -5,16 +5,16 @@ jQuery(document).ready(function($) {
 
 // Theme Changer
    $("#themecolor .blue").click(function(){
-      $("#theme").attr("href", "css/themes/blue.css");
+      $("#theme").attr("href", "/css/themes/blue.css");
       return false;
    });
    $("#themecolor .red").click(function(){
-      $("#theme").attr("href", "css/themes/red.css");
+      $("#theme").attr("href", "/css/themes/red.css");
       return false;
    });
 
    $("#themecolor .green").click(function(){
-      $("#theme").attr("href", "css/themes/green.css");
+      $("#theme").attr("href", "/css/themes/green.css");
       return false;
    });
 
@@ -153,12 +153,12 @@ $(".filetree").treeview({
 	});
 $("#filetree-add").click(function() {
 		var branches = $("<li><span class='folder'>New Sublist</span><ul>" + 
-			"<li><img alt='' src='./img/icons/16/page.png' /><a href='#'>New Item</a></li>" + 
-			"<li><img alt='' src='./img/icons/16/page.png' /><a href='#'>New Item</a></li></ul></li>").appendTo("#browser");
+			"<li><img alt='' src='/img/icons/16/page.png' /><a href='#'>New Item</a></li>" + 
+			"<li><img alt='' src='/img/icons/16/page.png' /><a href='#'>New Item</a></li></ul></li>").appendTo("#browser");
 		$("#browser").treeview({
 			add: branches
 		});
-		branches = $("<li class='closed'><span class='folder'>New Sublist</span><ul><li><img alt='' src='./img/icons/16/page.png' /><a href='#'>New Item</a></li><li><img alt='' src='./img/icons/16/page.png' /><a href='#'>New Item</a></li></ul></li>").prependTo("#folder21");
+		branches = $("<li class='closed'><span class='folder'>New Sublist</span><ul><li><img alt='' src='/img/icons/16/page.png' /><a href='#'>New Item</a></li><li><img alt='' src='/img/icons/16/page.png' /><a href='#'>New Item</a></li></ul></li>").prependTo("#folder21");
 		$("#browser").treeview({
 			add: branches
 		});
@@ -168,11 +168,11 @@ $("#filetree-add").click(function() {
 $('.gallery a').lightBox({
 	fixedNavigation:true,
 	overlayOpacity:0.5,
-	imageLoading:'img/lightbox/lightbox-ico-loading.gif',
-	imageBtnClose:'img/lightbox/lightbox-btn-close.gif',
-	imageBtnPrev:'img/lightbox/lightbox-btn-prev.gif',
-	imageBtnNext:'img/lightbox/lightbox-btn-next.gif',
-	imageBlank:'img/lightbox/lightbox-blank.gif'
+	imageLoading:'/img/lightbox/lightbox-ico-loading.gif',
+	imageBtnClose:'/img/lightbox/lightbox-btn-close.gif',
+	imageBtnPrev:'/img/lightbox/lightbox-btn-prev.gif',
+	imageBtnNext:'/img/lightbox/lightbox-btn-next.gif',
+	imageBlank:'/img/lightbox/lightbox-blank.gif'
 	});
 	
 // wysiwyg Setup
