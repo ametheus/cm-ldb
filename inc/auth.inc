@@ -131,6 +131,22 @@ class Auth
         return 0;
     }
     
+    private static $_priv = false;
+    static function privilege_level( $numeric=true )
+    {
+        if ( Auth::$_priv === false ) { Auth::$_priv = Auth::check(); }
+        
+        if ( $numeric ) { return Auth::$_priv; }
+        $PL = array(
+            0 => "Illegaal",
+            1 => "Alleen-lezen",
+            2 => "(Onbekend)",
+            3 => "Lezen en schrijven",
+            4 => "Nerd"
+        );
+        return @$PL[Auth::$_priv];
+    }
+    
     static function redirect_login_page()
     {
         if ( Auth::login_page() )
@@ -150,8 +166,13 @@ class Auth
         }
     }
     
-    static function username()
+    static function username( $short=false )
     {
+        if ( $short )
+        {
+            $em = explode( "@", $_SESSION["e-mail"] );
+            return $em[0];
+        }
         return $_SESSION["e-mail"];
     }
     

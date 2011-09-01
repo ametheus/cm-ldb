@@ -28,10 +28,10 @@
         <ul id="widgets">
           <!-- Widget Start -->
           <li id="info" class="sortable-item">
-            <h3>Account Information</h3>
+            <h3>Accountinformatie</h3>
             <ul>
-              <li><span class="strong">Username:</span> MaestroX</li>
-              <li><span class="strong">Account Type:</span> Premium</li>
+              <li><span class="strong">Gebruikersnaam:</span> <?=Auth::username(true)?></li>
+              <li><span class="strong">Accounttype:</span> <?=Auth::privilege_level(false)?></li>
             </ul>
           </li>
           <!-- Widget End --> 
