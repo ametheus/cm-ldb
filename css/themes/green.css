@@ -1,0 +1,16 @@
+/* 
+Admina Template
+Author: MaestroX (http://themeforest.net/user/MaestroX)
+*/
+
+#nav-wrap-border {
+	border-color:#157e0b;
+}
+#nav-wrap {
+	background-color:#20c00f;	
+	border-color:#81d178;
+}
+nav, nav ul li, nav ul li.first {
+	border-color:#81d178;
+	
+}
