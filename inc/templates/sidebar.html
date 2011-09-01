@@ -42,7 +42,8 @@
               <input value="Search..." onBlur="if (this.value == '') {this.value = 'Search...';}" onFocus="if (this.value == 'Search...') {this.value = '';}" />
             </form>
           </li>
-          <!-- Widget End --> 
+          <!-- Widget End -->
+          <?php if ( false ) { ?>
           <!-- Widget Start -->
           <li id="tags" class="sortable-item">
             <h3>Tags</h3>
@@ -57,6 +58,8 @@
             </ul>
           </li>
           <!-- Widget End --> 
+          <?php } ?>
+          <?php if ( false ) { ?>
           <!-- Widget Start -->
           <li id="todo" class="sortable-item">
             <h3>To Do</h3>
@@ -94,6 +97,8 @@
             </ul>
           </li>
           <!-- Widget End --> 
+          <?php } ?>
+          <?php if ( false ) { ?>
           <!-- Widget Start -->
           <li id="gallery" class="sortable-item">
             <h3>Media</h3>
@@ -105,13 +110,21 @@
             </ul>
           </li>
           <!-- Widget End --> 
+          <?php } ?>
           <!-- Widget Start -->
           <li id="stats" class="sortable-item">
-            <h3>Stats</h3>
+            <h3>Status</h3>
             <ul>
-              <li>Users: 165</li>
-              <li>Comments: 235</li>
-              <li>Pages: 42</li>
+              <li>
+                Softwareversie
+                <ul>
+                  <li>Ledendatabase: <?=Config::version()?></li>
+                  <li>MySQL: <?=Config::mysql_version()?></li>
+                  <li>Ubuntu: <?=Config::ubuntu_version()?></li>
+                </ul>
+              </li>
+              <li>Grootte database: <?=Config::backup_stats('size')?></li>
+              <li>Laatste backup: <?=Config::backup_stats('ago')?></li>
             </ul>
           </li>
         </ul>
