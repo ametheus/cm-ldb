@@ -6,7 +6,7 @@ Author: Chris Mooney (http://themeforest.net/user/ChrisMooney)
 /*////   - Body Styles -   ////*/
 body {
 	color:#1a1a1a;
-	background: #F5F5F5 url('../img/bg.png') repeat;
+	background: #F5F5F5 url('/img/bg.png') repeat;
 }
 body.login, body.error {
 	width:350px;
@@ -148,7 +148,7 @@ section {
 /*////   - Logo -   ////*/
 
 #logo a {
-	background: url(../img/logo.png) no-repeat center center;
+	background: url(/img/logo.png) no-repeat center center;
 	text-indent:-9999px;
 	width:109px;
 	height:25px;
@@ -162,7 +162,7 @@ section {
 	border-right:0;
 }
 #nav-wrap {
-	background-image:url(../img/grad.png);
+	background-image:url(/img/grad.png);
 	background-repeat:repeat-x;
 	background-position:bottom;
 	background-color:#525252;
@@ -214,7 +214,7 @@ nav ul a:hover {
 }
 /* main level link hover */
 nav ul .active a, nav ul li:hover > a {
-	background:  url('../img/grad2.png') repeat-x bottom;
+	background:  url('/img/grad2.png') repeat-x bottom;
 	color: #fff;
 }
 /* sub levels link hover */
@@ -227,7 +227,7 @@ nav ul ul li:hover a, nav ul li:hover li > a {
 	box-shadow:none;
 }
 nav ul ul a:hover {
-	background: url("../img/grad.png") repeat-x bottom #00bfe5 !important;
+	background: url("/img/grad.png") repeat-x bottom #00bfe5 !important;
 	color: #fff !important;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
@@ -319,7 +319,7 @@ nav ul.right ul {
 	height:16px;
 	width:16px;
 	padding:0;
-	background-image:url("../img/grad.png");
+	background-image:url("/img/grad.png");
 	background-position:center bottom;
 	background-repeat:repeat-x;
 	margin-right:10px;
@@ -438,7 +438,7 @@ body.sidebar-off #page-content {
 body.sidebar-left #open_sidebar {
 	left:-34px;
 	border-right:none;
-	background:#fff url(../img/icons/arrow-left.png) no-repeat center center;
+	background:#fff url(/img/icons/arrow-left.png) no-repeat center center;
 	border-radius:4px 0 0 4px;
 	-moz-border-radius:4px 0 0 4px;
 	-wenkit-border-radius:4px 0 0 4px;
@@ -446,7 +446,7 @@ body.sidebar-left #open_sidebar {
 body.sidebar-right #open_sidebar {
 	right:-34px;
 	border-left:none;
-	background:#fff url(../img/icons/arrow-right.png) no-repeat center center;
+	background:#fff url(/img/icons/arrow-right.png) no-repeat center center;
 	border-radius:0 4px 4px 0;
 	-moz-border-radius:0 4px 4px 0;
 	-webkit-border-radius:0 4px 4px 0;
@@ -543,7 +543,7 @@ body.sidebar-right aside li {
 	padding:0 0 5px;
 }
 #close_sidebar {
-	background:#fff url(../img/icons/close.png) no-repeat center center;
+	background:#fff url(/img/icons/close.png) no-repeat center center;
 	height:24px;
 	width:24px;
 	text-indent:-9999px;
@@ -729,7 +729,7 @@ body.login .box-wrapper .box-footer {
 	-webkit-border-radius:3px;
 }
 .box-wrapper .box-header {
-	background:#e2e2e2 url('../img/boxheader.gif') repeat-x top;
+	background:#e2e2e2 url('/img/boxheader.gif') repeat-x top;
 	padding:12px 15px 10px;
 	border-bottom:1px solid #ccc;
 	position:relative;
@@ -763,7 +763,7 @@ body.login .box-wrapper .box-footer {
 	padding:25px 20px 20px;
 }
 .box-wrapper .box-footer {
-	background:#e2e2e2 url('../img/boxheader.gif') repeat-x top;
+	background:#e2e2e2 url('/img/boxheader.gif') repeat-x top;
 	padding:10px 15px;
 	border-top:1px solid #ccc;
 	position:relative;
@@ -791,12 +791,12 @@ body.login .box-wrapper .box-footer {
 	font-size:93%;
 	outline:none;
 	display:block;
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border-left:1px solid #ccc;
 	padding:9px 15px 5px 14px;
 }
 .box-header .controls li.ui-tabs-selected a, .box-header .controls li a:hover {
-	background:url("../img/boxheader-rev.gif") repeat-x top #FFFFFF;
+	background:url("/img/boxheader-rev.gif") repeat-x top #FFFFFF;
 }
 .box-header .tabs.mini li a {
 	padding:6px 10px 3px;
@@ -826,7 +826,7 @@ body.login .box-wrapper .box-footer {
 	outline:none;
 	display:block;
 	margin-left:10px;
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border:1px solid #ccc;
 	border-bottom:none;
 	padding:8px 15px 6px 14px;
@@ -880,7 +880,7 @@ body.login .box-wrapper .box-footer {
 	list-style:none outside none;
 }
 .box-header .pagination a {
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border:1px solid #CCCCCC;
 	display:inline-block;
 	padding:6px 8px;
@@ -917,12 +917,12 @@ body.ie7 .box-header .pagination a, body.ie8 .box-header .pagination a {
 	font-size:93%;
 	outline:none;
 	display:block;
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border-left:1px solid #ccc;
 	padding:6px 15px 3px 14px;
 }
 .box-footer .controls li a.active, .box-footer .controls li a:hover {
-	background:url("../img/boxheader-rev.gif") repeat-x top #FFFFFF;
+	background:url("/img/boxheader-rev.gif") repeat-x top #FFFFFF;
 }
 .box-footer .tabs.mini li a {
 	padding:7px 10px 3px;
@@ -952,7 +952,7 @@ body.ie7 .box-header .pagination a, body.ie8 .box-header .pagination a {
 	outline:none;
 	display:block;
 	margin-left:10px;
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border:1px solid #ccc;
 	border-top:none;
 	padding:5px 15px 7px 14px;
@@ -1007,7 +1007,7 @@ body.ie7 .box-header .pagination a, body.ie8 .box-header .pagination a {
 	list-style:none outside none;
 }
 .box-footer .pagination a {
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border:1px solid #CCCCCC;
 	display:inline-block;
 	padding:6px 8px;
@@ -1036,7 +1036,7 @@ body.ie7 .box-footer .pagination a, body.ie8 .box-footer .pagination a {
 	padding:6px 10px;
 	font-weight: 700;
 	color: #333;
-	background:url("../img/boxheader.gif") repeat-x scroll center top #E2E2E2;
+	background:url("/img/boxheader.gif") repeat-x scroll center top #E2E2E2;
 	border-bottom: 1px solid #cccccc;
 	border-right:1px solid #CCCCCC;
 }

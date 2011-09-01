@@ -42,7 +42,7 @@ body.ie7 fieldset, body.ie8 fieldset, body.ie7 .fieldset, body.ie8 .fieldset {
 	-webkit-box-shadow:0px 1px 0px #fff inset;
 }
 .form legend, .legend {
-	background:url("../img/boxheader.gif") repeat-x scroll center top #E2E2E2;
+	background:url("/img/boxheader.gif") repeat-x scroll center top #E2E2E2;
 	border:1px solid #ccc;
 	font-size:93%;
 	padding:5px 8px;
@@ -56,14 +56,14 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	top:-10px;
 }
 .form legend a {
-	background:url("../img/icons/16/bullet_toggle_plus.png") no-repeat right center;
+	background:url("/img/icons/16/bullet_toggle_plus.png") no-repeat right center;
 	text-decoration:none;
 	display:block;
 	color:#181818;
 	padding-right:20px;
 }
 .form legend a.collapse {
-	background:url("../img/icons/16/bullet_toggle_minus.png") no-repeat right center;
+	background:url("/img/icons/16/bullet_toggle_minus.png") no-repeat right center;
 }
 .form label {
 	display:block;
@@ -79,7 +79,7 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	margin-right:15px;
 }
 .form input, .form textarea {
-	background:#fefefe url(../img/bg-input.gif) repeat-x top;
+	background:#fefefe url(/img/bg-input.gif) repeat-x top;
 	border:1px solid #ccc;
 	padding:5px;
 	color:#4d4d4d;
@@ -102,7 +102,7 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	width:260px;
 }
 .form select {
-	background:#fefefe url(../img/bg-input.gif) repeat-x top;
+	background:#fefefe url(/img/bg-input.gif) repeat-x top;
 	border:1px solid #ccc;
 	padding:5px;
 	color:#4d4d4d;
@@ -124,23 +124,23 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	font-size:131%;
 }
 .form input.success {
-	background:#F1FFBF url("../img/icons/16/success.png") no-repeat 140px center;
+	background:#F1FFBF url("/img/icons/16/success.png") no-repeat 140px center;
 	border-color:#A6D50F;
 }
 .form input.error {
-	background:#FECDC6 url("../img/icons/16/error.png") no-repeat 140px center;
+	background:#FECDC6 url("/img/icons/16/error.png") no-repeat 140px center;
 	border-color:#F45D43;
 }
 .form input.warning {
-	background:#FFECB0 url("../img/icons/16/warning.png") no-repeat 140px center;
+	background:#FFECB0 url("/img/icons/16/warning.png") no-repeat 140px center;
 	border-color:#FFBC2A;
 }
 .form input.info {
-	background:#D4E7F5 url("../img/icons/16/information.png") no-repeat 140px center;
+	background:#D4E7F5 url("/img/icons/16/information.png") no-repeat 140px center;
 	border-color:#589AD7;
 }
 .form input.tip {
-	background:#FFECCD url("../img/icons/16/tip.png") no-repeat 140px center;
+	background:#FFECCD url("/img/icons/16/tip.png") no-repeat 140px center;
 	border-color:#DD9854;
 }
 .form input.success, .form input.error, .form input.warning, .form input.info, .form input.tip {
@@ -172,7 +172,7 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	line-height: 30px;
 	border:1px solid #ccc;
 	padding: 0 10px;
-	background: url("../img/bg-input.gif") repeat-x top #FEFEFE;
+	background: url("/img/bg-input.gif") repeat-x top #FEFEFE;
 	font-weight: 700;
 	color:#333333;
 }
@@ -192,14 +192,14 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	padding: 0 10px;
 }
 .switch-disable.selected {
-	background: #b04d44 url(../img/grad.png) repeat-x bottom;
+	background: #b04d44 url(/img/grad.png) repeat-x bottom;
 	border:1px solid #96413b;
 	border-radius:0 5px 5px 0;
 	-moz-border-radius:0 5px 5px 0;
 	-webkit-border-radius:0 5px 5px 0;
 }
 .switch-enable.selected {
-	background: #88bc1f url(../img/grad.png) repeat-x bottom;
+	background: #88bc1f url(/img/grad.png) repeat-x bottom;
 	border:1px solid #4f810f;
 	border-right:0;
 	border-radius:5px 0 0 5px;
@@ -221,14 +221,14 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 	padding: 0 5px;
 }
 .switch-wrapper.small .switch-disable.selected {
-	background: #b04d44 url(../img/grad.png) repeat-x bottom;
+	background: #b04d44 url(/img/grad.png) repeat-x bottom;
 	border:1px solid #96413b;
 	border-radius:0 5px 5px 0;
 	-moz-border-radius:0 5px 5px 0;
 	-webkit-border-radius:0 5px 5px 0;
 }
 .switch-wrapper.small .switch-enable.selected {
-	background: #88bc1f url(../img/grad.png) repeat-x bottom;
+	background: #88bc1f url(/img/grad.png) repeat-x bottom;
 	border:1px solid #4f810f;
 	border-right:0;
 	border-radius:5px 0 0 5px;
@@ -241,7 +241,7 @@ body.ie7 legend, body.ie8 legend, body.ie7 .legend, body.ie8 .legend {
 }
 /* Progress Bars */
 .progress-bar {
-	background:url("../img/grad.png") repeat-x center bottom #ccc;
+	background:url("/img/grad.png") repeat-x center bottom #ccc;
 	border:1px solid #808080;
 	display:inline-block;
 	padding:10px;
@@ -261,7 +261,7 @@ body.ie7 .progress-bar, body.ie8 .progress-bar {
 	display:inline;
 }
 .progress-bar span {
-	background-image:url("../img/grad.png");
+	background-image:url("/img/grad.png");
 	background-repeat:repeat-x;
 	background-position:bottom center;
 	border:1px solid rgba(0, 0, 0, 0.3);
@@ -302,7 +302,7 @@ button, .button {
 	text-align:center;
 	text-decoration:none !important;
 	vertical-align:middle;
-	background:#404040 url('../img/grad.png') repeat-x bottom;
+	background:#404040 url('/img/grad.png') repeat-x bottom;
 	color:#fff !important;
 	border-width:2px;
 	border-style:groove;
@@ -322,7 +322,7 @@ body.ie7 button, body.ie8 button, body.ie7 .button, body.ie8 .button {
 }
 button:hover, .button:hover {
 	background-color:#595959;
-	background-image: url('../img/grad.png');
+	background-image: url('/img/grad.png');
 	text-decoration:none;
 	outline:none;
 }
@@ -330,7 +330,7 @@ button:active, .button:active {
 	position:relative;
 	top:1px;
 	outline:none;
-	background-image: url('../img/grad-rev.png');
+	background-image: url('/img/grad-rev.png');
 	background-position:top;
 }
 button.blue, .button.blue {
@@ -361,7 +361,7 @@ button.red:hover, .button.red:hover {
 	background-color:#d91111;
 }
 button.grey, .button.grey {
-	background:url("../img/boxheader.gif") repeat-x center center #E2E2E2;
+	background:url("/img/boxheader.gif") repeat-x center center #E2E2E2;
 	color:#4d4d4d !important;
 	border:1px solid rgba(0, 0, 0, 0.1);
 }
@@ -391,7 +391,7 @@ body.ie7 button.disabled, body.ie8 button.disabled {
 button.disabled:active, .button.disabled:active {
 	position:relative;
 	top:0;
-	background-image: url('../img/grad.png');
+	background-image: url('/img/grad.png');
 }
 fieldset button, .button {
 	margin:0 5px 10px 0;
@@ -405,35 +405,35 @@ button img, .button img {
 }
 /* notifications */
 .notification.success {
-	background:#f1ffbf url('../img/icons/16/success.png') no-repeat 10px 10px;
+	background:#f1ffbf url('/img/icons/16/success.png') no-repeat 10px 10px;
 	border-color:#a6d50f;
 }
 .notification.success span.strong {
 	color:#283304;
 }
 .notification.error {
-	background:#fecdc6 url('../img/icons/16/error.png') no-repeat 10px 10px;
+	background:#fecdc6 url('/img/icons/16/error.png') no-repeat 10px 10px;
 	border-color:#f45d43;
 }
 .notification.error span.strong {
 	color:#33130e;
 }
 .notification.warning {
-	background:#ffecb0 url('../img/icons/16/warning.png') no-repeat 10px 10px;
+	background:#ffecb0 url('/img/icons/16/warning.png') no-repeat 10px 10px;
 	border-color:#ffbc2a;
 }
 .notification.warning span.strong {
 	color:#332508;
 }
 .notification.info {
-	background:#d4e7f5 url('../img/icons/16/information.png') no-repeat 10px 10px;
+	background:#d4e7f5 url('/img/icons/16/information.png') no-repeat 10px 10px;
 	border-color:#589ad7;
 }
 .notification.info span.strong {
 	color:#152433;
 }
 .notification.tip {
-	background:#ffeccd url('../img/icons/16/tip.png') no-repeat 10px 10px;
+	background:#ffeccd url('/img/icons/16/tip.png') no-repeat 10px 10px;
 	border-color:#dd9854;
 }
 .notification.tip span.strong {
@@ -455,7 +455,7 @@ button img, .button img {
 	margin:0;
 }
 .notification .close {
-	background:url("../img/icons/16/close.png") no-repeat scroll 0 0 transparent;
+	background:url("/img/icons/16/close.png") no-repeat scroll 0 0 transparent;
 	cursor:pointer;
 	display:block;
 	height:16px;

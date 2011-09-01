@@ -75,7 +75,7 @@ aside .tags li a {
 	text-transform:uppercase;
 }
 .pagination a, .pagination .dots {
-	background:url("../img/boxheader.gif") repeat-x scroll center top #E2E2E2;
+	background:url("/img/boxheader.gif") repeat-x scroll center top #E2E2E2;
 	border:1px solid #CCCCCC;
 	display: inline-block;
 	color:#181818;
@@ -90,11 +90,11 @@ aside .tags li a {
 	color: #181818;
 }
 .pagination a.current {
-	background: #E2E2E2 url(../img/grad.png) repeat-x top;
+	background: #E2E2E2 url(/img/grad.png) repeat-x top;
 	color: #181818;
 }
 .pagination a.current:active {
-	background: #E2E2E2 url(../img/grad-rev.png) repeat-x bottom;
+	background: #E2E2E2 url(/img/grad-rev.png) repeat-x bottom;
 	color: #181818;
 }
 .pagination a:hover {
@@ -108,7 +108,7 @@ aside .tags li a {
 	color: #4fa3e0;
 }
 .pagination.blue a.current {
-	background: #0f8bc0 url(../img/grad.png) repeat-x bottom;
+	background: #0f8bc0 url(/img/grad.png) repeat-x bottom;
 	border-color:#0f8bc0;
 	color:#fff;
 }
@@ -119,7 +119,7 @@ aside .tags li a {
 	border-color:#000;
 }
 .pagination.blue a.number.current:active {
-	background: #0f8bc0 url(../img/grad-rev.png) repeat-x bottom;
+	background: #0f8bc0 url(/img/grad-rev.png) repeat-x bottom;
 }
 /* Small Pagination */
 .pagination.small a, .pagination.small .dots {
@@ -186,7 +186,7 @@ border-radius:3px;
 	margin-bottom:5px;
 }
 .collapsible-list span.toggle {
-	background:url("../img/icons/16/bullet_toggle_minus.png") no-repeat center center;
+	background:url("/img/icons/16/bullet_toggle_minus.png") no-repeat center center;
 	cursor:pointer;
 	height:16px;
 	left:1px;
@@ -195,7 +195,7 @@ border-radius:3px;
 	width:16px;
 }
 .collapsible-list li.collapsed > span {
-	background:url("../img/icons/16/bullet_toggle_plus.png") no-repeat center center;
+	background:url("/img/icons/16/bullet_toggle_plus.png") no-repeat center center;
 }
 .collapsible-list li img {
 	margin-right:5px;
@@ -215,7 +215,7 @@ dl.definition {
 	margin-bottom:20px;	
 }
 dl.definition dt {
-	background:url("../img/icons/16/bullet_arrow_right.png") no-repeat left center;
+	background:url("/img/icons/16/bullet_arrow_right.png") no-repeat left center;
 	font-weight: 700;
 	margin-bottom:5px;
 	padding-left:20px;
@@ -247,7 +247,7 @@ dl.definition dd {
 	display:block;
 	-moz-border-radius:6px 0 0 6px;
 	-webkit-border-radius:6px 0 0 6px;
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border:1px solid #ccc;
 	border-right:none;
 	padding:7px 10px 6px 10px;
@@ -297,7 +297,7 @@ margin-bottom:15px;
 margin-left:0;
 }
 .bullet-list li {
-background:url("../img/icons/16/bullet_arrow_right.png") no-repeat left center transparent;
+background:url("/img/icons/16/bullet_arrow_right.png") no-repeat left center transparent;
 margin-bottom:5px;
 padding:6px 6px 6px 20px;
 }
@@ -342,7 +342,7 @@ padding:6px 6px 6px 20px;
 	margin-top: 4px;
 }
 .filetree .hitarea {
-	background: url(../img/filetree-default.gif) -64px -24px no-repeat;
+	background: url(/img/filetree-default.gif) -64px -24px no-repeat;
 	height: 16px;
 	width: 16px;
 	margin-left: -16px;
@@ -383,20 +383,20 @@ padding:6px 6px 6px 20px;
 
 .filetree .hover { color: #000; cursor: pointer; }
 
-.filetree li { background: url(../img/filetree-default-line.gif) 0 0 no-repeat; }
+.filetree li { background: url(/img/filetree-default-line.gif) 0 0 no-repeat; }
 .filetree li.collapsable, .filetree li.expandable { background-position: 0 -176px; }
 
 .filetree .expandable-hitarea { background-position: -80px -3px; }
 
 .filetree li.last { background-position: 0 -1766px }
-.filetree li.lastCollapsable, .filetree li.lastExpandable { background-image: url(../img/filetree-default.gif); }  
+.filetree li.lastCollapsable, .filetree li.lastExpandable { background-image: url(/img/filetree-default.gif); }  
 .filetree li.lastCollapsable { background-position: 0 -111px }
 .filetree li.lastExpandable { background-position: -32px -67px }
 
 .filetree div.lastCollapsable-hitarea, .filetree div.lastExpandable-hitarea { background-position: 0; }
 
 .filetree span.folder, .filetree span.file { padding: 1px 0 1px 24px; display: block; }
-.filetree span.folder { background: url(../img/icons/16/folder.png) 4px 0 no-repeat; }
+.filetree span.folder { background: url(/img/icons/16/folder.png) 4px 0 no-repeat; }
 
 
 
@@ -438,7 +438,7 @@ body.ie7 .tabs, body.ie8 .tabs {
 	outline:none;
 	display:block;
 	margin-right:10px;
-	background:url("../img/boxheader.gif") repeat-x 0 5px #FFFFFF;
+	background:url("/img/boxheader.gif") repeat-x 0 5px #FFFFFF;
 	border:1px solid #ccc;
 	border-bottom:none;
 	padding:8px 15px 6px 14px;
