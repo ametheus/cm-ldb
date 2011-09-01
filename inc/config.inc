@@ -116,6 +116,19 @@ class Config
         return "1998";
     }
     private static $_backup_stats = false;
+    private static function human( $b )
+    {
+        $PF = array('', 'K','M','G','T','P','E','Z','Y');
+        while ( $b >= 1000 and count($PF > 1) )
+        {
+            $b /= 1024;
+            array_shift($PF);
+        }
+        if ( $b < 10  ) { return number_format($b,2,',','.') . $PF[0]; }
+        if ( $b < 100 ) { return number_format($b,1,',','.') . $PF[0]; }
+        return number_format($b,0) . $PF[0];
+    }
+    
     static function backup_stats( $k )
     {
         if ( Config::$_backup_stats === false )
@@ -133,7 +146,7 @@ class Config
             {
                 $S = stat($F);
                 Config::$_backup_stats = array(
-                    'size' => $S[7],
+                    'size' => Config::human($S[7]),
                     'date' => $S[9]
                 );
             }
