@@ -118,6 +118,8 @@ class Config
     private static $_backup_stats = false;
     private static function human( $b )
     {
+        if ( $b < 1000 ) { return $b; }
+        
         $PF = array('', 'K','M','G','T','P','E','Z','Y');
         while ( $b >= 1000 and count($PF > 1) )
         {
