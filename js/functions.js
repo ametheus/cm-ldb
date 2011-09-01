@@ -281,6 +281,25 @@ $('.wysiwyg a').tipsy({fade: true, gravity: 's'});
 
 
 
+   (function($)
+   {
+      var b = {b: true};
+      
+      $("nav li > a").each(function(i,x)
+      {
+         if ( $(x).attr('href') == location.pathname )
+         {
+            $(x).parent().addClass('active');
+            b.b = false;
+         }
+      });
+      
+      if ( b.b )
+      {
+         $("nav li")[0].addClass('active');
+      }
+   })($);
+
 
 
 }); 
