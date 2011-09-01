@@ -141,6 +141,10 @@ EOT;
     private static $_Modify = false;
     private static function _Modify()
     {
+        # 
+        # TODO:  Die gekke CASE's weghalen zodra er typed arguments bestaan
+        # 
+        
         $Q = <<<EOT
         UPDATE persoon SET
             achternaam        = @achternaam,
@@ -158,8 +162,8 @@ EOT;
             telefoon          = @telefoon,
             mobiel            = @mobiel,
             email             = @email,
-            geboortedatum     = @geboortedatum,
-            sterftedatum      = @sterftedatum,
+            geboortedatum     = CASE @geboortedatum WHEN '' THEN NULL WHEN '0000-00-00' THEN NULL ELSE @geboortedatum END,
+            sterftedatum      = CASE @sterftedatum  WHEN '' THEN NULL WHEN '0000-00-00' THEN NULL ELSE @sterftedatum  END,
             banknummer        = @banknummer,
             tenaamstelling    = @tenaamstelling,
             nationaliteit     = @nationaliteit,
