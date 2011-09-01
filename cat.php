@@ -34,7 +34,9 @@ $files = array(
         "js/jquery.cookie.js",
         "js/jquery.lightbox-0.5.min.js",
         "js/jquery.wysiwyg.js",
-        "js/functions.js"
+        "js/functions.js",
+        
+        "js/PersonPicker.js"
     ),
     'css/admina' => array(
         # CSS - Setup

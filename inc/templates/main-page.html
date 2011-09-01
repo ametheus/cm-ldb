@@ -87,6 +87,12 @@
     <script type="text/javascript">
       $(function(){
         $(".query_list").accordion();
+        
+        PersonPicker.create( "#sidebar-pick",
+        function( pers_id )
+        {
+          location.href = "/bewerken#" + pers_id;
+        })
       });
     </script>
   </body>
