@@ -1,0 +1,94 @@
+<?php
+
+/*
+    Copyright (C) 2011 Thijs van Dijk
+    
+    This file is part of CM-LDB.
+
+    CM-LDB is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CM-LDB is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CM-LDB.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+    Main page template
+*/
+
+?><!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><?=Config::short_app()?></title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="/css/admina.css" rel="stylesheet" type="text/css" />
+    <link id="theme" href="/css/themes/blue.css" rel="stylesheet" type="text/css" />
+    
+    <link href="/css/query-list.css" rel="stylesheet" type="text/css" />
+    
+    <script src="js/modernizr-1.5.min.js"></script>
+    
+  </head>
+  <body id="layout1280" class="sidebar-left">
+  
+  <?php include( "inc/templates/navigation.html" ) ?>
+    
+    
+    <div id="page" class="width">
+      <?php include( "inc/templates/sidebar.html" ) ?>
+      
+      <!-- Page Start -->
+      <div id="page-content" class="container_12"> <a href="#" id="open_sidebar">Open Sidebar</a>
+        <div class="page-title"> 
+          <!-- Page Title -->
+          <h1>Queries</h1>
+          <!-- Breadcrumbs 
+          <ul id="crumbs">
+            <li><a href="#">Base</a> &gt;</li>
+            <li><a href="#">First</a> &gt;</li>
+            <li><a href="#">Second</a></li>
+          </ul>-->
+          <br class="cl" />
+        </div>
+        
+        <section class="grid_12 query_list tile_view">
+<?php LoQ() ?>
+        </section>
+        <br class="cl" />
+      </div>
+    </div>
+    
+    
+    
+    
+    <?php include( "inc/templates/footer.html" ) ?>
+    
+    
+    
+    
+    <!-- Javascript at the bottom for fast page loading --> 
+    <script type="text/javascript" src="/js/admina.js"></script> 
+    <!--[if lt IE 7 ]>
+      <script src="js/dd_belatedpng.js"></script>
+    <![endif]--> 
+    
+    <!-- Page specific Javascript --> 
+    <script type="text/javascript">
+      $(function(){
+        $(".query_list").accordion();
+        alert( "Accordion failed" );
+      });
+    </script>
+  </body>
+</html>

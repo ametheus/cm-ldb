@@ -148,9 +148,10 @@ section {
 /*////   - Logo -   ////*/
 
 #logo a {
-	background: url(/img/logo.png) no-repeat center center;
+	background: url(/img/user-database-48.png) no-repeat center center;
+	background-size: 35px;
 	text-indent:-9999px;
-	width:109px;
+	width:25px;
 	height:25px;
 	padding:0 20px;
 	height:45px;
