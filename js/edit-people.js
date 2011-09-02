@@ -47,6 +47,9 @@ $(function()
         SGR.Relatie.actual_actual_pers_id = id;
     } );
     
+    $('#sgr-accordion').accordion({ collapsible: true }).accordion( "activate", false );
+    
+    
     $('#IDNav-insert').click(insert_person);
     $('#IDNav-delete').click(delete_person);
     
