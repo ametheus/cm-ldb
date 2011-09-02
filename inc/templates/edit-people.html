@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<!--
+<?php
 
+/*
     Copyright (C) 2011 Thijs van Dijk
     
     This file is part of CM-LDB.
@@ -17,196 +17,242 @@
 
     You should have received a copy of the GNU General Public License
     along with CM-LDB.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
--->
-<html>
-    <head>
-        <title>Bewerk personen</title>
-        
-        <link rel="stylesheet" href="/css/common.css" />
-        <link rel="stylesheet" href="/css/edit-people.css" />
-        <link rel="stylesheet" href="/css/humanity/jquery-ui-1.8.12.custom.css" />
-        
-        <script type="text/javascript" src="/js/jquery.js"></script>
-        <script type="text/javascript" src="/js/jquery-ui.js"></script>
-        <script type="text/javascript" src="/js/naam.js"></script>
-        <script type="text/javascript" src="/js/SpecialLabelContainer.js"></script>
-        <script type="text/javascript" src="/js/PersonPicker.js"></script>
-        <script type="text/javascript" src="/js/SGR.js"></script>
-        <script type="text/javascript" src="/js/edit-people.js"></script>
-        <script type="text/javascript" src="/js/json2-min.js"></script>
-    </head>
-    <body>
-        <div style="display: none;">
-            <a id="debug-SGRcache">Laat S/G/R-transcript zien</a>
-            <script type="text/javascript">
-            $("#debug-SGRcache").click(function(){
-                alert( JSON.stringify( {
-                    Studie: SGR.Studie.transaction,
-                    Groep: SGR.Groep.transaction,
-                    Relatie: SGR.Relatie.transaction
-                } ) );
-            });
-            </script>
+/*
+    Edit page template
+*/
+
+?><!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Bewerken</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <link href="/css/admina.css" rel="stylesheet" type="text/css" />
+    <link id="theme" href="/css/themes/blue.css" rel="stylesheet" type="text/css" />
+    
+    <link href="/css/edit-people.css" rel="stylesheet" type="text/css" />
+    
+    <script src="js/modernizr-1.5.min.js"></script>
+    
+  </head>
+  <body id="layout1280" class="sidebar-left">
+  
+  <?php include( "inc/templates/navigation.html" ) ?>
+    
+    
+    <div id="page" class="width">
+      <?php include( "inc/templates/sidebar.html" ) ?>
+      
+      <!-- Page Start -->
+      <div id="page-content" class="container_12"> <a href="#" id="open_sidebar">Open Sidebar</a>
+        <div class="page-title"> 
+          <!-- Page Title -->
+          <h1>Bewerken</h1>
+          <!-- Breadcrumbs -->
+          <ul id="crumbs" style="display: none;">
+            <li><a id="debug-SGRcache">Laat S/G/R-transcript zien</a></li>
+          </ul>
+          <br class="cl" />
         </div>
-        <div id="EditPeople">
-            <div id="IDNavigator">
-                <a id="IDNav-fist">&nbsp;</a>
-                <a id="IDNav-back">&nbsp;</a>
-                <input type="text" id="IDNav-id" />
-                <a id="IDNav-next">&nbsp;</a>
-                <a id="IDNav-last">&nbsp;</a>
-                <div class="separator">&nbsp;</div>
-                <input type="text" id="IDNav-searchbox" />
-                <div class="separator">&nbsp;</div>
-                <a id="IDNav-insert">&nbsp;</a>
-                <a id="IDNav-delete">&nbsp;</a>
-                <div class="separator">&nbsp;</div>
-                <a id="IDNav-save">&nbsp;</a>
-            </div>
-            
+        
+        <section class="grid_9">
+          <form id="EditPeople" class="form">
             <table>
-                <tr>
-                    <td class="label"><label for="Field-Voornaam">Voornaam</label></td>
-                    <td><input type="text" id="Field-Voornaam" /></td>
-                    
-                    <td class="label"><label for="Field-Tussenvoegsel">Tussenvoegsels</label></td>
-                    <td><input type="text" id="Field-Tussenvoegsel" /></td>
-                    
-                    <td class="label"><label for="Field-Achternaam">Achternaam</label></td>
-                    <td><input type="text" id="Field-Achternaam" /></td>
-                </tr>
-                <tr>
-                    <td class="label"><label for="Field-Titel">Titel</label></td>
-                    <td><input type="text" id="Field-Titel" /></td>
-                    
-                    <td class="label"><label for="Field-Voorletters">Voorletters</label></td>
-                    <td><input type="text" id="Field-Voorletters" /></td>
-                    
-                    <td class="label"><label for="Field-Aangetrouwdenaam">Aangetrouwde naam</label></td>
-                    <td><input type="text" id="Field-Aangetrouwdenaam" /></td>
-                </tr>
-                <tr>
-                    <td class="label"><label for="Field-Geslacht">Geslacht</label></td>
-                    <td>
-                        <select id="Field-Geslacht">
-                            <option>Man</option>
-                            <option>Vrouw</option>
-                            <option>Onbekend</option>
-                        </select>
-                    </td>
-                    
-                    <td class="label"><label for="Field-Email">E-mailadres</label></td>
-                    <td><input type="email" id="Field-Email" /></td>
-                    
-                    <td class="label"><label for="Field-Telefoon">Telefoon vast</label></td>
-                    <td><input type="text" id="Field-Telefoon" /></td>
-                </tr>
-                <tr>
-                    <td class="label"><label for="Field-Adres">Straat/huisnummer</label></td>
-                    <td colspan="3"><input type="text" id="Field-Adres" /></td>
-                    
-                    <td class="label"><label for="Field-Mobiel">Telefoon mobiel</label></td>
-                    <td><input type="text" id="Field-Mobiel" /></td>
-                </tr>
-                <tr>
-                    <td class="label"><label for="Field-Postcode">Postcode</label></td>
-                    <td><input type="text" id="Field-Postcode" /></td>
-                    
-                    <td class="label"><label for="Field-Plaats">Woonplaats</label></td>
-                    <td><input type="text" id="Field-Plaats" /></td>
-                    
-                    <td class="label"><label for="Field-Land">Land</label></td>
-                    <td><input type="text" id="Field-Land" /></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td><input type="checkbox" id="Field-Post" /><label for="Field-Post">Stelt prijs op post</label></td>
-                    
-                    <td class="label"><label for="Field-Geboortedatum">Geboortedatum</label></td>
-                    <td><input type="date" id="Field-Geboortedatum" /></td>
-                    
-                    <td class="label"><label for="Field-Sterftedatum">Sterftedatum</label></td>
-                    <td><input type="date" id="Field-Sterftedatum" /></td>
-                </tr>
-                <tr>
-                    <td class="label"><label for="Field-Banknummer">Banknummer</label></td>
-                    <td><input type="text" id="Field-Banknummer" /></td>
-                    
-                    <td class="label"><label for="Field-Tenaamstelling">Tenaamstelling</label></td>
-                    <td><input type="text" id="Field-Tenaamstelling" /></td>
-                    
-                    <td>&nbsp;</td><td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="label"><label for="Field-Nationaliteit">Nationaliteit</label></td>
-                    <td><input type="text" id="Field-Nationaliteit" /></td>
-                    
-                    <td class="label"><label for="Field-Voorkeurstaal">Voorkeurstaal</label></td>
-                    <td><input type="text" id="Field-Voorkeurstaal" /></td>
-                    
-                    <td>&nbsp;</td><td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="2" id="Studies"  class="special_label">Studies</td>
-                    <td colspan="2" id="Secties"  class="special_label">Secties/commissies</td>
-                    <td colspan="2" id="Relaties" class="special_label">Relaties</td>
-                </tr>
+              <tr>
+                <td class="label"><label for="Field-Voornaam">Voornaam</label></td>
+                <td><input type="text" id="Field-Voornaam" /></td>
+                
+                <td class="label"><label for="Field-Tussenvoegsel">Tussenvoegsels</label></td>
+                <td><input type="text" id="Field-Tussenvoegsel" /></td>
+                
+                <td class="label"><label for="Field-Achternaam">Achternaam</label></td>
+                <td><input type="text" id="Field-Achternaam" /></td>
+              </tr>
+              <tr>
+                <td class="label"><label for="Field-Titel">Titel</label></td>
+                <td><input type="text" id="Field-Titel" /></td>
+                
+                <td class="label"><label for="Field-Voorletters">Voorletters</label></td>
+                <td><input type="text" id="Field-Voorletters" /></td>
+                
+                <td class="label"><label for="Field-Aangetrouwdenaam">Aangetrouwde naam</label></td>
+                <td><input type="text" id="Field-Aangetrouwdenaam" /></td>
+              </tr>
+              <tr>
+                <td class="label"><label for="Field-Geslacht">Geslacht</label></td>
+                <td>
+                  <select id="Field-Geslacht">
+                    <option>Man</option>
+                    <option>Vrouw</option>
+                    <option>Onbekend</option>
+                  </select>
+                </td>
+                
+                <td class="label"><label for="Field-Email">E-mailadres</label></td>
+                <td><input type="email" id="Field-Email" /></td>
+                
+                <td class="label"><label for="Field-Telefoon">Telefoon vast</label></td>
+                <td><input type="text" id="Field-Telefoon" /></td>
+              </tr>
+              <tr>
+                <td class="label"><label for="Field-Adres">Straat/huisnummer</label></td>
+                <td colspan="3"><input type="text" id="Field-Adres" /></td>
+                
+                <td class="label"><label for="Field-Mobiel">Telefoon mobiel</label></td>
+                <td><input type="text" id="Field-Mobiel" /></td>
+              </tr>
+              <tr>
+                <td class="label"><label for="Field-Postcode">Postcode</label></td>
+                <td><input type="text" id="Field-Postcode" /></td>
+                
+                <td class="label"><label for="Field-Plaats">Woonplaats</label></td>
+                <td><input type="text" id="Field-Plaats" /></td>
+                
+                <td class="label"><label for="Field-Land">Land</label></td>
+                <td><input type="text" id="Field-Land" /></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td><input type="checkbox" id="Field-Post" /><label for="Field-Post">Stelt prijs op post</label></td>
+                
+                <td class="label"><label for="Field-Geboortedatum">Geboortedatum</label></td>
+                <td><input type="date" class="datepicker" id="Field-Geboortedatum" /></td>
+                
+                <td class="label"><label for="Field-Sterftedatum">Sterftedatum</label></td>
+                <td><input type="date" id="Field-Sterftedatum" /></td>
+              </tr>
+              <tr>
+                <td class="label"><label for="Field-Banknummer">Banknummer</label></td>
+                <td><input type="text" id="Field-Banknummer" /></td>
+                
+                <td class="label"><label for="Field-Tenaamstelling">Tenaamstelling</label></td>
+                <td><input type="text" id="Field-Tenaamstelling" /></td>
+                
+                <td>&nbsp;</td><td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td class="label"><label for="Field-Nationaliteit">Nationaliteit</label></td>
+                <td><input type="text" id="Field-Nationaliteit" /></td>
+                
+                <td class="label"><label for="Field-Voorkeurstaal">Voorkeurstaal</label></td>
+                <td><input type="text" id="Field-Voorkeurstaal" /></td>
+                
+                <td>&nbsp;</td><td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" id="Studies"  class="special_label">Studies</td>
+                <td colspan="2" id="Secties"  class="special_label">Secties/commissies</td>
+                <td colspan="2" id="Relaties" class="special_label">Relaties</td>
+              </tr>
             </table>
-        </div>
-        <div style="display: none;">
-            <div class="slc_dialog" id="GroepenEditor">
-                <p>
-                    <label for="groep_id">Groep</label>
-                    <select id="groep_id" class="resetable"><?=Groepen()?></select>
-                </p>
-                <p>
-                    <label for="van">Van</label>
-                    <input id="van" class="resetable" type="date" />
-                </p>
-                <p>
-                    <label for="tot">Tot</label>
-                    <input id="tot" class="resetable" type="date" />
-                </p>
-                <p>
-                    <input type="button" id="delete" value="Verwijderen" />
-                    <input type="button" id="save" value="Opslaan" style="float: right" />
-                </p>
-            </div>
-            <div class="slc_dialog" id="StudieEditor">
-                <p>
-                    <label for="studie_id">Studie</label>
-                    <select id="studie_id" class="resetable"><?=Studies()?></select>
-                </p>
-                <p>
-                    <input id="afgestudeerd" type="checkbox" class="uncheckable"/>
-                    <label for="afgestudeerd">Afgestudeerd</label>
-                </p>
-                <p>
-                    <input type="button" id="delete" value="Verwijderen" />
-                    <input type="button" id="save" value="Opslaan" style="float: right" />
-                </p>
-            </div>
-            <div class="slc_dialog" id="RelatieEditor">
-                <p>
-                    <label for="pers_id_b">Persoon</label>
-                    <input id="pers_id_b" type="tekst" class="PersonPicker resetable" />
-                    <input id="actual_pers_id" type="hidden" />
-                </p>
-                <p>
-                    <label for="type">Relatietype</label>
-                    <select id="type" class="resetable">
-                        <option value="ouder">Ouder van ...</option>
-                        <option value="kind">Kind van ...</option>
-                        <option value="partner">Partner van ...</option>
-                        <option value="anders">Anders / onbekend</option>
-                    </select>
-                </p>
-                <p>
-                    <input type="button" id="delete" value="Verwijderen" />
-                    <input type="button" id="save" value="Opslaan" style="float: right" />
-                </p>
-            </div>
-        </div>
-    </body>
+          </form>
+        </section>
+        <section class="grid_3">
+          <div id="IDNavigator">
+            <a id="IDNav-fist">&nbsp;</a>
+            <a id="IDNav-back">&nbsp;</a>
+            <input type="text" id="IDNav-id" />
+            <a id="IDNav-next">&nbsp;</a>
+            <a id="IDNav-last">&nbsp;</a>
+            <div class="separator">&nbsp;</div>
+            <input type="text" id="IDNav-searchbox" />
+            <div class="separator">&nbsp;</div>
+            <a id="IDNav-insert">&nbsp;</a>
+            <a id="IDNav-delete">&nbsp;</a>
+            <div class="separator">&nbsp;</div>
+            <a id="IDNav-save">&nbsp;</a>
+          </div>
+        </section>
+        <br class="cl" />
+      </div>
+    </div>
+    
+    
+    
+    
+    <?php include( "inc/templates/footer.html" ) ?>
+    
+    
+    
+    
+    <!--  Dialog boxes  -->
+    <div style="display: none;">
+      <div class="slc_dialog" id="GroepenEditor">
+        <p>
+          <label for="groep_id">Groep</label>
+          <select id="groep_id" class="resetable"><?=Groepen()?></select>
+        </p>
+        <p>
+          <label for="van">Van</label>
+          <input id="van" class="resetable" type="date" />
+        </p>
+        <p>
+          <label for="tot">Tot</label>
+          <input id="tot" class="resetable" type="date" />
+        </p>
+        <p>
+          <input type="button" id="delete" value="Verwijderen" />
+          <input type="button" id="save" value="Opslaan" style="float: right" />
+        </p>
+      </div>
+      <div class="slc_dialog" id="StudieEditor">
+        <p>
+          <label for="studie_id">Studie</label>
+          <select id="studie_id" class="resetable"><?=Studies()?></select>
+        </p>
+        <p>
+          <input id="afgestudeerd" type="checkbox" class="uncheckable"/>
+          <label for="afgestudeerd">Afgestudeerd</label>
+        </p>
+        <p>
+          <input type="button" id="delete" value="Verwijderen" />
+          <input type="button" id="save" value="Opslaan" style="float: right" />
+        </p>
+      </div>
+      <div class="slc_dialog" id="RelatieEditor">
+        <p>
+          <label for="pers_id_b">Persoon</label>
+          <input id="pers_id_b" type="tekst" class="PersonPicker resetable" />
+          <input id="actual_pers_id" type="hidden" />
+        </p>
+        <p>
+          <label for="type">Relatietype</label>
+          <select id="type" class="resetable">
+            <option value="ouder">Ouder van ...</option>
+            <option value="kind">Kind van ...</option>
+            <option value="partner">Partner van ...</option>
+            <option value="anders">Anders / onbekend</option>
+          </select>
+        </p>
+        <p>
+          <input type="button" id="delete" value="Verwijderen" />
+          <input type="button" id="save" value="Opslaan" style="float: right" />
+        </p>
+      </div>
+    </div>
+    
+    
+    <!-- Javascript at the bottom for fast page loading --> 
+    <script type="text/javascript" src="/js/admina.js"></script> 
+    <!--[if lt IE 7 ]>
+      <script src="js/dd_belatedpng.js"></script>
+    <![endif]--> 
+    
+    <!-- Page specific Javascript --> 
+    <script type="text/javascript" src="js/bewerken.js"></script>
+    <script type="text/javascript">
+    $("#debug-SGRcache").click(function(){
+        alert( JSON.stringify( {
+            Studie: SGR.Studie.transaction,
+            Groep: SGR.Groep.transaction,
+            Relatie: SGR.Relatie.transaction
+        } ) );
+    });
+    </script>
+  </body>
 </html>

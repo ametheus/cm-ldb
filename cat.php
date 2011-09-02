@@ -49,6 +49,17 @@ $files = array(
         "css/lists.css",
         "css/calendar.css",
         "css/extensions.css"
+    ),
+    
+    'js/bewerken' => array(
+        //"js/jquery.js",
+        //"js/jquery-ui.js",
+        "js/naam.js",
+        "js/SpecialLabelContainer.js",
+        //"js/PersonPicker.js",
+        "js/SGR.js",
+        "js/edit-people.js",
+        "js/json2-min.js"
     )
 );
 
