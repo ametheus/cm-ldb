@@ -27,8 +27,9 @@ var SGR = {
     
     load: function( pers_id )
     {
-        $("td.special_label ul").html('');
-        $("td.special_label").addClass('loading');
+        //$('#sgr-accordion').accordion( "activate", false );
+        $(".special_label ul").html('');
+        $(".special_label").addClass('loading');
         if ( SGR.timer ) { clearTimeout( SGR.timer ); }
         
         // Check if the selected person is already in the cache
@@ -68,7 +69,7 @@ var SGR = {
         $.map( SGR.Groep.cache[pid()],   SGR.Groep.append );
         $.map( SGR.Relatie.cache[pid()], SGR.Relatie.append );
         
-        $("td.special_label").removeClass('loading');
+        $(".special_label").removeClass('loading');
         
     },
     append_relatie: function( relatie )
