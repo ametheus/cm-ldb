@@ -145,7 +145,10 @@ $(function() {
  };
 
 // Datepicker Setup
-$( ".datepicker" ).datepicker();
+$( ".datepicker" ).datepicker({
+   dateFormat: 'yy-mm-dd',
+   monthNames: ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december']
+});
 
 // Filetree Setup
 $(".filetree").treeview({

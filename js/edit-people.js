@@ -39,7 +39,10 @@ $(function()
     $('#IDNav-next').click(function(){select_index(selectedIndex+1);});
     $('#IDNav-last').click(function(){select_index(IDs.length);});
     
-    PersonPicker.create( '#IDNav-searchbox', select_id );
+    PersonPicker.create( '#sidebar-pick', function( id ){
+        select_id(id);
+        $('#sidebar-pick').val('');
+    });
     PersonPicker.create( '#RelatieEditor #pers_id_b', function(id){
         SGR.Relatie.actual_actual_pers_id = id;
     } );

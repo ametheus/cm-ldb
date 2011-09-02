@@ -49,7 +49,7 @@
       <?php include( "inc/templates/sidebar.html" ) ?>
       
       <!-- Page Start -->
-      <div id="page-content" class="container_12"> <a href="#" id="open_sidebar">Open Sidebar</a>
+      <div id="page-content" class="container_11"> <a href="#" id="open_sidebar">Open Sidebar</a>
         <div class="page-title"> 
           <!-- Page Title -->
           <h1>Bewerken</h1>
@@ -60,7 +60,7 @@
           <br class="cl" />
         </div>
         
-        <section class="grid_9">
+        <section class="grid_11">
           <form id="EditPeople" class="form">
             <table>
               <tr>
@@ -100,7 +100,7 @@
                 <td><input type="text" id="Field-Telefoon" /></td>
               </tr>
               <tr>
-                <td class="label"><label for="Field-Adres">Straat/huisnummer</label></td>
+                <td class="label"><label for="Field-Adres">Adres</label></td>
                 <td colspan="3"><input type="text" id="Field-Adres" /></td>
                 
                 <td class="label"><label for="Field-Mobiel">Telefoon mobiel</label></td>
@@ -124,7 +124,7 @@
                 <td><input type="date" class="datepicker" id="Field-Geboortedatum" /></td>
                 
                 <td class="label"><label for="Field-Sterftedatum">Sterftedatum</label></td>
-                <td><input type="date" id="Field-Sterftedatum" /></td>
+                <td><input type="date" class="datepicker" id="Field-Sterftedatum" /></td>
               </tr>
               <tr>
                 <td class="label"><label for="Field-Banknummer">Banknummer</label></td>
@@ -152,19 +152,23 @@
             </table>
           </form>
         </section>
-        <section class="grid_3">
+        <section class="grid_1">
           <div id="IDNavigator">
             <a id="IDNav-fist">&nbsp;</a>
             <a id="IDNav-back">&nbsp;</a>
+            <br class="cl" />
             <input type="text" id="IDNav-id" />
+            <br class="cl" />
             <a id="IDNav-next">&nbsp;</a>
             <a id="IDNav-last">&nbsp;</a>
-            <div class="separator">&nbsp;</div>
-            <input type="text" id="IDNav-searchbox" />
-            <div class="separator">&nbsp;</div>
+            
+            <br class="cl" />
+            
+            <!--<div class="separator">&nbsp;</div> -->
             <a id="IDNav-insert">&nbsp;</a>
             <a id="IDNav-delete">&nbsp;</a>
-            <div class="separator">&nbsp;</div>
+            <br class="cl" />
+            <!--<div class="separator">&nbsp;</div> -->
             <a id="IDNav-save">&nbsp;</a>
           </div>
         </section>
