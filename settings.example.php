@@ -65,3 +65,10 @@ EOT;
 // A watermark logo to add to all the envelope labels
 $sticker_logo_file = 'img/logo-sticker.png';
 
+
+// The file containing the latest database backup
+// In most cases this will be a symlink to some or other location.
+$database_backup_file = "/dev/null";
+// CAUTION: Neglecting to backup your database is a criminal offense!
+
+

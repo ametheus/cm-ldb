@@ -37,6 +37,8 @@ function create_slc( container, CC, editor, title )
         });
         
         $(container + " ul").append(li);
+        var ct = $(container + " ul").children("li").length;
+        $(container).prev().find("span").html("(" + ct + ")");
     };
     
     CC.addnew = function()
@@ -125,16 +127,16 @@ function create_slc( container, CC, editor, title )
         
         // Create buttons, place everything in a nested <div>, and generate
         // an <ul> below.
-        var div = $('<div />');
+        var div = $('<div class="grid_3" />');
         div.html($(container).html());
         $(container).html('').append(div);
         
-        var buttons = $('<div class="buttons" />');
+        var buttons = $('<div class="buttons grid_3" />');
         div.append(buttons);
         
         buttons.append("<div>add</div>").click(CC.addnew);
         
-        $(container).append('<ul />');
+        $(container).append('<ul class="grid_8" />');
         
         
         // Set correct click events on the editor dialog.

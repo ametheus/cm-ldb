@@ -1,0 +1,132 @@
+<?php
+
+/*
+    Copyright (C) 2011 Thijs van Dijk
+    
+    This file is part of CM-LDB.
+
+    CM-LDB is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CM-LDB is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CM-LDB.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/*
+    Side bar template
+*/
+
+?>      <!-- Sidebar Start -->
+      <aside> <a href="#" id="close_sidebar"> Close Sidebar </a>
+        <ul id="widgets">
+          <!-- Widget Start -->
+          <li id="info" class="sortable-item">
+            <h3>Accountinformatie</h3>
+            <ul>
+              <li><span class="strong">Gebruikersnaam:</span> <?=Auth::username(true)?></li>
+              <li><span class="strong">Accounttype:</span> <?=Auth::privilege_level(false)?></li>
+            </ul>
+          </li>
+          <!-- Widget End --> 
+          <!-- Widget Start -->
+          <li id="search" class="sortable-item">
+            <h3>Zoeken</h3>
+            <form method="post" class="form" action="">
+              <input id="sidebar-pick" value="Zoeken..." onBlur="if (this.value == '') {this.value = 'Zoeken...';}" onFocus="if (this.value == 'Zoeken...') {this.value = '';}" />
+            </form>
+          </li>
+          <!-- Widget End -->
+          <?php if ( false ) { ?>
+          <!-- Widget Start -->
+          <li id="tags" class="sortable-item">
+            <h3>Tags</h3>
+            <ul class="tags">
+              <li><a href="#">CSS 3</a></li>
+              <li><a href="#">HTML5</a></li>
+              <li><a href="#">jQuery</a></li>
+              <li><a href="#">Google Charts</a></li>
+              <li><a href="#">jQuery UI</a></li>
+              <li><a href="#">Tags</a></li>
+              <li><a href="#">Live Search</a></li>
+            </ul>
+          </li>
+          <!-- Widget End --> 
+          <?php } ?>
+          <?php if ( false ) { ?>
+          <!-- Widget Start -->
+          <li id="todo" class="sortable-item">
+            <h3>To Do</h3>
+            <ul class="todo">
+              <li>
+                <label>
+                  <input type="checkbox" checked />
+                  Talk to server guys</label>
+                <span class="done">Done</span></li>
+              <li>
+                <label>
+                  <input type="checkbox" />
+                  Pick up milk</label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" />
+                  Contact James</label>
+                <span class="important">Important</span></li>
+              <li>
+                <label>
+                  <input type="checkbox" />
+                  Check analytucs</label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" />
+                  Install new app</label>
+              </li>
+              <li>
+                <label>
+                  <input type="checkbox" />
+                  Review changes</label>
+                <span class="new">New</span></li>
+            </ul>
+          </li>
+          <!-- Widget End --> 
+          <?php } ?>
+          <?php if ( false ) { ?>
+          <!-- Widget Start -->
+          <li id="gallery" class="sortable-item">
+            <h3>Media</h3>
+            <ul class="sidebar-gallery">
+              <li><a href="#"><img src="./img/gallery/01-thumb.jpg" alt="" /></a></li>
+              <li><a href="#"><img src="./img/gallery/02-thumb.jpg" alt="" /></a></li>
+              <li><a href="#"><img src="./img/gallery/03-thumb.jpg" alt="" /></a></li>
+              <li><a href="#"><img src="./img/gallery/04-thumb.jpg" alt="" /></a></li>
+            </ul>
+          </li>
+          <!-- Widget End --> 
+          <?php } ?>
+          <!-- Widget Start -->
+          <li id="stats" class="sortable-item">
+            <h3>Status</h3>
+            <ul>
+              <li>
+                Softwareversie
+                <ul>
+                  <li>Ledendatabase: <?=Config::version()?></li>
+                  <li>MySQL: <?=Config::mysql_version()?></li>
+                  <li>Ubuntu: <?=Config::ubuntu_version()?></li>
+                </ul>
+              </li>
+              <li>Grootte database: <?=Config::backup_stats('size')?></li>
+              <li>Laatste backup: <?=Config::backup_stats('ago')?></li>
+            </ul>
+          </li>
+        </ul>
+      </aside>
+      <!-- Sidebar End --> 

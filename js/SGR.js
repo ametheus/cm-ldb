@@ -27,8 +27,10 @@ var SGR = {
     
     load: function( pers_id )
     {
-        $("td.special_label ul").html('');
-        $("td.special_label").addClass('loading');
+        $(".special_label ul").html('');
+        $(".special_label").addClass('loading');
+        $('#sgr-accordion h3 span').html('...');
+        
         if ( SGR.timer ) { clearTimeout( SGR.timer ); }
         
         // Check if the selected person is already in the cache
@@ -64,11 +66,13 @@ var SGR = {
         if (!((pid() in SGR.Studie.cache)&&(pid() in SGR.Groep.cache)&&(pid() in SGR.Relatie.cache)))
         { alert( "Not found!" ); return; }
         
+        $('#sgr-accordion h3 span').html('(0)');
+        
         $.map( SGR.Studie.cache[pid()],  SGR.Studie.append );
         $.map( SGR.Groep.cache[pid()],   SGR.Groep.append );
         $.map( SGR.Relatie.cache[pid()], SGR.Relatie.append );
         
-        $("td.special_label").removeClass('loading');
+        $(".special_label").removeClass('loading');
         
     },
     append_relatie: function( relatie )
@@ -107,6 +111,7 @@ var SGR = {
         {
             $("#StudieEditor #studie_id").val(studie["studie_id"]);
             $("#StudieEditor #afgestudeerd").attr('checked', ( studie["afgestudeerd"] > 0 ) );
+            $("#StudieEditor #afgestudeerd").change(); // HACK: Dit zou niet expliciet zo moeten.
         }
     },
     

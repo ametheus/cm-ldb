@@ -62,6 +62,8 @@ class Config
         
         if ( isset($sql_connection_readonly)  ) { Config::import_connection("sql_readonly", $sql_connection_readonly);  }
         if ( isset($sql_connection_readwrite) ) { Config::import_connection("sql_readwrite",$sql_connection_readwrite); }
+        
+        if ( isset($database_backup_file) ) { Config::$data["database_backup_file"] = $database_backup_file; }
     }
     
     private static function import_connection( $name, $conn )
@@ -77,6 +79,83 @@ class Config
                 Config::$data[$name][$k] = $conn[$k];
             }
         }
+    }
+    
+    private static $_mysql_version = false;
+    function mysql_version()
+    {
+        $XC = "MySQL version";
+        
+        if ( Config::$_mysql_version === false )
+        {
+            if ( xcache_isset($XC) )
+            {
+                Config::$_mysql_version = xcache_get($XC);
+            }
+            else
+            {
+                $output = shell_exec('mysql -V'); 
+                preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version); 
+                Config::$_mysql_version = $version[0];
+                
+                xcache_set( $XC, Config::$_mysql_version, 86400 );
+            }
+        }
+        return Config::$_mysql_version;
+    }
+    function ubuntu_version()
+    {
+        $LSB = file_get_contents("/etc/lsb-release");
+        $Ls = explode( "\n", $LSB );
+        foreach ( $Ls as $l )
+        {
+            @list($k, $v) = explode( "=", $l );
+            if ( $k == "DISTRIB_RELEASE" )
+                return $v;
+        }
+        return "1998";
+    }
+    private static $_backup_stats = false;
+    private static function human( $b )
+    {
+        if ( $b < 1000 ) { return $b; }
+        
+        $PF = array('', 'K','M','G','T','P','E','Z','Y');
+        while ( $b >= 1000 and count($PF > 1) )
+        {
+            $b /= 1024;
+            array_shift($PF);
+        }
+        if ( $b < 10  ) { return number_format($b,2,',','.') . $PF[0]; }
+        if ( $b < 100 ) { return number_format($b,1,',','.') . $PF[0]; }
+        return number_format($b,0) . $PF[0];
+    }
+    
+    static function backup_stats( $k )
+    {
+        if ( Config::$_backup_stats === false )
+        {
+            $F = Config::$data["database_backup_file"];
+            while ( file_exists($F) && is_link($F) )
+            {
+                $F = readlink($F);
+            }
+            if ( ! file_exists($F) )
+            {
+                Config::$_backup_stats = array( 'size'=>'0B', 'date'=>0 );
+            }
+            else
+            {
+                $S = stat($F);
+                Config::$_backup_stats = array(
+                    'size' => Config::human($S[7]),
+                    'date' => $S[9]
+                );
+            }
+            Config::$_backup_stats["ago"] = time() - Config::$_backup_stats["date"];
+        }
+        
+        return Config::$_backup_stats[$k];
     }
 }
 
