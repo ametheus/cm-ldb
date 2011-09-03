@@ -121,7 +121,7 @@
                 <td class="switch-wrapper small">
                   <div style="display: inline-block;"><span class="switch-enable"><span>Ja</span></span> <span class="switch-disable selected"><span>Neen</span></span></div>
                   <input type="checkbox" id="Field-Post" class="checkbox">
-                </p>
+                </td>
                 
                 <td class="label"><label for="Field-Geboortedatum">Geboortedatum</label></td>
                 <td><input type="date" class="datepicker" id="Field-Geboortedatum" /></td>
@@ -199,57 +199,65 @@
     
     <!--  Dialog boxes  -->
     <div style="display: none;">
-      <div class="slc_dialog" id="GroepenEditor">
-        <p>
-          <label for="groep_id">Groep</label>
-          <select id="groep_id" class="resetable"><?=Groepen()?></select>
-        </p>
-        <p>
-          <label for="van">Van</label>
-          <input id="van" class="resetable" type="date" />
-        </p>
-        <p>
-          <label for="tot">Tot</label>
-          <input id="tot" class="resetable" type="date" />
-        </p>
-        <p>
-          <input type="button" id="delete" value="Verwijderen" />
-          <input type="button" id="save" value="Opslaan" style="float: right" />
-        </p>
+      <div class="slc_dialog form container_12" id="GroepenEditor">
+        
+        <label class="grid_3" for="groep_id">Groep</label>
+        <select class="grid_8" id="groep_id" class="resetable"><?=Groepen()?></select>
+        
+        <br class="cl" />
+        
+        <label class="grid_3" for="van">Van</label>
+        <input class="grid_8" id="van" class="resetable" type="date" />
+        
+        <br class="cl" />
+        
+        <label class="grid_3" for="tot">Tot</label>
+        <input class="grid_8" id="tot" class="resetable" type="date" />
+        
+        <br class="cl" />
+        
+        <button class="grid_5 red" type="button" id="delete" style="margin-top: 15px;">Verwijderen</button>
+        <button class="grid_5"     type="button" id="save" style="margin-top: 15px; float: right;">Opslaan</button>
       </div>
-      <div class="slc_dialog" id="StudieEditor">
-        <p>
-          <label for="studie_id">Studie</label>
-          <select id="studie_id" class="resetable"><?=Studies()?></select>
-        </p>
-        <p>
-          <input id="afgestudeerd" type="checkbox" class="uncheckable"/>
-          <label for="afgestudeerd">Afgestudeerd</label>
-        </p>
-        <p>
-          <input type="button" id="delete" value="Verwijderen" />
-          <input type="button" id="save" value="Opslaan" style="float: right" />
-        </p>
+      <div class="slc_dialog form" id="StudieEditor">
+        <table width="100%">
+          <tr>
+            <td><label for="studie_id">Studie</label></td>
+            <td><select id="studie_id" class="resetable" style="width: 65%"><?=Studies()?></select></td>
+          </tr>
+          <tr>
+            <td><label for="afgestudeerd">Afgestudeerd</label></td>
+            <td><div class="switch-wrapper small">
+              <span class="switch-enable"><span>Ja</span></span> <span class="switch-disable selected"><span>Neen</span></span>
+              <input id="afgestudeerd" type="checkbox" class="checkbox uncheckable"/>
+            </div></td>
+          </tr>
+          <tr>
+            <td><button class="red" type="button" id="delete" style="margin-top: 15px;">Verwijderen</button></td>
+            <td><button             type="button" id="save" style="margin-top: 15px; float: right;">Opslaan</button></td>
+          </tr>
+        </table>
       </div>
-      <div class="slc_dialog" id="RelatieEditor">
-        <p>
-          <label for="pers_id_b">Persoon</label>
-          <input id="pers_id_b" type="tekst" class="PersonPicker resetable" />
-          <input id="actual_pers_id" type="hidden" />
-        </p>
-        <p>
-          <label for="type">Relatietype</label>
-          <select id="type" class="resetable">
-            <option value="ouder">Ouder van ...</option>
-            <option value="kind">Kind van ...</option>
-            <option value="partner">Partner van ...</option>
-            <option value="anders">Anders / onbekend</option>
-          </select>
-        </p>
-        <p>
-          <input type="button" id="delete" value="Verwijderen" />
-          <input type="button" id="save" value="Opslaan" style="float: right" />
-        </p>
+      <div class="slc_dialog form container_12" id="RelatieEditor">
+        
+        <label class="grid_3" for="pers_id_b">Persoon</label>
+        <input class="grid_8" id="pers_id_b" type="tekst" class="PersonPicker resetable" />
+        <input id="actual_pers_id" type="hidden" />
+        
+        <br class="cl" />
+        
+        <label class="grid_3" for="type">Relatietype</label>
+        <select class="grid_8" id="type" class="resetable">
+          <option value="ouder">Ouder van ...</option>
+          <option value="kind">Kind van ...</option>
+          <option value="partner">Partner van ...</option>
+          <option value="anders">Anders / onbekend</option>
+        </select>
+        
+        <br class="cl" />
+        
+        <button class="grid_5 red" type="button" id="delete" style="margin-top: 15px;">Verwijderen</button>
+        <button class="grid_5"     type="button" id="save" style="margin-top: 15px; float: right;">Opslaan</button>
       </div>
     </div>
     

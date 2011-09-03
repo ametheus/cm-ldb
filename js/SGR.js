@@ -108,6 +108,7 @@ var SGR = {
         {
             $("#StudieEditor #studie_id").val(studie["studie_id"]);
             $("#StudieEditor #afgestudeerd").attr('checked', ( studie["afgestudeerd"] > 0 ) );
+            $("#StudieEditor #afgestudeerd").change(); // HACK: Dit zou niet expliciet zo moeten.
         }
     },
     
