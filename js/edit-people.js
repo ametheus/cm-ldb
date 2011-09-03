@@ -39,10 +39,16 @@ $(function()
     $('#IDNav-next').click(function(){select_index(selectedIndex+1);});
     $('#IDNav-last').click(function(){select_index(IDs.length);});
     
-    PersonPicker.create( '#IDNav-searchbox', select_id );
+    PersonPicker.create( '#sidebar-pick', function( id ){
+        select_id(id);
+        $('#sidebar-pick').val('');
+    });
     PersonPicker.create( '#RelatieEditor #pers_id_b', function(id){
         SGR.Relatie.actual_actual_pers_id = id;
     } );
+    
+    $('#sgr-accordion').accordion({ collapsible: true }).accordion( "activate", false );
+    
     
     $('#IDNav-insert').click(insert_person);
     $('#IDNav-delete').click(delete_person);
@@ -189,7 +195,10 @@ function update_fields()
     $('#Field-Postcode')         .val(d['postcode']);
     $('#Field-Plaats')           .val(d['plaats']);
     $('#Field-Land')             .val(d['land']);
-    $('#Field-Post')             .val(d['post']);
+    
+    $('#Field-Post')             .attr('checked', (d['post'] == 'ja'));
+    $('#Field-Post').change(); // HACK: Dit zou niet expliciet moeten!
+    
     $('#Field-Telefoon')         .val(d['telefoon']);
     $('#Field-Mobiel')           .val(d['mobiel']);
     $('#Field-Email')            .val(d['email']);

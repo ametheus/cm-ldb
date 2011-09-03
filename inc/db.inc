@@ -157,6 +157,10 @@ class Connection
 
 class Command
 {
+    # 
+    # TODO:  Typed arguments!
+    # 
+    
     private $_text;
     private $_connection;
     private $_mandatory;

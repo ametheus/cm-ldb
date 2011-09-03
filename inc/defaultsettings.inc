@@ -87,4 +87,7 @@ EOT;
 $sticker_logo_file = false;
 
 
+// The file containing the latest database backup
+$database_backup_file = "/dev/null";
+
 
