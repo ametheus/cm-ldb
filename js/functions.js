@@ -269,18 +269,32 @@ $('form [title]').tipsy({fade: true, trigger: 'focus', gravity: 'w'});
 $('.wysiwyg a').tipsy({fade: true, gravity: 's'});
 
 // Form Switches
-  $(".switch-enable").click(function(){
-        var parent = $(this).parents('.switch-wrapper');
-        $('.switch-disable',parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox',parent).attr('checked', true);
-    });
-    $(".switch-disable").click(function(){
-        var parent = $(this).parents('.switch-wrapper');
-        $('.switch-enable',parent).removeClass('selected');
-        $(this).addClass('selected');
-        $('.checkbox',parent).attr('checked', false);
-    });
+   $(".switch-enable").click(function(){
+      var parent = $(this).parents('.switch-wrapper');
+      $('.switch-disable',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $('.checkbox',parent).attr('checked', true);
+   });
+   $(".switch-disable").click(function(){
+      var parent = $(this).parents('.switch-wrapper');
+      $('.switch-enable',parent).removeClass('selected');
+      $(this).addClass('selected');
+      $('.checkbox',parent).attr('checked', false);
+   });
+   $('.switch-wrapper .checkbox').change(function(){
+      var checked = $(this).attr('checked');
+      var parent = $(this).parents('.switch-wrapper');
+      if ( checked )
+      {
+         $('.switch-enable',parent).addClass('selected');
+         $('.switch-disable',parent).removeClass('selected');
+      }
+      else
+      {
+         $('.switch-enable',parent).removeClass('selected');
+         $('.switch-disable',parent).addClass('selected');
+      }
+   });
 
 
 

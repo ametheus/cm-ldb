@@ -47,13 +47,11 @@
 
 #EditPeople td
 {
-    padding-bottom: 6px;
+    padding: 0px 6px 6px 6px;
 }
 #EditPeople input, #EditPeople select
 {
     width: 148px;
-    margin-left: 6px;
-    margin-right: 6px;
 }
 #EditPeople #Field-Adres
 {

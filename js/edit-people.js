@@ -195,7 +195,10 @@ function update_fields()
     $('#Field-Postcode')         .val(d['postcode']);
     $('#Field-Plaats')           .val(d['plaats']);
     $('#Field-Land')             .val(d['land']);
-    $('#Field-Post')             .val(d['post']);
+    
+    $('#Field-Post')             .attr('checked', (d['post'] == 'ja'));
+    $('#Field-Post').change(); // HACK: Dit zou niet expliciet moeten!
+    
     $('#Field-Telefoon')         .val(d['telefoon']);
     $('#Field-Mobiel')           .val(d['mobiel']);
     $('#Field-Email')            .val(d['email']);
