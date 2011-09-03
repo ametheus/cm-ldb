@@ -37,6 +37,8 @@ function create_slc( container, CC, editor, title )
         });
         
         $(container + " ul").append(li);
+        var ct = $(container + " ul").children("li").length;
+        $(container).prev().find("span").html("(" + ct + ")");
     };
     
     CC.addnew = function()

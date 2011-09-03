@@ -27,9 +27,10 @@ var SGR = {
     
     load: function( pers_id )
     {
-        //$('#sgr-accordion').accordion( "activate", false );
         $(".special_label ul").html('');
         $(".special_label").addClass('loading');
+        $('#sgr-accordion h3 span').html('...');
+        
         if ( SGR.timer ) { clearTimeout( SGR.timer ); }
         
         // Check if the selected person is already in the cache
@@ -64,6 +65,8 @@ var SGR = {
     {
         if (!((pid() in SGR.Studie.cache)&&(pid() in SGR.Groep.cache)&&(pid() in SGR.Relatie.cache)))
         { alert( "Not found!" ); return; }
+        
+        $('#sgr-accordion h3 span').html('(0)');
         
         $.map( SGR.Studie.cache[pid()],  SGR.Studie.append );
         $.map( SGR.Groep.cache[pid()],   SGR.Groep.append );
