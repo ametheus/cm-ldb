@@ -77,6 +77,7 @@ class QueryParameters
         <title><?=$Q->Title?></title>
         
         <link type="text/css" href="/css/admina.css" rel="stylesheet" />	
+        <link type="text/css" href="/css/mock-grid.css" rel="stylesheet" />	
 		<script type="text/javascript" src="/js/admina.js"></script>
 <?php
         include('inc/parameters/string.inc');
@@ -88,7 +89,9 @@ class QueryParameters
     <body id="layout1280">
       <div id="page" class="width">
         <h1><?=$Q->Title?></h1>
+        <br class="cl" />
         <form method="get" class="form" action="<?=$_SERVER["REQUEST_URI"]?>"
+          <div class="mock_grid">
 
 <?php
         foreach ( $params as $name=>$paramspec )
@@ -103,6 +106,7 @@ class QueryParameters
                 print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
                        "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
             }
+            print( "        <br class=\"cl\" />\n" );
         }
 ?>
             <p>
@@ -115,6 +119,7 @@ class QueryParameters
                     });
                 </script>
             </p>
+          </div>
         </form>
       </div>
     </body>

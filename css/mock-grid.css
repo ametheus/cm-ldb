@@ -1,0 +1,31 @@
+/*
+	960 Grid System ~ Core CSS.
+	Learn more ~ http://960.gs/
+
+	Licensed under GPL and MIT.
+*/
+
+/* =Containers
+--------------------------------------------------------------------------------*/
+
+/* =Grid >> Global
+--------------------------------------------------------------------------------*/
+
+.mock_grid
+{
+	display: inline;
+	float: left;
+	margin-left: 1%;
+	margin-right: 1%;
+}
+
+.mock_grid label
+{
+	width: 23%;
+}
+
+.mock_grid input
+{
+	width: 48%;
+}
+
