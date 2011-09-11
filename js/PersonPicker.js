@@ -26,8 +26,10 @@ var PersonPicker = {
     
     cache: {},
     
-    create: function( elt, cb )
+    create: function( elt, cb, def )
     {
+        if ( !def ) { def = 'Zoeken...'; }
+        
         $(elt).autocomplete({
             
             minLength: 2,
@@ -58,6 +60,8 @@ var PersonPicker = {
             select: function( event, ui )
             {
                 cb( ui.item.id );
+                $(elt).val('').blur();
+                return false;
             }
             
         });

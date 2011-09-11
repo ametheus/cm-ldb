@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+    Copyright (C) 2011 Thijs van Dijk
+    
+    This file is part of CM-LDB.
+
+    CM-LDB is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CM-LDB is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CM-LDB.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
+    <Header>
+        <Title>Rekeningnummers</Title>
+        <Description>Bankgegevens van leden, donateurs, en calmamente</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+    </Header>
+    <Parameter />
+    <Body>
+        <Text Name="Huidige leden"><![CDATA[
+SELECT
+  Naam,
+  banknummer
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    LEFT JOIN lidVan USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE
+  groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
+  AND van <= NOW()
+  AND ( tot IS NULL OR tot > NOW() )
+  
+  AND banknummer != ''
+
+GROUP BY pers_id
+ORDER BY Achternaam, Voornaam
+
+        ]]></Text>
+        <Text Name="CalmaMente"><![CDATA[
+SELECT
+  Naam,
+  banknummer
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    LEFT JOIN lidVan USING ( pers_id )
+WHERE
+  groep_id = 2
+  AND van <= NOW()
+  AND ( tot IS NULL OR tot > NOW() )
+  
+  AND banknummer != ''
+
+GROUP BY pers_id
+ORDER BY Achternaam, Voornaam
+
+        ]]></Text>
+        <Text Name="Donateurs"><![CDATA[
+SELECT
+  Naam,
+  banknummer
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    LEFT JOIN lidVan USING ( pers_id )
+WHERE
+  groep_id = 1
+  AND van <= NOW()
+  AND ( tot IS NULL OR tot > NOW() )
+  
+  AND banknummer != ''
+
+GROUP BY pers_id
+ORDER BY Achternaam, Voornaam
+
+        ]]></Text>
+    </Body>
+</Query>

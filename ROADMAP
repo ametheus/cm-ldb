@@ -36,8 +36,6 @@
 
 ===  FMF  ===
 
-*  UTF-8 in Q-resultaat
-*  UTF-8 in de database
 *  Mooiere exceptions
 *  klikken op datum-jetzer maakt geen wijzig-event
 *  Opslaan kan nog per persoon mis gaan;
