@@ -29,14 +29,10 @@
     <Body>
         <Text Name="Huidige leden"><![CDATA[
 SELECT
-  CONCAT(
-    voornaam,
-    ' ',
-    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
-    achternaam
-  ) as `Naam`,
+  Naam,
   banknummer
 FROM persoon
+    JOIN AlleNamen USING ( pers_id )
     LEFT JOIN lidVan USING ( pers_id )
     JOIN groep USING ( groep_id )
 WHERE
@@ -52,14 +48,10 @@ ORDER BY Achternaam, Voornaam
         ]]></Text>
         <Text Name="CalmaMente"><![CDATA[
 SELECT
-  CONCAT(
-    voornaam,
-    ' ',
-    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
-    achternaam
-  ) as `Naam`,
+  Naam,
   banknummer
 FROM persoon
+    JOIN AlleNamen USING ( pers_id )
     LEFT JOIN lidVan USING ( pers_id )
 WHERE
   groep_id = 2
@@ -74,14 +66,10 @@ ORDER BY Achternaam, Voornaam
         ]]></Text>
         <Text Name="Donateurs"><![CDATA[
 SELECT
-  CONCAT(
-    voornaam,
-    ' ',
-    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
-    achternaam
-  ) as `Naam`,
+  Naam,
   banknummer
 FROM persoon
+    JOIN AlleNamen USING ( pers_id )
     LEFT JOIN lidVan USING ( pers_id )
 WHERE
   groep_id = 1
