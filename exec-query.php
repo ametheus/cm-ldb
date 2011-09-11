@@ -104,16 +104,18 @@ elseif ( @$_REQUEST["as"] == "stickers" )
     <head>
         <title><?=$Q->Title?></title>
         
-        <link type="text/css" href="/css/common.css" rel="stylesheet" />
+        <link type="text/css" href="/css/admina.css" rel="stylesheet" />
         <style type="text/css">
         span.maillijstlink
         {
             padding: 2px;
         }
+        div.ods
+        {
+            margin: 10px 2px 10px 2px;
+        }
         </style>
-        <link type="text/css" href="/css/humanity/jquery-ui-1.8.12.custom.css" rel="stylesheet" />
-        <script type="text/javascript" src="/js/jquery.js"></script>
-        <script type="text/javascript" src="/js/jquery-ui.js"></script>
+        <script type="text/javascript" src="/js/admina.js"></script>
         <script type="text/javascript" src="/js/ZeroClipboard.js"></script>
         
         <script type="text/javascript">
@@ -122,7 +124,8 @@ elseif ( @$_REQUEST["as"] == "stickers" )
         })
         </script>
     </head>
-    <body>
+    <body id="layout1280">
+      <div id="page" class="width">
         <div class="ods"><a href="<?=QSA(array('as'=>'ods'))?>">Openen in OpenOffice</a></div>
         <div id="Table-tabs">
             <ul>
@@ -216,5 +219,6 @@ foreach ( $Result as $table=>$data )
             $("#Table-tabs").bind( "tabsshow", reposition_clips );
         })
         </script>
+      </div>
     </body>
 </html>

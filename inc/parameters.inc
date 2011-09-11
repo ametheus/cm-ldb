@@ -76,10 +76,9 @@ class QueryParameters
     <head>
         <title><?=$Q->Title?></title>
         
-        <link type="text/css" href="/css/common.css" rel="stylesheet" />	
-        <link type="text/css" href="/css/humanity/jquery-ui-1.8.12.custom.css" rel="stylesheet" />	
-		<script type="text/javascript" src="/js/jquery-1.5.1.min.js"></script>
-		<script type="text/javascript" src="/js/jquery-ui-1.8.12.custom.min.js"></script>
+        <link type="text/css" href="/css/admina.css" rel="stylesheet" />	
+        <link type="text/css" href="/css/mock-grid.css" rel="stylesheet" />	
+		<script type="text/javascript" src="/js/admina.js"></script>
 <?php
         include('inc/parameters/string.inc');
         include('inc/parameters/integer.inc');
@@ -87,9 +86,12 @@ class QueryParameters
         include('inc/parameters/pick.inc');
 ?>
     </head>
-    <body>
+    <body id="layout1280">
+      <div id="page" class="width">
         <h1><?=$Q->Title?></h1>
-        <form method="get" action="<?=$_SERVER["REQUEST_URI"]?>"
+        <br class="cl" />
+        <form method="get" class="form" action="<?=$_SERVER["REQUEST_URI"]?>"
+          <div class="mock_grid">
 
 <?php
         foreach ( $params as $name=>$paramspec )
@@ -104,12 +106,22 @@ class QueryParameters
                 print( "<p>Ik heb een parameter [$name] gevonden van type [{$paramspec['type']}], ".
                        "en ik heb geen flauw idee wat ik er mee moet.</p>\n" );
             }
+            print( "        <br class=\"cl\" />\n" );
         }
 ?>
             <p>
-                <input type="submit" value="Query uitvoeren" />
+                <button id="submit" type="submit">Query uitvoeren</button>
+                <script type="text/javascript">
+                    $(function(){
+                        $('#submit').click(function(){
+                            $('form.form').submit();
+                        });
+                    });
+                </script>
             </p>
+          </div>
         </form>
+      </div>
     </body>
 </html><?php
         exit;

@@ -313,7 +313,11 @@ $('.wysiwyg a').tipsy({fade: true, gravity: 's'});
       
       if ( b.b )
       {
-         $("nav li")[0].addClass('active');
+         navli = $("nav li");
+         if ( navli.length > 0 )
+         {
+            navli[0].addClass('active');
+         }
       }
    })($);
 
