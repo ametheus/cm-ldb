@@ -28,59 +28,66 @@
     <Body>
         <Text Name="Seniphallus"><![CDATA[
         SELECT
-            Naam,
             
-            YEAR(lidsinds) as `Lid sinds`, 
-            Besturen, Bluicies as `[B/L]u[i]cies`, Commissies,
+            Naam, 
+            Sum( Datediff(Ifnull(tot,NOW()),van)*(gewicht/365) ) as Score
             
-            ( 4*Besturen + 5*Bluicies + (0.8/365)*Dagenlid + (1.1/365)*Commissiedagen ) AS Score
-            
-        FROM ( 
+        FROM AlleNamen
+            JOIN lidVan USING ( pers_id )
+            JOIN (
                 
                 
-                SELECT
-                    pers_id,
-                    
-                    van as `lidsinds`,
-                    
-                    @besturen := ( select count(1) from lidVan
-                            WHERE lidVan.pers_id = bloep.pers_id
-                            AND lidVan.groep_id = 4001 ) AS `Besturen`,
-                            
-                    @buicies := ( select count(1) from lidVan
-                            WHERE lidVan.pers_id = bloep.pers_id 
-                            AND lidVan.groep_id IN ( 4006, 4015, 4110 ) ) AS `Bluicies`,
-                    
-                    @cies := ( select count(1) from lidVan
-                            JOIN groep USING ( groep_id )
-                            WHERE lidVan.pers_id = bloep.pers_id
-                            AND klasse = 'commissie' ) AS `Commissies`,
-                            
-                    @dagen := DATEDIFF(NOW(),van) as `Dagenlid`,
-                    
-                    @ciedagen := IFNULL(( select SUM(DATEDIFF(IFNULL(tot,NOW()),van)) from lidVan
-                                JOIN groep USING ( groep_id )
-                            WHERE lidVan.pers_id = bloep.pers_id
-                            AND klasse = 'commissie' ),0) AS `Commissiedagen`
-                    
-                FROM persoon as bloep
-                    LEFT JOIN lidVan USING ( pers_id )
-                    JOIN groep USING ( groep_id )
-                WHERE klasse IN ( 'grootkoor', 'orkest' )
-                    AND ( SELECT COUNT(1) FROM lidVan AS floep
-                            JOIN groep USING ( groep_id )
-                        WHERE floep.pers_id = bloep.pers_id
-                            AND klasse IN ( 'grootkoor', 'orkest' )
-                            AND van < NOW() AND ( tot is null or tot > NOW() ) ) > 0
+                SELECT groep_id, 2.1 as gewicht
+                FROM groep
+                WHERE klasse IN ('grootkoor','kamerkoor','orkest')
                 
-                ORDER BY van ASC
+                UNION SELECT 4001, 20    -- Bestuur
+                UNION SELECT 4006, 20    -- Buicie
+                UNION SELECT 4015, 22    -- Luicie
+                UNION SELECT 4110, 20    -- Lucie
                 
+                UNION SELECT 4002, 1     -- Accie
+                UNION SELECT 4003, 1     -- Accolade
+                UNION SELECT 4004, 2     -- Acquicie
+                UNION SELECT 4005, 3     -- Archiefcie
+                UNION SELECT 4007, 1     -- Cameracie
+                UNION SELECT 4008, 2     -- Cmoelcie
+                UNION SELECT 4009, 0.6   -- Footcie 0.6
+                UNION SELECT 4010, 2     -- Galacie 2
+                UNION SELECT 4011, 0.5   -- Hijscie 0.5
+                UNION SELECT 4012, 2.5   -- Integracie 2.5
+                UNION SELECT 4013, 0.3   -- Jamsescie 0.3
+                UNION SELECT 4014, 2.5   -- Kerstzingcie 2.5
+                UNION SELECT 4016, 1     -- Muzecie 1
+                UNION SELECT 4017, 2     -- Procie 2
+                UNION SELECT 4018, 3     -- Promocie 3
+                UNION SELECT 4019, 2     -- Publicie 2
+                UNION SELECT 4020, 8     -- Raad van Advies 8
+                UNION SELECT 4021, 8     -- Raad van Beheer 8
+                UNION SELECT 4022, 2     -- Kamerkoorvertegenwoordigers 2
+                UNION SELECT 4023, 3     -- CalmaMente 3
+                UNION SELECT 4024, 0.2   -- Zeilcie 0.2
+                UNION SELECT 4025, 1     -- Instrumentacie 1
+                UNION SELECT 4026, 1.5   -- Gilcie 1.5
+                UNION SELECT 4096, 3     -- Nerdcie 3
+                UNION SELECT 4101, 50    -- Bestuur LSZ 50  <-- Als je het LSZ hebt meegemaakt, ben je de oudste der lullen
+                UNION SELECT 4102, 8     -- Rva-intern 8
+                UNION SELECT 4103, 8     -- Rva-extern 8
+                UNION SELECT 4104, 15    -- Dircie 15   <---  De laatste dirigentenwissel was in 2004? Ouwelullenwerk dus.
+                UNION SELECT 4112, 4     -- Concertmeester 4
+                UNION SELECT 4114, 25    -- Erelid 25
+                UNION SELECT 4115, 7     -- Jeppecie 7
                 
-            ) punten
-        JOIN AlleNamen USING ( pers_id )
+            ) gewichttabel using ( groep_id )
+        
+        WHERE (select count(1) from lidVan as floep join groep as bliep using ( groep_id )
+                where floep.pers_id = AlleNamen.pers_id 
+                and bliep.klasse IN ( 'grootkoor', 'orkest' )
+                and van < now() and (tot is null or tot > now()) ) > 0
         
         GROUP BY pers_id
         ORDER BY Score DESC
-    ]]></Text><!---->
+
+]]></Text><!---->
     </Body>
 </Query>
