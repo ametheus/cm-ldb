@@ -21,31 +21,12 @@
 -->
 <Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
-        <Title>Donateurs maillijst</Title>
+        <Title>Donateursmaillijst</Title>
         <Description>Geeft een lijst met e-mailadressen van donateurs, voorzover bekend.</Description>
         <Author PersoonID="2021">Thijs</Author>
         <Category>Adreslijsten</Category>
     </Header>
     <Body>
-        <Text Name="Alles"><![CDATA[
-SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
-	Adres, 
-	Postcode, 
-	Plaats,
-	Email
-FROM persoon
-WHERE Email != ''
-	AND ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 1
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
-]]></Text>
         <Text Name="Mensen die gemaild willen worden"><![CDATA[
 SELECT 
 	Titel, 
@@ -74,6 +55,24 @@ SELECT
 FROM persoon
 WHERE Email = ''
 	AND ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 1
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Alles"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
 			AND lidVan.groep_id = 1
 			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
