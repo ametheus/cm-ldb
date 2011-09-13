@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+
+    Copyright (C) 2011 Thijs van Dijk
+    
+    This file is part of CM-LDB.
+
+    CM-LDB is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    CM-LDB is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with CM-LDB.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
+    <Header>
+        <Title>Ouwe L***en</Title>
+        <Description>De meest gerespecteerde leden van CM</Description>
+        <Author PersoonID="2021">Thijs van Dijk</Author>
+    </Header>
+    <Body>
+        <Text Name="Seniphallus"><![CDATA[
+        SELECT
+            Naam,
+            
+            YEAR(lidsinds) as `Lid sinds`, 
+            Besturen, Bluicies as `[B/L]u[i]cies`, Commissies,
+            
+            ( 4*Besturen + 5*Bluicies + (0.8/365)*Dagenlid + (1.1/365)*Commissiedagen ) AS Score
+            
+        FROM ( 
+                
+                
+                SELECT
+                    pers_id,
+                    
+                    van as `lidsinds`,
+                    
+                    @besturen := ( select count(1) from lidVan
+                            WHERE lidVan.pers_id = bloep.pers_id
+                            AND lidVan.groep_id = 4001 ) AS `Besturen`,
+                            
+                    @buicies := ( select count(1) from lidVan
+                            WHERE lidVan.pers_id = bloep.pers_id 
+                            AND lidVan.groep_id IN ( 4006, 4015, 4110 ) ) AS `Bluicies`,
+                    
+                    @cies := ( select count(1) from lidVan
+                            JOIN groep USING ( groep_id )
+                            WHERE lidVan.pers_id = bloep.pers_id
+                            AND klasse = 'commissie' ) AS `Commissies`,
+                            
+                    @dagen := DATEDIFF(NOW(),van) as `Dagenlid`,
+                    
+                    @ciedagen := IFNULL(( select SUM(DATEDIFF(IFNULL(tot,NOW()),van)) from lidVan
+                                JOIN groep USING ( groep_id )
+                            WHERE lidVan.pers_id = bloep.pers_id
+                            AND klasse = 'commissie' ),0) AS `Commissiedagen`
+                    
+                FROM persoon as bloep
+                    LEFT JOIN lidVan USING ( pers_id )
+                    JOIN groep USING ( groep_id )
+                WHERE klasse IN ( 'grootkoor', 'orkest' )
+                    AND ( SELECT COUNT(1) FROM lidVan AS floep
+                            JOIN groep USING ( groep_id )
+                        WHERE floep.pers_id = bloep.pers_id
+                            AND klasse IN ( 'grootkoor', 'orkest' )
+                            AND van < NOW() AND ( tot is null or tot > NOW() ) ) > 0
+                
+                ORDER BY van ASC
+                
+                
+            ) punten
+        JOIN AlleNamen USING ( pers_id )
+        
+        GROUP BY pers_id
+        ORDER BY Score DESC
+    ]]></Text><!---->
+    </Body>
+</Query>
