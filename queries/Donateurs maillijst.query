@@ -27,25 +27,6 @@
         <Category>Adreslijsten</Category>
     </Header>
     <Body>
-        <Text Name="Alles"><![CDATA[
-SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
-	Adres, 
-	Postcode, 
-	Plaats,
-	Email
-FROM persoon
-WHERE Email != ''
-	AND ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 1
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
-]]></Text>
         <Text Name="Mensen die gemaild willen worden"><![CDATA[
 SELECT 
 	Titel, 
@@ -72,8 +53,25 @@ SELECT
 	Postcode, 
 	Plaats
 FROM persoon
-WHERE Email = ''
-	AND ( 
+WHERE ( 
+		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
+			AND lidVan.groep_id = 1
+			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+	) > 0
+ORDER BY Achternaam
+]]></Text>
+        <Text Name="Alles"><![CDATA[
+SELECT 
+	Titel, 
+	Voornaam, 
+	Tussenvoegsel, 
+	Achternaam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	Email
+FROM persoon
+WHERE ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
 			AND lidVan.groep_id = 1
 			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
