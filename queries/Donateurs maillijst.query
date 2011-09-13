@@ -21,7 +21,7 @@
 -->
 <Query xmlns="https://database.collegiummusicum.nl/CMQuery.xsd">
     <Header>
-        <Title>Donateurs maillijst</Title>
+        <Title>Donateursmaillijst</Title>
         <Description>Geeft een lijst met e-mailadressen van donateurs, voorzover bekend.</Description>
         <Author PersoonID="2021">Thijs</Author>
         <Category>Adreslijsten</Category>
@@ -53,7 +53,8 @@ SELECT
 	Postcode, 
 	Plaats
 FROM persoon
-WHERE ( 
+WHERE Email = ''
+	AND ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
 			AND lidVan.groep_id = 1
 			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
