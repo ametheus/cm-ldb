@@ -30,17 +30,23 @@
         SELECT
             
             Naam, 
-            Sum( Datediff(Ifnull(tot,NOW()),van)*(gewicht/365) ) as Score,
-            YEAR(LidSinds) as `Lid sinds`, percentiel as `Percentiel`
+            YEAR(LidSinds) as `Lid sinds`,
+            Sum( Datediff(Ifnull(tot,NOW()),van)*(gewicht/365) ) + 2.4*(percentiel - 50) as Score
             
         FROM AlleNamen
             JOIN lidVan USING ( pers_id )
             JOIN (
                 
                 
-                SELECT groep_id, 2.1 as gewicht
+                SELECT groep_id, 0.8 as gewicht
                 FROM groep
-                WHERE klasse IN ('grootkoor','kamerkoor','orkest')
+                WHERE klasse IN ('kamerkoor')
+                
+                UNION
+                
+                SELECT groep_id, 0 as gewicht
+                FROM groep
+                WHERE klasse IN ('grootkoor','orkest')
                 
                 UNION SELECT 4001, 20    -- Bestuur
                 UNION SELECT 4006, 20    -- Buicie
