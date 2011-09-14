@@ -89,5 +89,29 @@
         ORDER BY Score DESC
 
 ]]></Text><!---->
+        <Text Name="Lengte lidmaatschap"><![CDATA[
+        SELECT
+            
+            Naam, 
+            (Datediff(Max(Ifnull(tot,NOW())),Min(van))*(1/365.2501)) as `Jaren Lid`
+            
+        FROM AlleNamen
+            JOIN lidVan USING ( pers_id )
+            JOIN groep using ( groep_id )
+        
+        WHERE klasse in ( 'grootkoor', 'orkest' )
+            AND groepsnaam != "Dirigent"
+            AND ( select count(1) from lidVan as bliep join groep as bloep using ( groep_id )
+                    where bliep.pers_id = AlleNamen.pers_id
+                    and bloep.klasse IN ( 'grootkoor', 'orkest' ) 
+                    and van < NOW() and (tot is null or tot > NOW())) = 0
+            AND ( select Min(van) from lidVan as bliep join groep as bloep using ( groep_id )
+                    where bliep.pers_id = AlleNamen.pers_id
+                    and bloep.klasse IN ( 'grootkoor', 'orkest' ) ) > '1950-01-01'
+        
+        GROUP BY pers_id
+        ORDER BY `Jaren Lid` DESC
+
+]]></Text><!---->
     </Body>
 </Query>
