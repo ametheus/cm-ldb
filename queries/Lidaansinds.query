@@ -33,13 +33,9 @@
     <Body>
         <Text Name="Lid-aan"><![CDATA[
 SELECT
-  CONCAT(
-    voornaam,
-    ' ',
-    CASE tussenvoegsel WHEN '' THEN '' ELSE CONCAT( tussenvoegsel, ' ' ) END,
-    achternaam
-  ) as `Naam`
+    Naam, Email
 FROM persoon
+    JOIN AlleNamen USING ( pers_id )
 WHERE
   ( SELECT COUNT(1) FROM lidVan
       JOIN groep USING ( groep_id )
