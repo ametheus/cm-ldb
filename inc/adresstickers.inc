@@ -75,7 +75,7 @@ class Adresstickers
         $LH = 1.07 * $fheight;
         
         
-        $L = Adresstickers::get_layout();
+        $L = Adresstickers::get_layout( $table );
         $lines = count(explode("\n",$L));
         
         $Ifile = false;
@@ -186,10 +186,21 @@ EOT;
         exit;
     }
     
-    static function get_layout()
+    static function get_layout( $table = array() )
     {
         // TODO: in $_REQUEST zoeken
-        return "<titel> <voornaam> <tussenvoegsel> <achternaam>\n<adres>\n<postcode> <plaats>";
+        $S = "{naam} {titel} {voornaam} {tussenvoegsel} {achternaam}\n{adres}\n{postcode} {plaats}";
+        
+        if ( count($table) == 0 ) { return $S; }
+        
+        $keys = array_keys( $table[0] );
+        foreach ( $keys as $k )
+        {
+            $S = str_ireplace( '{'.$k.'}', '<'.$k.'>', $S );
+        }
+        $S = preg_replace( '/\{[^>]+\}/', '', $S );
+        
+        return $S;
     }
     
     static function get_amt()
