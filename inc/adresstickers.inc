@@ -222,3 +222,40 @@ EOT;
 
 
 
+class StickerTemplate
+{
+    public $margins;
+    public $amount;
+    public $unit;
+    public $paper_size;
+    public $orientation;
+    
+    function __construct( $margins, $amount, $paper_size = 'A4', $orientation = 'P', $unit = 'mm' )
+    {
+        $this->unit = $unit;
+        $this->orientation = $orientation;
+        $this->paper_size = $paper_size;
+        $this->amount = $amount;
+        
+        $this->margins = new stdClass();
+        $this->margins->left    = $margins['left'];
+        $this->margins->top     = $margins['top'];
+        $this->margins->hskip   = $margins['hskip'];
+        $this->margins->vskip   = $margins['vskip'];
+        $this->margins->padding = $margins['padding'];
+    }
+    
+    static function get_template( $name )
+    {
+        switch( $name )
+        {
+            case ( 'HEMA' ):
+            default:
+                return new StickerTemplate( array('left'=>7,'top'=>15,'hskip'=>2.5,'vskip'=>0,'padding'=>3), array(3,7) );
+        }
+    }
+}
+
+
+
+
