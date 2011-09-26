@@ -142,8 +142,8 @@ class Adresstickers
             $sticker_origin[0] + $this->image->position[0],
             $sticker_origin[1] + $this->image->position[1],
             
-            $this->image->position[0],
-            $this->image->position[1]
+            $this->image->size[0],
+            $this->image->size[1]
         );
     }
     
@@ -189,7 +189,7 @@ class Adresstickers
             
             // Y offset
             $this->sizes->padding +
-                min((($this->sizes->sticker[1] - $lines*$this->sizes->line[1]*1.3) / 2), 0)
+                max((($this->sizes->sticker[1] - $lines*$this->sizes->line[1]*1.3) / 2), 0)
         );
     }
     
@@ -218,6 +218,39 @@ class Adresstickers
             $ex[0]++;
         if ( $p->GetY() > 8 )
             $ex[1]++;*/
+    }
+    
+    function debug_page()
+    {
+        $ex = array(0,0);
+        // Paper size:  {$paper_size[0]}x{$paper_size[1]}mm
+        // Horizontal, vertical separator:  {$DX}mm / {$DY}mm
+        // Paper (printable area) width/height:  {$PW}x{$PH}mm
+        
+        $debug_page = @<<<EOT
+
+Left, top margin:  {$this->sizes->margin[0]}mm / {$this->sizes->margin[1]}mm
+Padding:  {$this->sizes->padding}mm
+
+Logo size:  {$this->image->size[0]}x{$this->image->size[1]}mm
+Logo origin:  [{$this->image->position[0]},{$this->image->position[1]}]
+
+Block (sticker+margins) width/height:  {$this->sizes->block[0]}x{$this->sizes->block[1]}mm
+Sticker width/height:  {$this->sizes->sticker[0]}x{$this->sizes->sticker[1]}mm
+Text offset:  [{$this->offset[0]},{$this->offset[1]}]
+Line width/height:  {$this->sizes->line[0]}x{$this->sizes->line[1]}mm
+
+
+Eccenticities:  {$ex[0]}.
+Critical:  {$ex[1]}.
+EOT;
+
+        $this->pdf->AddPage();
+        $this->pdf->SetXY(20,30);
+        $this->pdf->MultiCell( 150, 1.3*$this->sizes->line[1], $debug_page, 0, 'L' );
+        
+        //$this->pdf->SetXY(1,1);
+        //$this->pdf->Cell( $paper_size[0]-2, $paper_size[1]-2, "", 1 );
     }
     
     function download()

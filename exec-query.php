@@ -95,6 +95,10 @@ elseif ( @$_REQUEST["as"] == "stickers" )
     //Adresstickers::download( $table, $Q->Title );
     $stick = new Adresstickers(StickerTemplate::get('HEMA'));
     $stick->append_from_table( $table );
+    if ( Auth::check() > 3 )
+    {
+        $stick->debug_page();
+    }
     $stick->download();
     exit;
 }
