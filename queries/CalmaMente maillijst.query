@@ -43,6 +43,7 @@
             AND post = 'ja'
             AND persoon.sterftedatum IS NULL
         GROUP BY pers_id
+        ORDER BY Achternaam, Voornaam
         ]]>
       </Text>
       <Text Name="CalmaMente-adresstickers">
@@ -63,6 +64,7 @@
             AND post = 'ja'
             AND persoon.sterftedatum IS NULL
         GROUP BY pers_id
+        ORDER BY Achternaam, Voornaam
         ]]>
       </Text>
       <Text Name="Alle oud-leden met een mailadres">
@@ -81,6 +83,7 @@
                     AND klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
             ), NOW()) < NOW()
             AND persoon.sterftedatum IS NULL
+        ORDER BY Achternaam, Voornaam
         ]]>
       </Text>
       <Text Name="Alle oud-leden zonder mailadres">
@@ -104,6 +107,7 @@
                     AND klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
             ), NOW()) < NOW()
             AND persoon.sterftedatum IS NULL
+        ORDER BY Achternaam, Voornaam
         ]]>
       </Text>
       <Text Name="Gewoon alles">
@@ -127,6 +131,7 @@
                     AND klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
             ), NOW()) < NOW()
             AND persoon.sterftedatum IS NULL
+        ORDER BY Achternaam, Voornaam
         ]]>
       </Text>
     </Body>
