@@ -28,29 +28,52 @@
     </Header>
     <Parameters />
     <Body>
-      <Text Name="CalmaMente-leden">
+      <Text Name="CalmaMenteleden">
         <![CDATA[
         SELECT 
-            Voornaam, 
-            Tussenvoegsel, 
-            Achternaam, 
+            Naam, 
             Email
         FROM persoon
-        WHERE ( 
-            SELECT Count(1) FROM lidVan 
-            WHERE lidVan.pers_id = persoon.pers_id AND lidVan.groep_id = 2 
-        ) > 0
+            JOIN AlleNamen using ( pers_id )
+            LEFT JOIN lidVan USING ( pers_id )
+        WHERE
+            groep_id = 2
+            AND van < NOW()
+            AND ( tot IS NULL OR tot > NOW() )
+            AND post = 'ja'
+            AND persoon.sterftedatum IS NULL
+        GROUP BY pers_id
+        ]]>
+      </Text>
+      <Text Name="CalmaMente-adresstickers">
+        <![CDATA[
+        SELECT 
+            Naam, 
+            Adres,
+            Postcode,
+            Plaats,
+            CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land
+        FROM persoon
+            JOIN AlleNamen using ( pers_id )
+            LEFT JOIN lidVan USING ( pers_id )
+        WHERE
+            groep_id = 2
+            AND van < NOW()
+            AND ( tot IS NULL OR tot > NOW() )
+            AND post = 'ja'
+            AND persoon.sterftedatum IS NULL
+        GROUP BY pers_id
         ]]>
       </Text>
       <Text Name="Alle oud-leden met een mailadres">
         <![CDATA[
         SELECT 
-            Voornaam, 
-            Tussenvoegsel, 
-            Achternaam, 
+            Naam, 
             Email
         FROM persoon
+            JOIN AlleNamen using ( pers_id )
         WHERE email != ''
+            AND post = 'ja'
             AND COALESCE(( 
                 SELECT MAX(IFNULL(tot,'2936-03-17')) FROM lidVan
                     JOIN groep USING ( groep_id )
@@ -62,18 +85,20 @@
       </Text>
       <Text Name="Alle oud-leden zonder mailadres">
         <![CDATA[
-        SELECT 
+        SELECT
+            Titel,
             Voornaam, 
             Tussenvoegsel, 
             Achternaam, 
             Adres,
             Postcode,
             Plaats,
-            Land
+            CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land
         FROM persoon
         WHERE email = ''
+            AND post = 'ja'
             AND COALESCE(( 
-                SELECT MAX(IFNULL(tot,'2936-03-17')) FROM lidVan
+                SELECT MAX(IFNULL(tot,NOW())) FROM lidVan
                     JOIN groep USING ( groep_id )
                 WHERE lidVan.pers_id = persoon.pers_id
                     AND klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
@@ -83,18 +108,20 @@
       </Text>
       <Text Name="Gewoon alles">
         <![CDATA[
-        SELECT 
+        SELECT
+            Titel,
             Voornaam, 
             Tussenvoegsel, 
             Achternaam, 
             Adres,
             Postcode,
             Plaats,
-            Land,
+            CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land,
             email
         FROM persoon
-        WHERE COALESCE(( 
-                SELECT MAX(IFNULL(tot,'2936-03-17')) FROM lidVan
+        WHERE post = 'ja'
+            AND COALESCE(( 
+                SELECT MAX(IFNULL(tot,NOW())) FROM lidVan
                     JOIN groep USING ( groep_id )
                 WHERE lidVan.pers_id = persoon.pers_id
                     AND klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
