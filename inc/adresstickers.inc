@@ -195,9 +195,6 @@ class Adresstickers
     
     protected function draw_sticker( $block_origin, $row )
     {
-        // Insert logo watermark
-        $this->draw_logo( $block_origin );
-        
         $X = $block_origin[0] + $this->offset[0];
         $Y = $block_origin[1] + $this->offset[1];
         $this->pdf->SetXY( $X, $Y );
@@ -209,10 +206,16 @@ class Adresstickers
         {
             $T = str_ireplace( "<{$k}>", $v, $T );
         }
-        $T = utf8_decode(trim(preg_replace('/[ ]+/',' ',$T)));
+        $T = utf8_decode(preg_replace('/^[ ]+/ms','',preg_replace('/[ ]+/',' ',$T)));
         
+        if ( preg_match('/^$/ms',$T) ) { return false; }
+        
+        // Insert logo watermark
+        $this->draw_logo( $block_origin );
+        // Draw the address
         $this->pdf->MultiCell( $L[0], $L[1], $T, 0, 'L', false );
         
+        return true;
         // Count eccentricities
         /*if ( $p->GetY() > 8 )
             $ex[0]++;
