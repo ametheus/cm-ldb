@@ -28,6 +28,176 @@ require_once('fpdf/fpdf.php');
 
 class Adresstickers
 {
+    protected $pdf;
+    public $title;
+    
+    protected $sizes;
+    protected $image = null;
+    
+    protected $layout;
+    protected $offset;
+    
+    function __construct( StickerTemplate $template, $title = "Adresstickers" )
+    {
+        if ( $template->unit != 'mm' ) { throw new Exception('Sorry, ik kan (nog) niet werken in maateenheid ['.$template->unit.'].'); }
+        $this->pdf = new FPDF( $template->orientation, $template->unit, $template->paper_size );
+        
+        $this->pdf->SetAuthor( Auth::username(), true );
+        $this->pdf->SetTitle( $title, true );
+        $this->title = $title;
+        $this->pdf->SetCreator( Config::full_app(), true );
+        
+        $this->pdf->SetMargins( $template->margins->page, 0, $template->margins->page );
+        $this->pdf->SetAutoPageBreak( false );
+        
+        
+        $this->pdf->SetFont( $template->font->family, '', $template->font->size );
+        $fheight = $template->font->size * 0.3528; // Pt to mm
+        
+        $amt = $template->amount;
+        
+        $paper_size = $template->paper_size;
+        $MX = $template->margins->left;
+        $MY = $template->margins->top;
+        $DX = $template->margins->hskip;
+        $DY = $templage->margins->vskip;
+        $padding = $template->margins->padding;
+        
+        
+        // Paper (printable area) width/height
+        $PW = $paper_size[0] - (2 * $MX);
+        $PH = $paper_size[1] - (2 * $MY);
+        
+        // Block (sticker+margins) width/height
+        $BW = ( $PW + $DX ) / $amt[0];
+        $BH = ( $PH + $DY ) / $amt[1];
+        // ( We need to add a virtual separator to the right, as there are $amt[0]-1 separators total. )
+        
+        // Sticker width/height
+        $SW = $BW - $DX;
+        $SH = $BH - $DY;
+        
+        // Line width/height
+        $LW = $SW - 2*$padding;
+        $LH = 1.07 * $fheight;
+        
+        $this->sizes = new stdClass();
+        $this->sizes->margin  = array( $MX, $MY );
+        $this->sizes->block   = array( $BW, $BH );
+        $this->sizes->sticker = array( $SW, $SH );
+        $this->sizes->padding = $padding;
+        $this->sizes->line    = array( $LW, $LH );
+        
+        $this->prepare_image( $SW, $SH );
+    }
+    
+    protected function prepare_image( $SW, $SH )
+    {
+        if ( !( $Ifile = Config::get('sticker_logo_file') ) || ( !file_exists($Ifile) )) { return; }
+        
+        list($IW,$IH) = getimagesize($Ifile);
+        // Determine if the aspect ratio of the image is smaller or larger
+        // than that of the sticker
+        
+        if ( ($IW/$IH) > ($SW/$SH) )
+        {
+            // Logo should go in the bottom half
+            $IH = $IH * ($SW/$IW);
+            $IW = $SW;
+            
+            $IX = 0;
+            $IY = $SH - $IH;
+        }
+        else
+        {
+            // Logo should go in the right half
+            $IW = $IW * ($SH/$IH);
+            $IH = $SH;
+            
+            $IX = $SW - $IW;
+            $IY = 0;
+        }
+        
+        
+        $this->image = new stdClass();
+        $this->image->size = array( $IW, $IH );
+        $this->image->position = array( $IX, $IY );
+    }
+    
+    
+    function append_from_table( $table )
+    {
+        $this->prepare_layout();
+        $M = $this->sizes->margin;
+        $B = $this->sizes->block;
+        
+        $ex = array(0,0);
+        $c = 0;
+        $max = count($table);
+        while ( $c < $max )
+        {
+            $p->AddPage();
+            
+            for ( $i = 0; $i < $amt[1]; $i++ )
+            {
+                for ( $j = 0; $j < $amt[0]; $j++ )
+                {
+                    $this->draw_sticker( array( $M[0] + ($j * $B[0]), $M[1] + ($i * $B[1]) ) );
+                    
+                    $c++;
+                    if ( $c >= $max ) { break; }
+                }
+                if ( $c >= $max ) { break; }
+            }
+        }
+    }
+    
+    protected function prepare_layout()
+    {
+        $this->layout = Adresstickers::get_layout( $table );
+        $lines = count(explode("\n",$L));
+        
+        $this->offset = array(
+            // X offset
+            $this->sizes->padding,
+            
+            // Y offset
+            $this->sizes->padding +
+                min((($this->sizes->sticker[1] - $lines*$this->sizes->line[1]*1.3) / 2), 0)
+        );
+    }
+    
+    protected function draw_sticker( $block_origin )
+    {
+        // Insert logo watermark
+        
+        $X = $block_origin[0] + $this->offset[0];
+        $Y = $block_origin[0] + $this->offset[1];
+        $p->SetXY( $X, $Y );
+        
+        $L = $this->sizes->line;
+        
+        $T = $this->layout;
+        foreach ( $table[$c] as $k => $v )
+        {
+            $T = str_ireplace( "<{$k}>", $v, $T );
+        }
+        $T = utf8_decode(trim(preg_replace('/[ ]+/',' ',$T)));
+        
+        $p->MultiCell( $L[0], $L[1], $T, 0, 'L', false );
+        
+        // Count eccentricities
+        /*if ( $p->GetY() > 8 )
+            $ex[0]++;
+        if ( $p->GetY() > 8 )
+            $ex[1]++;*/
+    }
+    
+    function also_download()
+    {
+        $this->pdf->Output( $this->title, 'I' );
+    }
+    
     static $margin = 6;
     
     static function download( $table, $title = "Adresstickers" )
@@ -191,7 +361,7 @@ EOT;
         // TODO: in $_REQUEST zoeken
         $S = "{naam} {titel} {voornaam} {tussenvoegsel} {achternaam}\n{adres}\n{postcode} {plaats}";
         
-        if ( count($table) == 0 ) { return $S; }
+        if ( count($table) == 0 ) { return preg_replace( '/\{([^>]+)\}/', '<\1>', $S ); }
         
         $keys = array_keys( $table[0] );
         foreach ( $keys as $k )
@@ -230,12 +400,16 @@ class StickerTemplate
     public $paper_size;
     public $orientation;
     
-    function __construct( $margins, $amount, $paper_size = array(210,297), $orientation = 'P', $unit = 'mm' )
+    function __construct( $margins, $amount, $font = array('family'=>'Times','size'=>11), $paper_size = array(210,297), $orientation = 'P', $unit = 'mm' )
     {
         $this->unit = $unit;
         $this->orientation = $orientation;
         $this->paper_size = $paper_size;
         $this->amount = $amount;
+        
+        $this->font = new stdClass();
+        $this->font->family = $font['family'];
+        $this->font->size   = $font['size'];
         
         $this->margins = new stdClass();
         $this->margins->left    = $margins['left'];
@@ -246,7 +420,7 @@ class StickerTemplate
         $this->margins->page    = $margins['page'] or 6;
     }
     
-    static function get_template( $name )
+    static function get( $name )
     {
         switch( $name )
         {
