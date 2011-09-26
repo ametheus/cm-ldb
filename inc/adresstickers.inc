@@ -230,7 +230,7 @@ class StickerTemplate
     public $paper_size;
     public $orientation;
     
-    function __construct( $margins, $amount, $paper_size = 'A4', $orientation = 'P', $unit = 'mm' )
+    function __construct( $margins, $amount, $paper_size = array(210,297), $orientation = 'P', $unit = 'mm' )
     {
         $this->unit = $unit;
         $this->orientation = $orientation;
@@ -243,6 +243,7 @@ class StickerTemplate
         $this->margins->hskip   = $margins['hskip'];
         $this->margins->vskip   = $margins['vskip'];
         $this->margins->padding = $margins['padding'];
+        $this->margins->page    = $margins['page'] or 6;
     }
     
     static function get_template( $name )
