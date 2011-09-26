@@ -92,7 +92,10 @@ elseif ( @$_REQUEST["as"] == "stickers" )
 {
     $table = get_a_table();
     
-    Adresstickers::download( $table, $Q->Title );
+    //Adresstickers::download( $table, $Q->Title );
+    $stick = new Adresstickers(StickerTemplate::get('HEMA'));
+    $stick->append_from_table( $table );
+    $stick->also_download();
     exit;
 }
 

@@ -60,7 +60,7 @@ class Adresstickers
         $MX = $template->margins->left;
         $MY = $template->margins->top;
         $DX = $template->margins->hskip;
-        $DY = $templage->margins->vskip;
+        $DY = $template->margins->vskip;
         $padding = $template->margins->padding;
         
         
@@ -86,6 +86,7 @@ class Adresstickers
         $this->sizes->block   = array( $BW, $BH );
         $this->sizes->sticker = array( $SW, $SH );
         $this->sizes->padding = $padding;
+        $this->sizes->amount  = $amt;
         $this->sizes->line    = array( $LW, $LH );
         
         $this->prepare_image( $SW, $SH );
@@ -127,7 +128,7 @@ class Adresstickers
     
     function append_from_table( $table )
     {
-        $this->prepare_layout();
+        $this->prepare_layout( $table );
         $M = $this->sizes->margin;
         $B = $this->sizes->block;
         
@@ -136,13 +137,17 @@ class Adresstickers
         $max = count($table);
         while ( $c < $max )
         {
-            $p->AddPage();
+            $this->pdf->AddPage();
             
-            for ( $i = 0; $i < $amt[1]; $i++ )
+            for ( $j = 0; $j < $this->sizes->amount[1]; $j++ )
             {
-                for ( $j = 0; $j < $amt[0]; $j++ )
+                for ( $i = 0; $i < $this->sizes->amount[0]; $i++ )
                 {
-                    $this->draw_sticker( array( $M[0] + ($j * $B[0]), $M[1] + ($i * $B[1]) ) );
+                    $this->draw_sticker(
+                        array(
+                            $M[0] + ($i * $B[0]),
+                            $M[1] + ($j * $B[1]) ),
+                        $table[$c] );
                     
                     $c++;
                     if ( $c >= $max ) { break; }
@@ -152,10 +157,10 @@ class Adresstickers
         }
     }
     
-    protected function prepare_layout()
+    protected function prepare_layout( $table )
     {
         $this->layout = Adresstickers::get_layout( $table );
-        $lines = count(explode("\n",$L));
+        $lines = count(explode("\n",$this->layout));
         
         $this->offset = array(
             // X offset
@@ -167,24 +172,24 @@ class Adresstickers
         );
     }
     
-    protected function draw_sticker( $block_origin )
+    protected function draw_sticker( $block_origin, $row )
     {
         // Insert logo watermark
         
         $X = $block_origin[0] + $this->offset[0];
-        $Y = $block_origin[0] + $this->offset[1];
-        $p->SetXY( $X, $Y );
+        $Y = $block_origin[1] + $this->offset[1];
+        $this->pdf->SetXY( $X, $Y );
         
         $L = $this->sizes->line;
         
         $T = $this->layout;
-        foreach ( $table[$c] as $k => $v )
+        foreach ( $row as $k => $v )
         {
             $T = str_ireplace( "<{$k}>", $v, $T );
         }
         $T = utf8_decode(trim(preg_replace('/[ ]+/',' ',$T)));
         
-        $p->MultiCell( $L[0], $L[1], $T, 0, 'L', false );
+        $this->pdf->MultiCell( $L[0], $L[1], $T, 0, 'L', false );
         
         // Count eccentricities
         /*if ( $p->GetY() > 8 )
@@ -417,7 +422,7 @@ class StickerTemplate
         $this->margins->hskip   = $margins['hskip'];
         $this->margins->vskip   = $margins['vskip'];
         $this->margins->padding = $margins['padding'];
-        $this->margins->page    = $margins['page'] or 6;
+        $this->margins->page    = @$margins['page'] or 6;
     }
     
     static function get( $name )
