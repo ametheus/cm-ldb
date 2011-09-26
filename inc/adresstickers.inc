@@ -96,7 +96,11 @@ class Adresstickers
     {
         if ( !( $Ifile = Config::get('sticker_logo_file') ) || ( !file_exists($Ifile) )) { return; }
         
-        list($IW,$IH) = getimagesize($Ifile);
+        try
+        {
+            list($IW,$IH) = getimagesize($Ifile);
+        }
+        catch (Exception $e) { return; }
         // Determine if the aspect ratio of the image is smaller or larger
         // than that of the sticker
         
@@ -121,10 +125,27 @@ class Adresstickers
         
         
         $this->image = new stdClass();
+        $this->image->file = $Ifile;
         $this->image->size = array( $IW, $IH );
         $this->image->position = array( $IX, $IY );
     }
     
+    protected function draw_logo( $sticker_origin )
+    {
+        if ( !$this->image ) { return; }
+        
+        
+        
+        $this->pdf->Image(
+            $this->image->file,
+            
+            $sticker_origin[0] + $this->image->position[0],
+            $sticker_origin[1] + $this->image->position[1],
+            
+            $this->image->position[0],
+            $this->image->position[1]
+        );
+    }
     
     function append_from_table( $table )
     {
@@ -175,6 +196,7 @@ class Adresstickers
     protected function draw_sticker( $block_origin, $row )
     {
         // Insert logo watermark
+        $this->draw_logo( $block_origin );
         
         $X = $block_origin[0] + $this->offset[0];
         $Y = $block_origin[1] + $this->offset[1];

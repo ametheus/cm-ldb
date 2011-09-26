@@ -95,7 +95,7 @@ elseif ( @$_REQUEST["as"] == "stickers" )
     //Adresstickers::download( $table, $Q->Title );
     $stick = new Adresstickers(StickerTemplate::get('HEMA'));
     $stick->append_from_table( $table );
-    $stick->also_download();
+    $stick->download();
     exit;
 }
 
