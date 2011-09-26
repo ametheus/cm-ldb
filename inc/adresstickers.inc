@@ -164,13 +164,18 @@ class Adresstickers
             {
                 for ( $i = 0; $i < $this->sizes->amount[0]; $i++ )
                 {
-                    $this->draw_sticker(
-                        array(
-                            $M[0] + ($i * $B[0]),
-                            $M[1] + ($j * $B[1]) ),
-                        $table[$c] );
-                    
-                    $c++;
+                    $break = false;
+                    while( ! $break )
+                    {
+                        $break = $this->draw_sticker(
+                            array(
+                                $M[0] + ($i * $B[0]),
+                                $M[1] + ($j * $B[1]) ),
+                            $table[$c] );
+                        
+                        $c++;
+                        if ( $c >= $max ) { break; }
+                    }
                     if ( $c >= $max ) { break; }
                 }
                 if ( $c >= $max ) { break; }
@@ -208,7 +213,7 @@ class Adresstickers
         }
         $T = utf8_decode(preg_replace('/^[ ]+/ms','',preg_replace('/[ ]+/',' ',$T)));
         
-        if ( preg_match('/^$/ms',$T) ) { return false; }
+        if ( preg_match('/^($|---\\Z)/m',"$T---") ) { return false; }
         
         // Insert logo watermark
         $this->draw_logo( $block_origin );
