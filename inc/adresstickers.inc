@@ -198,14 +198,14 @@ class Adresstickers
             $ex[1]++;*/
     }
     
-    function also_download()
+    function download()
     {
         $this->pdf->Output( $this->title, 'I' );
     }
     
     static $margin = 6;
     
-    static function download( $table, $title = "Adresstickers" )
+    static function quick_download( $table, $title = "Adresstickers" )
     {
         $p = new FPDF( 'P', 'mm', 'A4' );
         $paper_size = array( 210, 297 );
