@@ -28,9 +28,11 @@
     </Header>
     <Body>
         <Text Name="Dubbel"><![CDATA[
-        SELECT A.pers_id as `PID A`, A.titel as `Titel A`, A.voornaam as `Voornaam A`, A.tussenvoegsel as `tv A`, A.achternaam as `naam A`, A.aangetrouwdenaam as `a-naam A`, 
-               B.pers_id as `PID B`, B.titel as `Titel B`, B.voornaam as `Voornaam B`, B.tussenvoegsel as `tv B`, B.achternaam as `naam B`, B.aangetrouwdenaam as `a-naam B`
+        SELECT  A.pers_id AS `Pers_ID A`, B.pers_id AS `Pers_ID B`,
+                AA.Naam   AS `Naam A`,    BB.Naam   AS `Naam B`
+               
         FROM persoon as A
+            
             INNER JOIN persoon as B ON
             ( A.achternaam = B.achternaam
                 AND A.tussenvoegsel = B.tussenvoegsel
@@ -39,11 +41,32 @@
                 AND (  A.geboortedatum IS NULL OR A.geboortedatum < '1800-01-01'
                     OR B.geboortedatum IS NULL OR B.geboortedatum < '1800-01-01'
                     OR A.geboortedatum = B.geboortedatum ) )
+            
+            INNER JOIN AlleNamen as AA ON ( AA.pers_id = A.pers_id )
+            INNER JOIN AlleNamen as BB ON ( BB.pers_id = B.pers_id )
+            
         WHERE ( SELECT COUNT(1) FROM relaties WHERE relatie = 'ouder'
                 AND ((pers_id_1 = A.pers_id AND pers_id_2 = B.pers_id) OR (pers_id_1 = B.pers_id AND pers_id_2 = A.pers_id))
             ) = 0
             AND ( A.geslacht = 'onbekend' OR B.geslacht = 'onbekend' OR A.geslacht = B.geslacht )
+            AND ((( select count(1) FROM lidVan JOIN groep USING (groep_id) WHERE lidVan.pers_id = A.pers_id
+                    AND groep.klasse IN ('grootkoor','orkest') ) > 0 AND B.titel != 'fam.' )
+                OR
+                 (( select count(1) FROM lidVan JOIN groep USING (groep_id) WHERE lidVan.pers_id = B.pers_id
+                    AND groep.klasse IN ('grootkoor','orkest') ) > 0 AND A.titel != 'fam.' ))
+            AND ( B.geboortedatum IS NULL  OR  (( select IFNULL(min(van),NOW()) FROM lidVan WHERE lidVan.pers_id = A.pers_id) > DATE_ADD(B.geboortedatum, INTERVAL 12 YEAR) ))
+            AND ( A.geboortedatum IS NULL  OR  (( select IFNULL(min(van),NOW()) FROM lidVan WHERE lidVan.pers_id = B.pers_id) > DATE_ADD(A.geboortedatum, INTERVAL 12 YEAR) ))
+            AND (    REPLACE(A.voorletters,'.','')  LIKE  CONCAT('%',REPLACE(B.voorletters,'.',''),'%')
+                 OR  REPLACE(B.voorletters,'.','')  LIKE  CONCAT('%',REPLACE(A.voorletters,'.',''),'%') )
         ORDER BY A.pers_id, B.pers_id
+]]></Text>
+        <Text Name="Begin der tijden"><![CDATA[
+        SELECT Naam
+        FROM lidVan
+            JOIN AlleNamen USING ( pers_id )
+        WHERE van = '1936-03-17'
+        GROUP by pers_id
+        ORDER BY Naam
 ]]></Text>
     </Body>
 </Query>
