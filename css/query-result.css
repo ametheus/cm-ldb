@@ -21,4 +21,18 @@
     CSS for the query result tables
 */
 
-
+table.query-result
+{
+    border-collapse: collapse;
+}
+table.query-result th,table.query-result td
+{
+    border: 1px solid #DDDDDD;
+    padding: 1px 3px 1px 3px;
+    background-color: #FFFFFF;
+}
+table.query-result th
+{
+    padding: 2px 6px 2px 6px;
+    border-color: #999999;
+}

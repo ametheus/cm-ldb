@@ -165,7 +165,7 @@ foreach ( $Result as $table=>$data )
     print( I(4)."</div>\n" );
     if ( count($data) > 0 )
     {
-        print( I(4)."<table>\n" );
+        print( I(4)."<table class=\"query-result\">\n" );
         print( I(5)."<thead>\n" );
         print( I(6)."<tr>\n" );
         foreach ( array_keys($data[0]) as $col )
