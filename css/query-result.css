@@ -36,3 +36,17 @@ table.query-result th
     padding: 2px 6px 2px 6px;
     border-color: #999999;
 }
+table.query-result td.row-number
+{
+    text-align: right;
+    vertical-align: middle;
+    font-size: 10px;
+    color: #444444;
+    
+    border-right-color: #999999;
+    border-left-style: none;
+}
+table.query-result th.row-number
+{
+    border-style: none none solid none;
+}

@@ -167,7 +167,7 @@ foreach ( $Result as $table=>$data )
     {
         print( I(4)."<table class=\"query-result\">\n" );
         print( I(5)."<thead>\n" );
-        print( I(6)."<tr>\n" );
+        print( I(6)."<tr><th class=\"row-number\" />\n" );
         foreach ( array_keys($data[0]) as $col )
         {
             print( I(7)."<th>{$col}</th>\n" );
@@ -175,9 +175,10 @@ foreach ( $Result as $table=>$data )
         print( I(6)."</tr>\n" );
         print( I(5)."</tbody>\n" );
         print( I(5)."<thead>\n" );
-        foreach ( $data as $row )
+        foreach ( $data as $i=>$row )
         {
             print( I(6)."<tr>\n" );
+            print( I(7)."<td class=\"row-number\">".($i+1)."</td>\n" );
             foreach ( $row as $val )
             {
                 print( I(7)."<td>{$val}</td>\n" );
