@@ -29,55 +29,75 @@
     <Body>
         <Text Name="Mensen die gemaild willen worden"><![CDATA[
 SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
+	Naam, 
 	Email
 FROM persoon
-WHERE Email != ''
-	AND ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 1
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
+    JOIN AlleNamen USING ( pers_id )
+    JOIN lidVan USING ( pers_id )
+WHERE groep_id = 1
+    AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+    AND Email != ''
+ORDER BY Achternaam, Voornaam, Voorletters
 ]]></Text>
         <Text Name="Mensen die een brief willen"><![CDATA[
 SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
-	Adres, 
-	Postcode, 
-	Plaats
-FROM persoon
-WHERE Email = ''
-	AND ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 1
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
-]]></Text>
-        <Text Name="Alles"><![CDATA[
-SELECT 
-	Titel, 
-	Voornaam, 
-	Tussenvoegsel, 
-	Achternaam, 
+	Naam, 
 	Adres, 
 	Postcode, 
 	Plaats,
+	CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    JOIN lidVan USING ( pers_id )
+WHERE groep_id = 1
+    AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+    AND Email = ''
+ORDER BY Achternaam, Voornaam, Voorletters
+]]></Text>
+        <Text Name="Alles"><![CDATA[
+SELECT 
+	Naam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land,
 	Email
 FROM persoon
-WHERE ( 
-		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
-			AND lidVan.groep_id = 1
-			AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
-	) > 0
-ORDER BY Achternaam
+    JOIN AlleNamen USING ( pers_id )
+    JOIN lidVan USING ( pers_id )
+WHERE groep_id = 1
+    AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+ORDER BY Achternaam, Voornaam, Voorletters
+]]></Text>
+        <Text Name="Ereleden"><![CDATA[
+SELECT 
+	Naam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land,
+	Email
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    JOIN lidVan USING ( pers_id )
+WHERE groep_id = 4114
+    AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+ORDER BY Achternaam, Voornaam, Voorletters
+]]></Text>
+        <Text Name="Donateurs voor het leven"><![CDATA[
+SELECT 
+	Naam, 
+	Adres, 
+	Postcode, 
+	Plaats,
+	CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land,
+	Email
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    JOIN lidVan USING ( pers_id )
+WHERE groep_id = 3
+    AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
+ORDER BY Achternaam, Voornaam, Voorletters
 ]]></Text>
     </Body>
 </Query>
