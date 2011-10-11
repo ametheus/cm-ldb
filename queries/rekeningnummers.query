@@ -30,7 +30,11 @@
         <Text Name="Huidige leden"><![CDATA[
 SELECT
   Naam,
-  banknummer
+  banknummer,
+  CASE ( SELECT COUNT(1) FROM lidVan as kk JOIN groep AS kkg USING ( groep_id )
+         WHERE kk.pers_id = AlleNamen.pers_id AND kkg.klasse = 'kamerkoor'
+         AND kk.van <= NOW() AND ( kk.tot IS NULL OR kk.tot > NOW() ) )
+  WHEN 0 THEN 'Neen' ELSE 'Ja' END AS Kamerkoor
 FROM persoon
     JOIN AlleNamen USING ( pers_id )
     LEFT JOIN lidVan USING ( pers_id )
