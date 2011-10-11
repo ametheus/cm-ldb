@@ -91,5 +91,47 @@ WHERE
 group by pers_id
 ORDER BY Achternaam, Voornaam
         ]]></Text><!---->
+        <Text Name="Verjaardagen"><![CDATA[
+
+SELECT
+    Naam,
+    Month(geboortedatum) AS Maand,
+    Day(geboortedatum) AS Dag,
+    Year(geboortedatum) AS Jaar
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    JOIN lidVan USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE geboortedatum IS NOT NULL
+    AND klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
+    AND van < NOW()
+    AND ( tot IS NULL OR tot > NOW() )
+GROUP BY pers_id
+ORDER BY Month(geboortedatum), Day(geboortedatum), Year(geboortedatum), Voornaam
+
+
+
+        ]]></Text>
+        <Text Name="Studies"><![CDATA[
+
+SELECT
+    Naam,
+    Studienaam,
+    Afgestudeerd
+FROM persoon
+    JOIN AlleNamen USING ( pers_id )
+    JOIN doetStudie USING ( pers_id )
+    JOIN studie USING ( studie_id )
+    JOIN lidVan USING ( pers_id )
+    JOIN groep USING ( groep_id )
+WHERE klasse IN ( 'grootkoor', 'kamerkoor', 'orkest' )
+    AND van < NOW()
+    AND ( tot IS NULL OR tot > NOW() )
+GROUP BY pers_id, studie_id
+ORDER BY Studienaam, Voornaam, Achternaam
+
+
+
+        ]]></Text>
     </Body>
 </Query>
