@@ -48,7 +48,9 @@ $files = array(
         "css/forms.css",
         "css/lists.css",
         "css/calendar.css",
-        "css/extensions.css"
+        "css/extensions.css",
+        # My own things
+        "css/query-result.css"
     ),
     
     'js/bewerken' => array(
