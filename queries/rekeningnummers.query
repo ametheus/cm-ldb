@@ -34,11 +34,13 @@ SELECT
   CASE ( SELECT COUNT(1) FROM lidVan as kk JOIN groep AS kkg USING ( groep_id )
          WHERE kk.pers_id = AlleNamen.pers_id AND kkg.klasse = 'kamerkoor'
          AND kk.van <= NOW() AND ( kk.tot IS NULL OR kk.tot > NOW() ) )
-  WHEN 0 THEN 'Neen' ELSE 'Ja' END AS Kamerkoor
+  WHEN 0 THEN 'Neen' ELSE 'Ja' END AS Kamerkoor,
+  CASE COUNT(studie_id) WHEN 0 THEN 'Waarschijnlijk niet' ELSE 'Ja' END AS Student
 FROM persoon
     JOIN AlleNamen USING ( pers_id )
     LEFT JOIN lidVan USING ( pers_id )
     JOIN groep USING ( groep_id )
+    LEFT JOIN doetStudie ON doetStudie.pers_id = AlleNamen.pers_id AND afgestudeerd != 'Ja'
 WHERE
   groep.klasse IN ( 'kamerkoor', 'grootkoor', 'orkest' )
   AND van <= NOW()
@@ -46,7 +48,7 @@ WHERE
   
   AND banknummer != ''
 
-GROUP BY pers_id
+GROUP BY AlleNamen.pers_id
 ORDER BY Achternaam, Voornaam
 
         ]]></Text>
