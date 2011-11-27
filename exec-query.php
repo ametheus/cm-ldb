@@ -82,6 +82,7 @@ if ( @$_REQUEST["as"] == "e-mail" )
     
     header( "Content-type: text/plain" );
     print( Maillijst::maak_lijst( $table ) );
+    exit;
 }
 elseif ( @$_REQUEST["as"] == "ods" )
 {
