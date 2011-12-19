@@ -48,6 +48,7 @@ SELECT
 FROM persoon
 WHERE Email = ''
 	AND Adres != ''
+	AND post != 'neen'
 	AND ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
 			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
@@ -73,6 +74,7 @@ SELECT
 	Email
 FROM persoon
 WHERE Email != ''
+	AND post != 'neen'
 	AND ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
 			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
@@ -101,7 +103,8 @@ SELECT
 	Land,
 	Email
 FROM persoon
-WHERE ( 
+WHERE post != 'neen'
+	AND ( 
 		SELECT Count(1) FROM lidVan WHERE lidVan.pers_id = persoon.pers_id
 			AND lidVan.groep_id >= 1000 AND lidVan.groep_id < 4000
 			AND lidVan.van < NOW() AND lidVan.tot IS NOT NULL AND lidVan.tot < NOW() AND lidVan.tot > '1936-03-17' 

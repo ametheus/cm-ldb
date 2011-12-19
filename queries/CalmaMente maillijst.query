@@ -40,7 +40,7 @@
             groep_id = 2
             AND van < NOW()
             AND ( tot IS NULL OR tot > NOW() )
-            AND post = 'ja'
+            AND post != 'neen'
             AND persoon.sterftedatum IS NULL
         GROUP BY pers_id
         ORDER BY Achternaam, Voornaam
@@ -61,7 +61,7 @@
             groep_id = 2
             AND van < NOW()
             AND ( tot IS NULL OR tot > NOW() )
-            AND post = 'ja'
+            AND post != 'neen'
             AND persoon.sterftedatum IS NULL
         GROUP BY pers_id
         ORDER BY Achternaam, Voornaam
@@ -75,7 +75,7 @@
         FROM persoon
             JOIN AlleNamen using ( pers_id )
         WHERE email != ''
-            AND post = 'ja'
+            AND post != 'neen'
             AND COALESCE(( 
                 SELECT MAX(IFNULL(tot,'2936-03-17')) FROM lidVan
                     JOIN groep USING ( groep_id )
@@ -99,7 +99,7 @@
             CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land
         FROM persoon
         WHERE email = ''
-            AND post = 'ja'
+            AND post != 'neen'
             AND COALESCE(( 
                 SELECT MAX(IFNULL(tot,NOW())) FROM lidVan
                     JOIN groep USING ( groep_id )
@@ -123,7 +123,7 @@
             CASE Land WHEN 'Nederland' THEN '' ELSE Land END AS Land,
             email
         FROM persoon
-        WHERE post = 'ja'
+        WHERE post != 'neen'
             AND COALESCE(( 
                 SELECT MAX(IFNULL(tot,NOW())) FROM lidVan
                     JOIN groep USING ( groep_id )
