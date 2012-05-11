@@ -30,7 +30,7 @@ RewriteRule ^js/bewerken.js$        cat.php                                    [
 RewriteRule ^favicon.ico$           img/favicon.ico
 
 
-RewriteRule ^aanmelden$             http://www.collegiummusicum.nl/joomla/index.php?option=com_content&view=article&id=96&Itemid=176  [R=301]
+RewriteRule ^aanmelden$             http://www.collegiummusicum.nl/w/lid-worden/  [R=301]
 
 
 php_value session.gc_maxlifetime    86400
