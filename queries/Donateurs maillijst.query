@@ -34,7 +34,7 @@ SELECT
 FROM persoon
     JOIN AlleNamen USING ( pers_id )
     JOIN lidVan USING ( pers_id )
-WHERE groep_id = 1
+WHERE groep_id IN ( 1/*donateur*/, 11/*machtiging*/, 12/*maakt over*/, 13/*Spookdonateur*/ )
     AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
     AND Email != ''
 ORDER BY Achternaam, Voornaam, Voorletters
@@ -49,7 +49,7 @@ SELECT
 FROM persoon
     JOIN AlleNamen USING ( pers_id )
     JOIN lidVan USING ( pers_id )
-WHERE groep_id = 1
+WHERE groep_id IN ( 1/*donateur*/, 11/*machtiging*/, 12/*maakt over*/, 13/*Spookdonateur*/ )
     AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
     AND Email = ''
 ORDER BY Achternaam, Voornaam, Voorletters
@@ -65,7 +65,7 @@ SELECT
 FROM persoon
     JOIN AlleNamen USING ( pers_id )
     JOIN lidVan USING ( pers_id )
-WHERE groep_id = 1
+WHERE groep_id IN ( 1/*donateur*/, 11/*machtiging*/, 12/*maakt over*/, 13/*Spookdonateur*/ )
     AND lidVan.van <= NOW() AND ( lidVan.tot >= NOW() OR lidVan.tot IS NULL ) 
 ORDER BY Achternaam, Voornaam, Voorletters
 ]]></Text>
