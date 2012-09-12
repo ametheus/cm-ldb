@@ -99,6 +99,7 @@ elseif ( @$_REQUEST["as"] == "stickers" )
 
 
 
+header( "Content-type: text/html;charset=UTF-8" );
 
 ?><!DOCTYPE html>
 <html>
