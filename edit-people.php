@@ -70,7 +70,7 @@ function Studies()
 
 if ( ! isset($_GET["json"]) )
 {
-    header( "Content-type: text/plain;charset=UTF-8" );
+    header( "Content-type: text/html;charset=UTF-8" );
     include( "inc/templates/edit-people.html" );
     exit;
 }
