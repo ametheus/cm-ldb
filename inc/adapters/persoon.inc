@@ -81,7 +81,16 @@ EOT;
             adres       LIKE concat('%',@q,'%') OR
             email       LIKE concat('%',@q,'%') OR
             banknummer  LIKE concat('%',@q,'%') )
-        ORDER BY pers_id DESC
+        ORDER BY /* relevantie */
+            (
+                /* Voorkeur aan exacte matches */
+                IF( naam = @q, 10, 0 ) +
+                IF( voornaam = @q, 7, 0 ) +
+                IF( achternaam = @q, 6, 0 ) +
+                
+                IF( email LIKE concat(@q,'%'), 4, 0 )
+            ) DESC,
+            pers_id DESC
         LIMIT 15
 EOT;
         Persoon::$_PersonPick = new \Command( $Q, \DB::ro(), array('q') );
