@@ -143,6 +143,18 @@ elseif ( $_GET["json"] == "verwijderen" )
     $ar = $D->execute(array('pers_id'=>@$_POST['pers_id'],'weetjehetzeker'=>@$_POST['weetjehetzeker']));
     print ( is_array($ar) ? 'true' : 'false' );
 }
+elseif ( $_GET["json"] == "nieuwe-studie" )
+{
+    $DA = Adapters\SGR::nieuwe_studie();
+    if ( !$DA || strlen(@$_REQUEST["studienaam"]) < 3 )
+    {
+        print(0);
+        exit;
+    }
+    
+    $DA->execute( array( 'studienaam' => $_REQUEST["studienaam"] ) );
+    print( DB::rw()->insert_id() );
+}
 elseif ( $_GET["json"] == "SGR" )
 {
     $DA = Adapters\SGR::Load();
