@@ -273,13 +273,13 @@ $('.wysiwyg a').tipsy({fade: true, gravity: 's'});
       var parent = $(this).parents('.switch-wrapper');
       $('.switch-disable',parent).removeClass('selected');
       $(this).addClass('selected');
-      $('.checkbox',parent).attr('checked', true);
+      $('.checkbox',parent).attr('checked', true).change();
    });
    $(".switch-disable").click(function(){
       var parent = $(this).parents('.switch-wrapper');
       $('.switch-enable',parent).removeClass('selected');
       $(this).addClass('selected');
-      $('.checkbox',parent).attr('checked', false);
+      $('.checkbox',parent).attr('checked', false).change();
    });
    $('.switch-wrapper .checkbox').change(function(){
       var checked = $(this).attr('checked');
@@ -294,6 +294,7 @@ $('.wysiwyg a').tipsy({fade: true, gravity: 's'});
          $('.switch-enable',parent).removeClass('selected');
          $('.switch-disable',parent).addClass('selected');
       }
+      return true;
    });
 
 

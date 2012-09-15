@@ -55,13 +55,17 @@ $(function()
     
     $('#IDNav-save').click(save);
     
-    $('#EditPeople table input').keyup(function()
+    var check_for_changes = function()
     {
-        if ( ! any_changes() ) { return; }
+        if ( _im_updating_myself_thank_you_very_much ) return;
+        if ( ! any_changes() ) return;
         Details[pid()] = get_new_details();
         Changes[pid()] = true;
         $('#EditPeople').addClass('modified');
-    });
+    };
+    var inputs = $('#EditPeople table input, #EditPeople table select')
+    inputs.keydown(check_for_changes).change(check_for_changes);
+    
     $('#IDNav-id').keyup(function()
     {
         select_id($('#IDNav-id').val());
@@ -167,6 +171,9 @@ function load_details( pers_id )
                 p = r['pers_id'];
                 if ( ! ( p in Details ))
                 {
+                    // HACK: Zet de datumvelden op null
+                    r['geboortedatum'] = nul( r['geboortedatum'] );
+                    r['sterftedatum']  = nul( r['sterftedatum'] );
                     Details[p] = r;
                 }
             }
@@ -179,10 +186,12 @@ function load_details( pers_id )
     });
 }
 
+var _im_updating_myself_thank_you_very_much = false;
 function update_fields()
 {
     if ( ! ( pid() in Details )) { alert("not anymore."); return; }
     var d = Details[pid()];
+    _im_updating_myself_thank_you_very_much = true;
     
     $('#Field-Achternaam')       .val(d['achternaam']);
     $('#Field-Aangetrouwdenaam') .val(d['aangetrouwdenaam']);
@@ -190,7 +199,7 @@ function update_fields()
     $('#Field-Voornaam')         .val(d['voornaam']);
     $('#Field-Tussenvoegsel')    .val(d['tussenvoegsel']);
     $('#Field-Titel')            .val(d['titel']);
-    $('#Field-Geslacht')         .val(ucfirst(d['geslacht']));
+    $('#Field-Geslacht')         .val(d['geslacht']);
     $('#Field-Adres')            .val(d['adres']);
     $('#Field-Postcode')         .val(d['postcode']);
     $('#Field-Plaats')           .val(d['plaats']);
@@ -218,6 +227,8 @@ function update_fields()
     $('#Field-Opm')              .val(d['opm']);
     
     $('#EditPeople').removeClass('loading');
+    
+    _im_updating_myself_thank_you_very_much = false;
     
     SGR.load( pid() );
 }
@@ -275,7 +286,11 @@ function any_changes()
     var nehw = get_new_details();
     for ( i in nehw )
     {
-        if ( ould[i] != nehw[i] ) { return true; }
+        if ( ould[i] != nehw[i] ) 
+        {
+            console.log( "Field ["+i+"]: ["+ould[i]+"] vs ["+nehw[i]+"]" );
+            return true;
+        }
     }
     return false;
 }
