@@ -76,6 +76,7 @@
                 UNION SELECT 4024, 0.2   -- Zeilcie 0.2
                 UNION SELECT 4025, 1     -- Instrumentacie 1
                 UNION SELECT 4026, 1.5   -- Gilcie 1.5
+                UNION SELECT 4027, 18    -- Verdicie   <-- De Verdicie was - per ontwerp - een ouwelullencommissie
                 UNION SELECT 4096, 3     -- Nerdcie 3
                 UNION SELECT 4101, 50    -- Bestuur LSZ 50  <-- Als je het LSZ hebt meegemaakt, ben je de oudste der lullen
                 UNION SELECT 4102, 8     -- Rva-intern 8
