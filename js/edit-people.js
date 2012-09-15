@@ -196,8 +196,15 @@ function update_fields()
     $('#Field-Plaats')           .val(d['plaats']);
     $('#Field-Land')             .val(d['land']);
     
-    $('#Field-Post')             .attr('checked', (d['post'] == 'ja'));
-    $('#Field-Post').change(); // HACK: Dit zou niet expliciet moeten!
+    if ( d['post'] == 'ja' )
+    {
+        $('#Field-Post').attr('checked', 'checked');
+    }
+    else
+    {
+        $('#Field-Post').removeAttr('checked');
+    }
+    $('#Field-Post').change();
     
     $('#Field-Telefoon')         .val(d['telefoon']);
     $('#Field-Mobiel')           .val(d['mobiel']);
@@ -230,7 +237,9 @@ function get_new_details()
     d['postcode']           = $('#Field-Postcode').val();
     d['plaats']             = $('#Field-Plaats').val();
     d['land']               = $('#Field-Land').val();
-    d['post']               = $('#Field-Post').val();
+    
+    d['post']               = $('#Field-Post').attr('checked') ? "ja" : "neen";
+    
     d['telefoon']           = $('#Field-Telefoon').val();
     d['mobiel']             = $('#Field-Mobiel').val();
     d['email']              = $('#Field-Email').val();
