@@ -112,7 +112,10 @@ EOT;
     {
         $Q = <<<EOT
         INSERT INTO lidVan( pers_id, groep_id, van, tot )
-        VALUES ( @pers_id, @groep_id, @van, @tot )
+		  VALUES (
+            @pers_id, @groep_id, @van,
+				IF( LENGTH(@tot) < 4 OR SUBSTR(@tot,1,2) = '00', NULL, @tot )
+        )
 EOT;
         SGR::$_insert_Groepen = new \Command( $Q, \DB::rw(),
             array('pers_id', 'groep_id', 'van', 'tot') );
@@ -153,7 +156,7 @@ EOT;
         UPDATE lidVan SET
             groep_id = @n_groep_id,
             van = @n_van,
-            tot = @n_tot
+            tot = IF( length(@tot) < 4 OR substr(@n_tot,1,2)='00', NULL, @n_tot )
         WHERE pers_id = @pers_id
             AND groep_id = @groep_id
             AND van = @van
