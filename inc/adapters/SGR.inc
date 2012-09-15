@@ -236,10 +236,11 @@ EOT;
         $Q = "INSERT INTO studie( studienaam ) VALUES ( @studienaam )";
         self::$_nieuwe_studie = new \Command( $Q, \DB::rw(),
             array("studienaam") );
+        return self::$_nieuwe_studie;
     }
     static function nieuwe_studie()
     {
-        if ( Auth::check() < 3 ) return false;
+        if ( \Auth::check() < 3 ) return false;
         if ( ! self::$_nieuwe_studie ) return self::_nieuwe_studie();
         return self::$_nieuwe_studie;
     }
