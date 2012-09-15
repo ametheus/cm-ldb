@@ -75,11 +75,12 @@ EOT;
         FROM persoon
             JOIN AlleNamen USING ( pers_id )
         WHERE @q != '' AND (
-            achternaam LIKE concat('%',@q,'%') OR
-            voornaam LIKE   concat('%',@q,'%') OR
-            adres LIKE      concat('%',@q,'%') OR
-            email LIKE      concat('%',@q,'%') OR
-            banknummer LIKE concat('%',@q,'%') )
+            naam        LIKE concat('%',@q,'%') OR
+            achternaam  LIKE concat('%',@q,'%') OR
+            voornaam    LIKE concat('%',@q,'%') OR
+            adres       LIKE concat('%',@q,'%') OR
+            email       LIKE concat('%',@q,'%') OR
+            banknummer  LIKE concat('%',@q,'%') )
         ORDER BY pers_id DESC
         LIMIT 15
 EOT;
