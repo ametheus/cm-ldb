@@ -64,7 +64,7 @@ $(function()
         $('#EditPeople').addClass('modified');
     };
     var inputs = $('#EditPeople table input, #EditPeople table select')
-    inputs.keydown(check_for_changes).change(check_for_changes);
+    inputs.keyup(check_for_changes).change(check_for_changes);
     
     $('#IDNav-id').keyup(function()
     {
