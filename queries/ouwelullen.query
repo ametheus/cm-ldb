@@ -31,7 +31,8 @@
             
             Naam, 
             YEAR(LidSinds) as `Lid sinds`,
-            Sum( Datediff(Ifnull(tot,NOW()),van)*(gewicht/365) ) + 2.4*(percentiel - 50) as Score
+            ( Sum( Datediff(Ifnull(tot,NOW()),van)*(gewicht/365) ) + 2.4*(percentiel - 50) )
+                / 2.0418354 as `Score in centiRients`
             
         FROM AlleNamen
             JOIN lidVan USING ( pers_id )
@@ -215,7 +216,7 @@
                 and van < now() and (tot is null or tot > now()) ) > 0
         
         GROUP BY pers_id
-        ORDER BY Score DESC
+        ORDER BY `Score in centiRients` DESC
 
 ]]></Text><!---->
         <Text Name="Lengte lidmaatschap"><![CDATA[
