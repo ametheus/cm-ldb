@@ -70,6 +70,7 @@ function Studies()
 
 if ( ! isset($_GET["json"]) )
 {
+    header( "Content-type: text/html;charset=UTF-8" );
     include( "inc/templates/edit-people.html" );
     exit;
 }
@@ -87,7 +88,7 @@ function print_pers_ids( $array )
 }
 
 
-header( "Content-type: text/plain" );
+header( "Content-type: text/plain;charset=UTF-8" );
 
 if ( $_GET["json"] == "IDs" )
 {

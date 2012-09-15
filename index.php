@@ -51,5 +51,6 @@ function LoQ()
 }
 
 
+header( "Content-type: text/html;charset=UTF-8" );
 include("inc/templates/main-page.html");
 exit;
