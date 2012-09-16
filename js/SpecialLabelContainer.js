@@ -51,7 +51,7 @@ function create_slc( container, CC, editor, title )
         $(editor).dialog({
             title: title,
             modal: true,
-            width: 400
+            width: 500
         });
         
         CC.current = [ groep, li ];
@@ -123,7 +123,8 @@ function create_slc( container, CC, editor, title )
     }
     
     
-    $(function(){
+    $(function()
+    {
         
         // Create buttons, place everything in a nested <div>, and generate
         // an <ul> below.
@@ -138,21 +139,30 @@ function create_slc( container, CC, editor, title )
         
         $(container).append('<ul class="grid_8" />');
         
+        var invalidate = function()
+        {
+            Changes[pid()] = true;
+            $('#EditPeople').addClass('modified');
+        }
+        
         
         // Set correct click events on the editor dialog.
-        $(editor + " #save").click(function(){
-            
+        $(editor + " #save").click(function()
+        {
             new_groep = CC.get_fields( editor );
             CC.change( new_groep );
+            invalidate();
             
             $(editor).dialog("close");
         });
         
-        $(editor + " #delete").click(function(){
+        $(editor + " #delete").click(function()
+        {
             if ( confirm( "Weet je zeker dat je dit item wilt verwijderen?\n" +
                           "Dit is waarschijnlijk niet wat je wil.") )
             {
                 CC.change( null );
+                invalidate();
                 
                 $(editor).dialog("close");
             }
