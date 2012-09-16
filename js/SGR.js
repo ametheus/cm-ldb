@@ -232,7 +232,7 @@ $(function()
         sng.next().toggle( ! parent );
         sng.html( parent ? "Hij staat er niet bij!" : "Oeps, toch wel." );
         
-        var parent_controls = $("#StudieEditor").find("#studie_id, #save, #delete");
+        var parent_controls = $("#StudieEditor").find("#studie_id, .switch-wrapper, #save, #delete");
         var child_controls  = $("#StudieEditor").find("#maak_nieuwe_studie, #nieuwe_studienaam");
         
         toggle_enabled( parent_controls, parent );
