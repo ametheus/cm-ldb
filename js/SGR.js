@@ -215,3 +215,42 @@ create_slc( "#Secties", SGR.Groep, "#GroepenEditor", "Bewerk groep" );
 create_slc( "#Studies", SGR.Studie, "#StudieEditor", "Bewerk studie" );
 create_slc( "#Relaties", SGR.Relatie, "#RelatieEditor", "Bewerk relatie" );
 
+
+// Nieuwe studie toevoegen:
+$(function()
+{
+    $("#StudieEditor #studie_niet_gevonden").click(function()
+    {
+        var next = $(this).next();
+        next.toggle();
+        
+        if ( next.is(":visible") )
+            $(this).html("Oeps, toch wel.");
+        else
+            $(this).html("Hij staat er niet bij!");
+        
+        return false;
+    });
+    
+    $("#StudieEditor #maak_nieuwe_studie").click(function()
+    {
+        var studienaam = $("#StudieEditor #nieuwe_studienaam").val();
+        if ( studienaam.length <= 3 ) return;
+        
+        $.ajax( "/bewerken/json/nieuwe-studie", {
+            dataType: "json",
+            data: { studienaam: studienaam },
+            success: function( studie_id )
+            {
+                if ( !studie_id ) return;
+                $("#StudieEditor #studie_id").append(
+                    $("<option />").html(studienaam).attr("value",studie_id)
+                ).val(studie_id);
+                
+                $("#StudieEditor #studie_niet_gevonden").html("Hij staat er niet bij!").next().toggle();
+            }
+        });
+    });
+});
+
+
