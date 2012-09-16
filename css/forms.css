@@ -288,6 +288,13 @@ body.ie7 .progress-bar, body.ie8 .progress-bar {
 .progress-bar.green > span {
 	background-color:#0F0;
 }
+
+.form *[disabled='disabled'], .form *:disabled
+{
+	opacity: 0.4;
+}
+
+
 /* Buttons */
 
 button, .button {

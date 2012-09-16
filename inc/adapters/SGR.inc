@@ -230,6 +230,21 @@ EOT;
         return SGR::$_update_Studies;
     }
     
+    private static $_nieuwe_studie = false;
+    private static function _nieuwe_studie()
+    {
+        $Q = "INSERT INTO studie( studienaam ) VALUES ( @studienaam )";
+        self::$_nieuwe_studie = new \Command( $Q, \DB::rw(),
+            array("studienaam") );
+        return self::$_nieuwe_studie;
+    }
+    static function nieuwe_studie()
+    {
+        if ( \Auth::check() < 3 ) return false;
+        if ( ! self::$_nieuwe_studie ) return self::_nieuwe_studie();
+        return self::$_nieuwe_studie;
+    }
+    
     
     
     private static $_insert_Relaties = false;
