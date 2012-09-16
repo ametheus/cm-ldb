@@ -51,7 +51,7 @@ function create_slc( container, CC, editor, title )
         $(editor).dialog({
             title: title,
             modal: true,
-            width: 400
+            width: 500
         });
         
         CC.current = [ groep, li ];
