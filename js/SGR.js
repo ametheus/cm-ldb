@@ -219,16 +219,30 @@ create_slc( "#Relaties", SGR.Relatie, "#RelatieEditor", "Bewerk relatie" );
 // Nieuwe studie toevoegen:
 $(function()
 {
+    var toggle_enabled = function( elt, enabled )
+    {
+        if ( enabled )   elt.removeAttr("disabled");
+        else             elt.attr("disabled","disabled");
+    };
+    
+    var enable_ipts = function( parent, child )
+    {
+        console.log({parent: parent, child: child});
+        var sng = $("#StudieEditor #studie_niet_gevonden");
+        sng.next().toggle( ! parent );
+        sng.html( parent ? "Hij staat er niet bij!" : "Oeps, toch wel." );
+        
+        var parent_controls = $("#StudieEditor").find("#studie_id, #save, #delete");
+        var child_controls  = $("#StudieEditor").find("#maak_nieuwe_studie, #nieuwe_studienaam");
+        
+        toggle_enabled( parent_controls, parent );
+        toggle_enabled( child_controls,  child );
+    };
+    
+    
     $("#StudieEditor #studie_niet_gevonden").click(function()
     {
-        var next = $(this).next();
-        next.toggle();
-        
-        if ( next.is(":visible") )
-            $(this).html("Oeps, toch wel.");
-        else
-            $(this).html("Hij staat er niet bij!");
-        
+        enable_ipts( $(this).next().is(":visible"), true );
         return false;
     });
     
@@ -236,6 +250,8 @@ $(function()
     {
         var studienaam = $("#StudieEditor #nieuwe_studienaam").val();
         if ( studienaam.length <= 3 ) return;
+        
+        enable_ipts( false, false );
         
         $.ajax( "/bewerken/json/nieuwe-studie", {
             dataType: "json",
@@ -247,7 +263,7 @@ $(function()
                     $("<option />").html(studienaam).attr("value",studie_id)
                 ).val(studie_id);
                 
-                $("#StudieEditor #studie_niet_gevonden").html("Hij staat er niet bij!").next().toggle();
+                enable_ipts( true, false );
             }
         });
     });
